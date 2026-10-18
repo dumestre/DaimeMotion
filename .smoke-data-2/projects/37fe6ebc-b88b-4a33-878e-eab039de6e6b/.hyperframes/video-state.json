@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "historyId": "a333350a-af1e-4219-8e1c-17fa83389117",
+  "currentRevision": null,
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "3f01c9cf8b132df43ca8efb0b5e8ad1dad181a441dc734de93b30d73aa6b4dfb",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\a333350a-af1e-4219-8e1c-17fa83389117\\blobs\\3f\\3f01c9cf8b132df43ca8efb0b5e8ad1dad181a441dc734de93b30d73aa6b4dfb"
+    },
+    "CLAUDE.md": {
+      "hash": "1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\a333350a-af1e-4219-8e1c-17fa83389117\\blobs\\1d\\1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5"
+    },
+    "hyperframes.json": {
+      "hash": "53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\a333350a-af1e-4219-8e1c-17fa83389117\\blobs\\53\\53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
+    },
+    "index.html": {
+      "hash": "7ea080aeaff893c8956a45e65aa3b75992b1b2a8a948404801188a85322172c3",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\a333350a-af1e-4219-8e1c-17fa83389117\\blobs\\7e\\7ea080aeaff893c8956a45e65aa3b75992b1b2a8a948404801188a85322172c3"
+    },
+    "meta.json": {
+      "hash": "eda0be874cd75fc1a2d6f2cdd895b953ef33bb042b176891c14b41818b65ea25",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\a333350a-af1e-4219-8e1c-17fa83389117\\blobs\\ed\\eda0be874cd75fc1a2d6f2cdd895b953ef33bb042b176891c14b41818b65ea25"
+    },
+    "package.json": {
+      "hash": "2d9bc1d2f2ca03a9261379d7ed8ab4f43b6f2ac2b7955fc4c5b92869af6f392c",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\a333350a-af1e-4219-8e1c-17fa83389117\\blobs\\2d\\2d9bc1d2f2ca03a9261379d7ed8ab4f43b6f2ac2b7955fc4c5b92869af6f392c"
+    }
+  },
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  }
+}

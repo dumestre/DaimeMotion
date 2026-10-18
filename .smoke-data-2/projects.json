@@ -1,0 +1,24 @@
+[
+  {
+    "id": "8f489abf-b5a4-4687-96eb-13f435923d27",
+    "name": "Projeto HyperFrames",
+    "description": "",
+    "aspectRatio": "16:9",
+    "resolution": "landscape",
+    "frameRate": 30,
+    "createdAt": "2026-10-18T22:40:44.660Z",
+    "updatedAt": "2026-10-18T22:40:44.660Z",
+    "directory": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\8f489abf-b5a4-4687-96eb-13f435923d27"
+  },
+  {
+    "id": "37fe6ebc-b88b-4a33-878e-eab039de6e6b",
+    "name": "Smoke Project",
+    "description": "",
+    "aspectRatio": "16:9",
+    "resolution": "landscape",
+    "frameRate": 30,
+    "createdAt": "2026-10-18T22:32:49.182Z",
+    "updatedAt": "2026-10-18T22:32:49.182Z",
+    "directory": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\37fe6ebc-b88b-4a33-878e-eab039de6e6b"
+  }
+]
