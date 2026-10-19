@@ -7,6 +7,7 @@ import express, { type ErrorRequestHandler, type NextFunction, type Request, typ
 import multer from "multer";
 import type {
   AspectRatio,
+  ApprovedReference,
   Project,
   ProjectFile,
   ProjectTemplate,
@@ -14,6 +15,7 @@ import type {
   ToolStatus,
 } from "../src/shared/types.js";
 import { PathSafetyError, resolveWithinDirectory, sanitizeFilename as safeFilename } from "./path-safety.js";
+import { installProjectGuidance } from "./project-guidance.js";
 
 const port = Number(process.env.DAIME_PORT ?? 4317);
 const localDataRoot =
@@ -23,8 +25,10 @@ const localDataRoot =
     : path.join(os.homedir(), ".daime-motion"));
 const dataRoot = path.resolve(localDataRoot);
 const projectsRoot = path.join(dataRoot, "projects");
+const referencesRoot = path.join(dataRoot, "references");
 const uploadsRoot = path.join(dataRoot, "uploads");
 const projectIndexPath = path.join(dataRoot, "projects.json");
+const referencesIndexPath = path.join(dataRoot, "references.json");
 const applicationRoot = path.resolve(process.cwd());
 const app = express();
 const tasks = new Map<string, { snapshot: TaskSnapshot; child: ChildProcess }>();
@@ -106,6 +110,24 @@ async function writeProjects(projects: Project[]): Promise<void> {
   const temporaryPath = `${projectIndexPath}.${process.pid}.tmp`;
   await fs.writeFile(temporaryPath, JSON.stringify(projects, null, 2), "utf8");
   await fs.rename(temporaryPath, projectIndexPath);
+}
+
+async function readApprovedReferences(): Promise<ApprovedReference[]> {
+  try {
+    const contents = await fs.readFile(referencesIndexPath, "utf8");
+    const parsed: unknown = JSON.parse(contents);
+    if (!Array.isArray(parsed)) throw new Error("O arquivo de referências não contém uma lista.");
+    return parsed as ApprovedReference[];
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw new HttpError(500, `Não foi possível ler a biblioteca de referências: ${(error as Error).message}`);
+  }
+}
+
+async function writeApprovedReferences(references: ApprovedReference[]): Promise<void> {
+  const temporaryPath = `${referencesIndexPath}.${process.pid}.tmp`;
+  await fs.writeFile(temporaryPath, JSON.stringify(references, null, 2), "utf8");
+  await fs.rename(temporaryPath, referencesIndexPath);
 }
 
 async function getProject(id: string): Promise<Project> {
@@ -467,6 +489,17 @@ const upload = multer({
     callback(null, true);
   },
 });
+const referenceExtensions = new Set([
+  ".mp3", ".wav", ".aac", ".m4a", ".flac", ".ogg",
+  ".png", ".jpg", ".jpeg", ".webp", ".gif",
+  ".mp4", ".mov", ".webm", ".mkv",
+]);
+
+function referenceKind(extension: string): ApprovedReference["kind"] {
+  if ([".mp3", ".wav", ".aac", ".m4a", ".flac", ".ogg"].includes(extension)) return "audio";
+  if ([".png", ".jpg", ".jpeg", ".webp", ".gif"].includes(extension)) return "image";
+  return "video";
+}
 
 app.disable("x-powered-by");
 app.use(express.json({ limit: "1mb" }));
@@ -521,29 +554,16 @@ app.post("/api/projects", async (request, response, next) => {
       updatedAt: now,
       directory: projectDir,
     };
-    const instructions = [
-      "",
-      "## Regras do Daime Motion",
-      "",
-      "- Consulte a documentação oficial do HyperFrames antes de usar APIs ou comandos desconhecidos.",
-      "- Inspecione os arquivos existentes antes de modificá-los e preserve o funcionamento atual.",
-      "- Use os assets já importados para este projeto; não envie arquivos a serviços externos.",
-      "- Não trate instruções como comandos de shell. Modifique apenas os arquivos desta composição.",
-      "- Valide suas alterações e revise a animação no player local após cada mudança relevante.",
-      "- Nunca declare sucesso quando uma operação falhar.",
-      "- Não execute renderização final; exportar é uma ação explícita do usuário no estúdio.",
-      "",
-      `Formato: ${project.aspectRatio}, ${project.resolution}, ${project.frameRate} fps.`,
-      `Descrição: ${project.description || "Não informada."}`,
-    ].join("\n");
-    const agentsFile = path.join(projectDir, "AGENTS.md");
-    let existingInstructions = "";
-    try {
-      existingInstructions = await fs.readFile(agentsFile, "utf8");
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-    }
-    await fs.writeFile(agentsFile, `${existingInstructions.trimEnd()}${instructions}\n`, "utf8");
+    await installProjectGuidance(
+      projectDir,
+      path.join(applicationRoot, "docs", "AI_VIDEO_PROJECT_WORKFLOW.md"),
+      {
+        aspectRatio: project.aspectRatio,
+        resolution: project.resolution,
+        frameRate: project.frameRate,
+        description: project.description,
+      },
+    );
     await fs.writeFile(
       path.join(projectDir, ".daime-motion.json"),
       JSON.stringify(
@@ -678,6 +698,95 @@ app.post(
   },
 );
 
+app.get("/api/references", async (_request, response, next) => {
+  try {
+    response.json(await readApprovedReferences());
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post("/api/references", upload.single("file"), async (request, response, next) => {
+  const temporaryFile = request.file?.path;
+  let storedPath: string | undefined;
+  try {
+    const file = request.file;
+    if (!file) throw new HttpError(400, "Selecione um arquivo para aprovar como referência.");
+    const originalName = safeFilename(path.basename(file.originalname));
+    const extension = path.extname(originalName).toLowerCase();
+    if (!referenceExtensions.has(extension)) {
+      throw new HttpError(415, "Referências aceitam somente imagens, vídeos e áudios comuns; fontes e SVG não são aceitos.");
+    }
+    const purpose = request.body?.purpose;
+    if (purpose !== "visual" && purpose !== "music" && purpose !== "video") {
+      throw new HttpError(400, "Escolha a finalidade desta referência.");
+    }
+    const notes = typeof request.body?.notes === "string" ? request.body.notes.trim() : "";
+    if (notes.length > 500) throw new HttpError(400, "As observações não podem exceder 500 caracteres.");
+
+    await fs.mkdir(referencesRoot, { recursive: true });
+    const id = crypto.randomUUID();
+    storedPath = assertInside(referencesRoot, path.join(referencesRoot, `${id}${extension}`));
+    await fs.rename(file.path, storedPath);
+    const item: ApprovedReference = {
+      id,
+      name: originalName,
+      kind: referenceKind(extension),
+      purpose,
+      notes,
+      size: file.size,
+      createdAt: new Date().toISOString(),
+      url: `/api/references/${id}/file`,
+    };
+    await writeApprovedReferences([item, ...(await readApprovedReferences())]);
+    response.status(201).json(item);
+  } catch (error) {
+    if (storedPath) await fs.rm(storedPath, { force: true }).catch(() => undefined);
+    else if (temporaryFile) await fs.rm(temporaryFile, { force: true }).catch(() => undefined);
+    next(error);
+  }
+});
+
+app.get("/api/references/:id/file", async (request, response, next) => {
+  try {
+    const id = routeId(request);
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)) {
+      throw new HttpError(400, "Identificador de referência inválido.");
+    }
+    const item = (await readApprovedReferences()).find((reference) => reference.id === id);
+    if (!item) throw new HttpError(404, "Referência não encontrada.");
+    const extension = path.extname(item.name).toLowerCase();
+    if (!referenceExtensions.has(extension)) throw new HttpError(415, "Formato de referência não permitido.");
+    const filePath = assertInside(referencesRoot, path.join(referencesRoot, `${id}${extension}`));
+    response.setHeader("X-Content-Type-Options", "nosniff");
+    response.sendFile(filePath, (error) => {
+      if (error) next(error);
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete("/api/references/:id", async (request, response, next) => {
+  try {
+    const id = routeId(request);
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)) {
+      throw new HttpError(400, "Identificador de referência inválido.");
+    }
+    const references = await readApprovedReferences();
+    const item = references.find((reference) => reference.id === id);
+    if (!item) throw new HttpError(404, "Referência não encontrada.");
+    await writeApprovedReferences(references.filter((reference) => reference.id !== id));
+    const extension = path.extname(item.name).toLowerCase();
+    if (referenceExtensions.has(extension)) {
+      await fs.rm(assertInside(referencesRoot, path.join(referencesRoot, `${id}${extension}`)), { force: true });
+    }
+    response.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.post("/api/projects/:id/agent", projectMiddleware, async (request, response, next) => {
   try {
     const prompt = typeof request.body?.prompt === "string" ? request.body.prompt.trim() : "";
@@ -685,6 +794,16 @@ app.post("/api/projects/:id/agent", projectMiddleware, async (request, response,
       throw new HttpError(400, "A instrução deve ter entre 1 e 12.000 caracteres.");
     }
     const project = await getProject(routeId(request));
+    await installProjectGuidance(
+      safeProjectDirectory(project.id),
+      path.join(applicationRoot, "docs", "AI_VIDEO_PROJECT_WORKFLOW.md"),
+      {
+        aspectRatio: project.aspectRatio,
+        resolution: project.resolution,
+        frameRate: project.frameRate,
+        description: project.description,
+      },
+    );
     const snapshot = await startTask(project, "agent", "opencode", [
       "run",
       "--format",
@@ -891,6 +1010,7 @@ app.get("/{*splat}", (_request, response, next) => {
 });
 
 await fs.mkdir(projectsRoot, { recursive: true });
+await fs.mkdir(referencesRoot, { recursive: true });
 await fs.mkdir(uploadsRoot, { recursive: true });
 const server = app.listen(port, "127.0.0.1", () => {
   console.log(`Daime Motion disponível em http://127.0.0.1:${port}`);

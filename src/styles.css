@@ -252,6 +252,37 @@ button:disabled { cursor: not-allowed !important; opacity: .55; }
 .empty-table strong { color: #d4d8d0; font-size: 12px; }
 .empty-table span { font-size: 10px; }
 
+.references-page > .privacy-note { margin-bottom: 18px; }
+.reference-form { border: 1px solid #303530; border-radius: 9px; padding: 19px; background: #191b19; }
+.reference-form-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; color: var(--green); }
+.reference-form-heading h2 { margin: 0 0 5px; color: #e5e7e1; font: 550 14px var(--display); }
+.reference-form-heading p { margin: 0; color: #8e948b; font-size: 10px; }
+.reference-form .field-label { margin: 10px 0; }
+.reference-form .field-label > small { color: #7f857c; font-size: 9px; font-weight: 400; }
+.reference-form input[type="file"] { padding: 7px; color: #aeb3aa; }
+.reference-form input[type="file"]::file-selector-button { margin-right: 10px; border: 1px solid #42473f; border-radius: 4px; padding: 6px 9px; background: #252824; color: #e3e7dc; font-size: 10px; cursor: pointer; }
+.reference-selected-file { display: flex; justify-content: space-between; gap: 12px; margin: 0 0 12px; border: 1px solid #35402d; border-radius: 5px; padding: 8px 10px; color: #c4d6b2; font-size: 10px; }
+.reference-selected-file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.reference-selected-file small { flex: 0 0 auto; color: #87917f; }
+.reference-fields { display: grid; grid-template-columns: minmax(210px, .7fr) minmax(280px, 1.3fr); gap: 16px; }
+.reference-form-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid #2d302d; padding-top: 13px; color: #8b9188; font-size: 9px; }
+.references-collection-heading { margin-top: 27px; }
+.reference-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(235px, 1fr)); gap: 14px; }
+.reference-card { min-width: 0; overflow: hidden; border: 1px solid #303330; border-radius: 8px; background: #191a19; }
+.reference-preview { height: 150px; display: grid; place-items: center; overflow: hidden; background: #101110; }
+.reference-preview img, .reference-preview video { width: 100%; height: 100%; object-fit: contain; }
+.reference-audio-preview { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: radial-gradient(ellipse, #343d2f 0, #1d211c 60%, #141514 100%); color: var(--green); }
+.reference-audio-preview audio { width: calc(100% - 24px); height: 35px; }
+.reference-card-info { padding: 12px; }
+.reference-card-top { display: flex; align-items: center; justify-content: space-between; }
+.reference-card h3 { overflow: hidden; margin: 7px 0 5px; color: #e3e5df; font-size: 11px; font-weight: 550; text-overflow: ellipsis; white-space: nowrap; }
+.reference-card p { display: -webkit-box; overflow: hidden; margin: 0 0 10px; color: #9ba097; font-size: 10px; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.reference-card-meta { display: flex; justify-content: space-between; gap: 5px; border-top: 1px solid #2a2d2a; padding-top: 8px; color: #777d75; font: 8px var(--mono); }
+.reference-empty { min-height: 155px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px dashed #343934; border-radius: 8px; color: #959b92; text-align: center; }
+.reference-empty svg { color: var(--green); }
+.reference-empty strong { color: #d3d7cf; font-size: 11px; font-weight: 550; }
+.reference-empty span { font-size: 10px; }
+
 .template-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 15px; }
 .template-card { overflow: hidden; border: 1px solid #303330; border-radius: 9px; background: #191a19; }
 .template-art { height: 155px; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at 45% 42%, #4c5b39, #252c22 55%, #1b1d1b); }
@@ -314,4 +345,5 @@ button:disabled { cursor: not-allowed !important; opacity: .55; }
   .studio-layout { grid-template-columns: 1fr; }
   .studio-right { grid-template-columns: 1fr 1fr; align-items: start; }
   .project-files-panel { grid-column: span 2; }
+  .reference-fields { grid-template-columns: 1fr; gap: 0; }
 }

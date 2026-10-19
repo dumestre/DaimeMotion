@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Activity,
   AudioLines,
+  Bookmark,
   Check,
   ChevronDown,
   Clapperboard,
@@ -19,6 +20,7 @@ import {
   Plus,
   Settings2,
   Sparkles,
+  Trash2,
   Upload,
   Video,
   X,
@@ -27,6 +29,7 @@ import {
 import type {
   ApiError,
   AspectRatio,
+  ApprovedReference,
   Project,
   ProjectFile,
   ProjectTemplate,
@@ -34,7 +37,7 @@ import type {
   ToolStatus,
 } from "./shared/types";
 
-type Section = "projects" | "studio" | "media" | "templates" | "settings";
+type Section = "projects" | "studio" | "media" | "references" | "templates" | "settings";
 type ProjectDraft = {
   name: string;
   description: string;
@@ -114,6 +117,10 @@ export default function App() {
   const [dataDirectory, setDataDirectory] = useState("");
   const [selectedId, setSelectedId] = useState(() => localStorage.getItem("daime-motion.selected-project") ?? "");
   const [files, setFiles] = useState<ProjectFile[]>([]);
+  const [references, setReferences] = useState<ApprovedReference[]>([]);
+  const [referenceFile, setReferenceFile] = useState<File | null>(null);
+  const [referencePurpose, setReferencePurpose] = useState<ApprovedReference["purpose"]>("visual");
+  const [referenceNotes, setReferenceNotes] = useState("");
   const [task, setTask] = useState<TaskSnapshot | null>(null);
   const [playerUrl, setPlayerUrl] = useState("");
   const [playbackRevision, setPlaybackRevision] = useState(0);
@@ -146,6 +153,10 @@ export default function App() {
     setFiles(result);
   }, []);
 
+  const refreshReferences = useCallback(async () => {
+    setReferences(await api<ApprovedReference[]>("/api/references"));
+  }, []);
+
   useEffect(() => {
     Promise.all([
       api<Project[]>("/api/projects"),
@@ -166,7 +177,8 @@ export default function App() {
         }
       })
       .catch((reason: Error) => setError(reason.message));
-  }, [refreshFiles, selectedId]);
+    void refreshReferences().catch((reason: Error) => setError(reason.message));
+  }, [refreshFiles, refreshReferences, selectedId]);
 
   useEffect(() => {
     if (!task || task.status !== "running") return;
@@ -389,6 +401,45 @@ export default function App() {
     }
   }
 
+  async function addReference(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!referenceFile || busy) return;
+    const formData = new FormData();
+    formData.append("file", referenceFile);
+    formData.append("purpose", referencePurpose);
+    formData.append("notes", referenceNotes);
+    setError("");
+    setBusy(true);
+    try {
+      await api<ApprovedReference>("/api/references", { method: "POST", body: formData });
+      await refreshReferences();
+      setReferenceFile(null);
+      setReferenceNotes("");
+      event.currentTarget.reset();
+      setReferencePurpose("visual");
+      setNotice(`${referenceFile.name} foi adicionada às referências aprovadas.`);
+    } catch (reason) {
+      setError((reason as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function removeReference(reference: ApprovedReference) {
+    if (!window.confirm(`Remover “${reference.name}” da biblioteca de referências aprovadas?`)) return;
+    setError("");
+    setBusy(true);
+    try {
+      await api<void>(`/api/references/${reference.id}`, { method: "DELETE" });
+      setReferences((current) => current.filter((item) => item.id !== reference.id));
+      setNotice(`“${reference.name}” foi removida da biblioteca de referências.`);
+    } catch (reason) {
+      setError((reason as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function openExports() {
     if (!project) return;
     try {
@@ -403,6 +454,9 @@ export default function App() {
     setError("");
     if (sectionName === "media" && selectedId) {
       void refreshFiles(selectedId).catch((reason: Error) => setError(reason.message));
+    }
+    if (sectionName === "references") {
+      void refreshReferences().catch((reason: Error) => setError(reason.message));
     }
   }
 
@@ -420,6 +474,7 @@ export default function App() {
           <NavButton icon={FolderOpen} label="Projetos" active={section === "projects"} onClick={() => goTo("projects")} />
           {project && <NavButton icon={MonitorPlay} label="Estúdio" active={section === "studio"} onClick={() => goTo("studio")} />}
           <NavButton icon={AudioLines} label="Biblioteca de mídia" active={section === "media"} onClick={() => goTo("media")} />
+          <NavButton icon={Bookmark} label="Referências aprovadas" active={section === "references"} onClick={() => goTo("references")} />
           <NavButton icon={Sparkles} label="Modelos" active={section === "templates"} onClick={() => goTo("templates")} />
         </nav>
         <div className="sidebar-bottom">
@@ -484,6 +539,20 @@ export default function App() {
         {section === "studio" && !project && <EmptySelection onProjects={() => goTo("projects")} />}
         {section === "media" && (
           <MediaPage project={project} files={files} busy={busy} onImport={importFile} onChooseProject={() => goTo("projects")} />
+        )}
+        {section === "references" && (
+          <ReferencesPage
+            references={references}
+            file={referenceFile}
+            purpose={referencePurpose}
+            notes={referenceNotes}
+            busy={busy}
+            onFile={setReferenceFile}
+            onPurpose={setReferencePurpose}
+            onNotes={setReferenceNotes}
+            onAdd={addReference}
+            onRemove={removeReference}
+          />
         )}
         {section === "templates" && <TemplatesPage templates={templates} onUse={applyTemplate} />}
         {section === "settings" && <SettingsPage tools={tools} dataDirectory={dataDirectory} />}
@@ -560,7 +629,7 @@ export default function App() {
 }
 
 function sectionLabel(section: Section): string {
-  return ({ projects: "Projetos", studio: "Estúdio", media: "Biblioteca de mídia", templates: "Modelos", settings: "Configurações" })[section];
+  return ({ projects: "Projetos", studio: "Estúdio", media: "Biblioteca de mídia", references: "Referências aprovadas", templates: "Modelos", settings: "Configurações" })[section];
 }
 
 function NavButton({ icon: Icon, label, active, onClick }: { icon: LucideIcon; label: string; active: boolean; onClick: () => void }) {
@@ -729,6 +798,76 @@ function MediaPage({ project, files, busy, onImport, onChooseProject }: { projec
       })}
       {!files.some((file) => ["audio", "image", "video", "font"].includes(file.kind)) && <div className="empty-table"><ImagePlus size={20} /><strong>Nenhuma mídia neste projeto</strong><span>Importe áudios, imagens e vídeos suportados.</span></div>}
     </div>
+  </section>;
+}
+
+function referencePurposeLabel(purpose: ApprovedReference["purpose"]): string {
+  return ({ visual: "Identidade visual", music: "Música e áudio", video: "Linguagem de vídeo" })[purpose];
+}
+
+function ReferencesPage({
+  references,
+  file,
+  purpose,
+  notes,
+  busy,
+  onFile,
+  onPurpose,
+  onNotes,
+  onAdd,
+  onRemove,
+}: {
+  references: ApprovedReference[];
+  file: File | null;
+  purpose: ApprovedReference["purpose"];
+  notes: string;
+  busy: boolean;
+  onFile: (file: File | null) => void;
+  onPurpose: (purpose: ApprovedReference["purpose"]) => void;
+  onNotes: (notes: string) => void;
+  onAdd: (event: React.FormEvent<HTMLFormElement>) => void;
+  onRemove: (reference: ApprovedReference) => void;
+}) {
+  return <section className="page-content references-page">
+    <div className="page-heading">
+      <div><span className="eyebrow">BIBLIOTECA CURADA</span><h1>Referências aprovadas</h1><p>Um acervo local de inspiração, separado dos arquivos usados nos projetos.</p></div>
+    </div>
+    <div className="privacy-note"><Activity size={16} /><span><strong>Só entra o que você aprovar.</strong> Os arquivos ficam neste dispositivo e não são enviados nem usados para treinar modelos automaticamente.</span></div>
+    <form className="reference-form" onSubmit={onAdd}>
+      <div className="reference-form-heading"><div><h2>Adicionar uma referência</h2><p>Escolha a mídia e descreva o que ela deve inspirar.</p></div><Bookmark size={19} /></div>
+      <label className="field-label">Arquivo de referência
+        <input type="file" required accept="audio/*,image/*,video/*,.mp3,.wav,.aac,.m4a,.flac,.ogg,.png,.jpg,.jpeg,.webp,.gif,.mp4,.mov,.webm,.mkv" disabled={busy} onChange={(event) => onFile(event.target.files?.[0] ?? null)} />
+        <small>Áudio, imagem ou vídeo · até 500 MB · não será adicionado a nenhum projeto.</small>
+      </label>
+      {file && <div className="reference-selected-file"><span>{file.name}</span><small>{formatSize(file.size)}</small></div>}
+      <div className="reference-fields">
+        <label className="field-label">Usar como referência para
+          <span className="select-wrap"><select value={purpose} disabled={busy} onChange={(event) => onPurpose(event.target.value as ApprovedReference["purpose"])}>
+            <option value="visual">Identidade visual</option>
+            <option value="music">Música e áudio</option>
+            <option value="video">Linguagem de vídeo</option>
+          </select><ChevronDown size={15} /></span>
+        </label>
+        <label className="field-label">Observações <span className="optional">opcional</span>
+          <textarea maxLength={500} rows={2} value={notes} disabled={busy} onChange={(event) => onNotes(event.target.value)} placeholder="Ex.: paleta quente, batida lenta, câmera na mão..." />
+        </label>
+      </div>
+      <div className="reference-form-footer"><span>Adicionar significa aprovar esta referência para uso futuro.</span><button className="button primary" type="submit" disabled={busy || !file}><Upload size={15} /> Aprovar e adicionar</button></div>
+    </form>
+    <div className="collection-heading references-collection-heading"><div><h2>Seu acervo</h2><span className="count-pill">{references.length}</span></div><span className="muted">Salvo localmente entre projetos</span></div>
+    {references.length ? <div className="reference-grid">{references.map((reference) => <article className="reference-card" key={reference.id}>
+      <div className="reference-preview">
+        {reference.kind === "image" ? <img src={reference.url} alt={`Referência: ${reference.name}`} loading="lazy" />
+          : reference.kind === "video" ? <video src={reference.url} controls preload="metadata" />
+            : <div className="reference-audio-preview"><AudioLines size={28} /><audio src={reference.url} controls preload="metadata" /></div>}
+      </div>
+      <div className="reference-card-info">
+        <div className="reference-card-top"><span className="type-pill">{referencePurposeLabel(reference.purpose)}</span><button className="icon-button danger-icon" type="button" disabled={busy} onClick={() => onRemove(reference)} aria-label={`Remover ${reference.name}`} title="Remover referência"><Trash2 size={15} /></button></div>
+        <h3 title={reference.name}>{reference.name}</h3>
+        {reference.notes && <p>{reference.notes}</p>}
+        <div className="reference-card-meta"><span>{reference.kind === "audio" ? "Áudio" : reference.kind === "image" ? "Imagem" : "Vídeo"}</span><span>{formatSize(reference.size)}</span><span>{formatDate(reference.createdAt)}</span></div>
+      </div>
+    </article>)}</div> : <div className="reference-empty"><Bookmark size={22} /><strong>Seu acervo começa com referências aprovadas por você.</strong><span>Adicione exemplos que representem o estilo ou a direção que deseja alcançar.</span></div>}
   </section>;
 }
 

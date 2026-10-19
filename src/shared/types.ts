@@ -20,6 +20,17 @@ export interface ProjectFile {
   duration: number | null;
 }
 
+export interface ApprovedReference {
+  id: string;
+  name: string;
+  kind: "audio" | "image" | "video";
+  purpose: "visual" | "music" | "video";
+  notes: string;
+  size: number;
+  createdAt: string;
+  url: string;
+}
+
 export interface ToolStatus {
   name: "OpenCode" | "HyperFrames" | "FFmpeg";
   available: boolean;

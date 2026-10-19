@@ -43,6 +43,10 @@ Por padrão, configurações e projetos são guardados em `%LOCALAPPDATA%\DaimeM
 
 Cada projeto é inicializado pelo HyperFrames, recebe seu próprio `AGENTS.md` e diretório `assets/`. Exportações são gravadas em `exports/` dentro do projeto. A animação no estúdio é a composição HTML reproduzida em tempo real no player do navegador; isso não cria nem renderiza um vídeo. A exportação MP4 é separada e só começa quando solicitada pela interface.
 
+As referências aprovadas ficam em uma biblioteca global separada, em `references/` e `references.json` dentro da pasta local de dados. Somente imagens, vídeos e áudios adicionados explicitamente entram nela; não são copiados para os assets de projetos nem enviados ou usados para treinar modelos automaticamente.
+
+Os projetos também recebem `DAIME-MOTION-WORKFLOW.md`, um guia compartilhado de edição segura por cenas para agentes de IA, referenciado por `AGENTS.md` e `CLAUDE.md`. O guia orienta a preservar o trabalho existente, validar mudanças e revisar o player antes de entregar. A versão mantida no aplicativo está em [docs/AI_VIDEO_PROJECT_WORKFLOW.md](./docs/AI_VIDEO_PROJECT_WORKFLOW.md).
+
 ## Limitações conhecidas do MVP
 
 - O backend é local e a biblioteca de projetos persiste em disco; tarefas e sessões do player vivem apenas enquanto o backend está executando.
