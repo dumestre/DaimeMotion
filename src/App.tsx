@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Activity,
   AudioLines,
@@ -170,6 +170,8 @@ export default function App() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+
+  const warmupRef = useRef<Set<string>>(new Set());
 
   const project = useMemo(() => projects.find((item) => item.id === selectedId) ?? null, [projects, selectedId]);
 
@@ -492,6 +494,10 @@ export default function App() {
     }
     if (sectionName === "references") {
       void refreshReferences().catch((reason: Error) => setError(reason.message));
+    }
+    if (sectionName === "studio" && selectedId && !warmupRef.current.has(selectedId)) {
+      warmupRef.current.add(selectedId);
+      api<void>(`/api/projects/${selectedId}/warmup`, { method: "POST" }).catch(() => {});
     }
   }
 

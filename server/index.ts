@@ -804,6 +804,8 @@ app.post("/api/projects/:id/agent", projectMiddleware, async (request, response,
       "run",
       "--format",
       "json",
+      "--session",
+      project.id,
       "--dir",
       safeProjectDirectory(project.id),
       prompt,
@@ -976,6 +978,25 @@ app.post("/api/projects/:id/open-exports", projectMiddleware, async (request, re
     const explorer = path.join(process.env.SystemRoot ?? "C:\\Windows", "explorer.exe");
     const child = spawn(explorer, [exportsDir], { shell: false, detached: true, stdio: "ignore" });
     child.unref();
+    response.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post("/api/projects/:id/warmup", projectMiddleware, async (request, response, next) => {
+  try {
+    const project = await getProject(routeId(request));
+    await installProjectGuidance(
+      safeProjectDirectory(project.id),
+      path.join(applicationRoot, "docs", "AI_VIDEO_PROJECT_WORKFLOW.md"),
+      {
+        aspectRatio: project.aspectRatio,
+        resolution: project.resolution,
+        frameRate: project.frameRate,
+        description: project.description,
+      },
+    );
     response.status(204).end();
   } catch (error) {
     next(error);
