@@ -1,0 +1,194 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 2,
+    "findings": [
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 2,
+        "selector": "#word-a-cor",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 126,
+          "top": 292.97,
+          "right": 727.7,
+          "bottom": 556.97,
+          "width": 601.7,
+          "height": 264
+        },
+        "containerSelector": "#word-ganha",
+        "text": "A COR",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 126,
+          "y": 292.97,
+          "width": 601.7,
+          "height": 264
+        },
+        "firstSeen": 2,
+        "lastSeen": 2,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 3.25,
+        "selector": "#word-ganha",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 154.09,
+          "top": 317,
+          "right": 813.64,
+          "bottom": 552,
+          "width": 659.55,
+          "height": 235
+        },
+        "containerSelector": "#word-motion > span:nth-of-type(1)",
+        "text": "GANHA",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 154.09,
+          "y": 317,
+          "width": 659.55,
+          "height": 235
+        },
+        "firstSeen": 3.25,
+        "lastSeen": 3.25,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          3.25
+        ]
+      }
+    ],
+    "duration": 8,
+    "samples": [
+      0.444,
+      1.333,
+      2.222,
+      3.111,
+      4,
+      4.889,
+      5.778,
+      6.667,
+      7.556
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 2,
+    "truncated": false
+  },
+  "motion": {
+    "ok": false,
+    "errorCount": 1,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "motion_out_of_order",
+        "severity": "error",
+        "time": 2,
+        "selector": "#word-ganha",
+        "message": "#word-ganha should appear before #word-motion, but #word-ganha appears at 2s and #word-motion at 0s — reorder the entrances",
+        "rect": {
+          "left": 108.13,
+          "top": 351.61,
+          "right": 732.05,
+          "bottom": 519.22,
+          "width": 623.92,
+          "height": 167.61
+        },
+        "fixHint": "Make #word-ganha's entrance land before #word-motion's on the timeline.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 108.13,
+          "y": 351.61,
+          "width": 623.92,
+          "height": 167.61
+        },
+        "firstSeen": 2,
+        "lastSeen": 2,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2
+        ]
+      }
+    ],
+    "enabled": true,
+    "specPath": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\97c15c4c-5246-4c11-832d-081d5de4d760\\index.motion.json",
+    "samples": 161
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0.444,
+      2.222,
+      4,
+      5.778,
+      7.556
+    ],
+    "checked": 23,
+    "passed": 23
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": true,
+    "files": [
+      ".hyperframes\\artifacts\\snapshots\\4de4932e-4d3f-4e8e-a9fe-45905febbbbb\\frame-00-at-0.4s.png",
+      ".hyperframes\\artifacts\\snapshots\\4de4932e-4d3f-4e8e-a9fe-45905febbbbb\\frame-01-at-2.2s.png",
+      ".hyperframes\\artifacts\\snapshots\\4de4932e-4d3f-4e8e-a9fe-45905febbbbb\\frame-02-at-4.0s.png",
+      ".hyperframes\\artifacts\\snapshots\\4de4932e-4d3f-4e8e-a9fe-45905febbbbb\\frame-03-at-5.8s.png",
+      ".hyperframes\\artifacts\\snapshots\\4de4932e-4d3f-4e8e-a9fe-45905febbbbb\\frame-04-at-7.6s.png"
+    ],
+    "times": [
+      0.444,
+      2.222,
+      4,
+      5.778,
+      7.556
+    ],
+    "findingFiles": [
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\97c15c4c-5246-4c11-832d-081d5de4d760\\.hyperframes\\artifacts\\snapshots\\4de4932e-4d3f-4e8e-a9fe-45905febbbbb\\finding-00-motion_out_of_order.png"
+    ]
+  }
+}

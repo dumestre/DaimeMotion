@@ -1,5 +1,16 @@
 [
   {
+    "id": "97c15c4c-5246-4c11-832d-081d5de4d760",
+    "name": "Daime Motion - Cor em movimento",
+    "description": "Fumaça colorida em câmera lenta, com tipografia cinética e grafismos luminosos.",
+    "aspectRatio": "16:9",
+    "resolution": "landscape",
+    "frameRate": 25,
+    "createdAt": "2026-10-19T00:24:54.046Z",
+    "updatedAt": "2026-10-19T00:27:11.028Z",
+    "directory": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\97c15c4c-5246-4c11-832d-081d5de4d760"
+  },
+  {
     "id": "309cbcd1-4753-4f91-8a09-534f1056700d",
     "name": "Daime Motion - Vinheta-manifesto",
     "description": "Uma ideia se acende, ganha ritmo e vira movimento - uma vinheta-manifesto curta para apresentar o Daime Motion.",

@@ -1,0 +1,10 @@
+{
+  "duration": 8,
+  "assertions": [
+    { "kind": "appearsBy", "selector": "#word-a-cor", "bySec": 1 },
+    { "kind": "before", "a": "#word-a-cor", "b": "#word-ganha" },
+    { "kind": "before", "a": "#word-ganha", "b": "#word-motion span:first-child" },
+    { "kind": "staysInFrame", "selector": "#brand-lockup" },
+    { "kind": "keepsMoving", "withinSelector": "#root", "maxStaticSec": 2 }
+  ]
+}

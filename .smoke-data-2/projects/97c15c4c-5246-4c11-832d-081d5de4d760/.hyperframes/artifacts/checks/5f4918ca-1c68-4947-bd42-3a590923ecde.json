@@ -1,0 +1,93 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 8,
+    "samples": [
+      0.444,
+      1.333,
+      2.222,
+      3.111,
+      4,
+      4.889,
+      5.778,
+      6.667,
+      7.556
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "specPath": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\97c15c4c-5246-4c11-832d-081d5de4d760\\index.motion.json",
+    "samples": 161
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0.444,
+      2.222,
+      4,
+      5.778,
+      7.556
+    ],
+    "checked": 23,
+    "passed": 23
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": true,
+    "files": [
+      ".hyperframes\\artifacts\\snapshots\\fdc93453-0475-4b9b-b696-11dbfd8640c2\\frame-00-at-0.4s.png",
+      ".hyperframes\\artifacts\\snapshots\\fdc93453-0475-4b9b-b696-11dbfd8640c2\\frame-01-at-2.2s.png",
+      ".hyperframes\\artifacts\\snapshots\\fdc93453-0475-4b9b-b696-11dbfd8640c2\\frame-02-at-4.0s.png",
+      ".hyperframes\\artifacts\\snapshots\\fdc93453-0475-4b9b-b696-11dbfd8640c2\\frame-03-at-5.8s.png",
+      ".hyperframes\\artifacts\\snapshots\\fdc93453-0475-4b9b-b696-11dbfd8640c2\\frame-04-at-7.6s.png"
+    ],
+    "times": [
+      0.444,
+      2.222,
+      4,
+      5.778,
+      7.556
+    ],
+    "findingFiles": []
+  }
+}

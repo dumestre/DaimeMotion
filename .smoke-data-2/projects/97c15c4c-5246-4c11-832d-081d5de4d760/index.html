@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Daime Motion — Cor em movimento</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #100d17;
+      }
+
+      body {
+        color: #fff7ec;
+        font-family: Inter, Arial, sans-serif;
+      }
+
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        isolation: isolate;
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+
+      .overlay-layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      #metadata-clip,
+      #brand-clip {
+        z-index: 4;
+      }
+
+      #spectrum-clip,
+      #orbit-clip {
+        z-index: 2;
+      }
+
+      .copy-layer {
+        z-index: 3;
+      }
+
+      #smoke-plate {
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .picture-veil {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 62% 82% at 30% 53%, rgba(12, 8, 20, 0.22), rgba(12, 8, 20, 0) 100%),
+          linear-gradient(0deg, rgba(12, 8, 20, 0.34), rgba(12, 8, 20, 0) 36%);
+      }
+
+      #metadata {
+        position: absolute;
+        top: 74px;
+        left: 126px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: #fff7ec;
+        font-size: 21px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        text-shadow: 0 3px 18px rgba(0, 0, 0, 0.72);
+      }
+
+      #metadata-mark {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #ff6b35;
+        box-shadow: 0 0 22px rgba(255, 107, 53, 0.8);
+      }
+
+      #metadata-index {
+        margin-left: 15px;
+        color: #ffcf67;
+        font-variant-numeric: tabular-nums;
+      }
+
+      #spectrum {
+        position: absolute;
+        top: 240px;
+        left: 132px;
+        display: flex;
+        width: 446px;
+        height: 10px;
+        transform-origin: left center;
+        overflow: hidden;
+        border-radius: 999px;
+      }
+
+      #spectrum span {
+        display: block;
+        height: 100%;
+      }
+
+      #spectrum span:nth-child(1) {
+        width: 34%;
+        background: #ff6b35;
+      }
+
+      #spectrum span:nth-child(2) {
+        width: 31%;
+        background: #ffd166;
+      }
+
+      #spectrum span:nth-child(3) {
+        width: 35%;
+        background: #65e6cf;
+      }
+
+      #orbit-field {
+        position: absolute;
+        top: 270px;
+        right: 238px;
+        width: 400px;
+        height: 400px;
+      }
+
+      #orbit-ring-outer,
+      #orbit-ring-inner,
+      #orbit-spin {
+        position: absolute;
+        border-radius: 50%;
+      }
+
+      #orbit-ring-outer {
+        inset: 0;
+        border: 2px solid rgba(255, 247, 236, 0.58);
+        box-shadow: 0 0 28px rgba(255, 247, 236, 0.12);
+      }
+
+      #orbit-ring-inner {
+        inset: 36px;
+        border: 2px solid rgba(255, 107, 53, 0.9);
+      }
+
+      #orbit-spin {
+        inset: -18px;
+        border: 2px dashed rgba(101, 230, 207, 0.82);
+      }
+
+      .orbit-dot {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+      }
+
+      #orbit-dot-hot {
+        top: -14px;
+        left: calc(50% - 14px);
+        background: #ff6b35;
+        box-shadow: 0 0 30px rgba(255, 107, 53, 0.9);
+      }
+
+      #orbit-dot-cool {
+        right: 18px;
+        bottom: 62px;
+        width: 20px;
+        height: 20px;
+        background: #65e6cf;
+        box-shadow: 0 0 26px rgba(101, 230, 207, 0.82);
+      }
+
+      .headline {
+        position: absolute;
+        top: 352px;
+        left: 126px;
+        margin: 0;
+        color: #fff7ec;
+        font-size: 218px;
+        font-weight: 900;
+        letter-spacing: -0.085em;
+        line-height: 0.86;
+        text-shadow: 0 10px 34px rgba(0, 0, 0, 0.56);
+        white-space: nowrap;
+      }
+
+      #word-ganha {
+        color: #ffd166;
+        font-size: 194px;
+      }
+
+      #word-motion {
+        color: #65e6cf;
+        font-size: 118px;
+        letter-spacing: -0.06em;
+      }
+
+      #word-motion span {
+        display: inline-block;
+      }
+
+      #brand-lockup {
+        position: absolute;
+        top: 386px;
+        left: 126px;
+        display: flex;
+        align-items: baseline;
+        gap: 24px;
+        color: #fff7ec;
+        font-size: 112px;
+        font-weight: 900;
+        letter-spacing: -0.075em;
+        line-height: 0.95;
+        text-shadow: 0 10px 34px rgba(0, 0, 0, 0.56);
+        white-space: nowrap;
+      }
+
+      #brand-lockup span {
+        color: #ff6b35;
+      }
+
+      #brand-caption {
+        position: absolute;
+        top: 524px;
+        left: 136px;
+        color: #fff7ec;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        text-shadow: 0 3px 18px rgba(0, 0, 0, 0.72);
+      }
+    </style>
+  </head>
+  <body>
+    <main
+      id="root"
+      data-composition-id="main"
+      data-width="1920"
+      data-height="1080"
+      data-fps="25"
+      data-duration="8"
+      aria-label="Vinheta colorida Daime Motion"
+    >
+      <video
+        id="smoke-plate"
+        class="clip"
+        src="assets/colored-smoke-pexels-2328902-e26dd6f7.mp4"
+        playsinline
+        data-start="0"
+        data-duration="8"
+        data-track-index="0"
+        data-has-audio="true"
+        data-volume="1"
+      ></video>
+
+      <div class="picture-veil" aria-hidden="true"></div>
+
+      <div id="metadata-clip" class="overlay-layer">
+        <div id="metadata">
+          <span id="metadata-mark" aria-hidden="true"></span>
+          <span>Daime Motion</span>
+          <span id="metadata-index">Estudo visual 02</span>
+        </div>
+      </div>
+
+      <div id="spectrum-clip" class="overlay-layer" aria-hidden="true">
+        <div id="spectrum"><span></span><span></span><span></span></div>
+      </div>
+
+      <div id="orbit-clip" class="overlay-layer" aria-hidden="true">
+        <div id="orbit-field">
+          <div id="orbit-ring-outer"></div>
+          <div id="orbit-ring-inner"></div>
+          <div id="orbit-spin">
+            <span id="orbit-dot-hot" class="orbit-dot"></span>
+            <span id="orbit-dot-cool" class="orbit-dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <section id="opening-clip" class="overlay-layer copy-layer" aria-label="A cor">
+        <h1 id="word-a-cor" class="headline">A COR</h1>
+      </section>
+
+      <section id="ganha-clip" class="overlay-layer copy-layer" aria-label="Ganha">
+        <h2 id="word-ganha" class="headline">GANHA</h2>
+      </section>
+
+      <section id="movement-clip" class="overlay-layer copy-layer" aria-label="Movimento">
+        <h2 id="word-motion" class="headline" aria-label="MOVIMENTO">
+          <span>MO</span><span>VI</span><span>MEN</span><span>TO</span>
+        </h2>
+      </section>
+
+      <section id="brand-clip" class="overlay-layer" aria-label="Daime Motion">
+        <div id="brand-lockup">DAIME <span>MOTION</span></div>
+        <div id="brand-caption">Cor · Luz · Ritmo</div>
+      </section>
+    </main>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo(
+        "#metadata",
+        { x: -24, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.42, ease: "power2.out" },
+        0.12,
+      );
+      tl.fromTo(
+        "#spectrum",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.5, ease: "power3.out" },
+        0.32,
+      );
+      tl.fromTo(
+        "#orbit-field",
+        { scale: 0.78, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.5)" },
+        0.62,
+      );
+      tl.to("#orbit-spin", { rotation: 360, duration: 7, ease: "none" }, 0.55);
+      tl.fromTo(
+        "#orbit-dot-hot",
+        { scale: 0.72 },
+        { scale: 1.16, duration: 0.72, repeat: 4, yoyo: true, ease: "sine.inOut" },
+        0.62,
+      );
+
+      tl.fromTo(
+        "#word-a-cor",
+        { x: -90, y: 34, scale: 0.82, rotation: -3, opacity: 0 },
+        { x: 0, y: 0, scale: 1, rotation: 0, opacity: 1, duration: 0.58, ease: "back.out(1.45)" },
+        0.42,
+      );
+      tl.to("#word-a-cor", { y: -26, opacity: 0, duration: 0.24, ease: "power2.in" }, 1.56);
+
+      tl.fromTo(
+        "#word-ganha",
+        { x: -74, scale: 0.88, rotation: 2, opacity: 0 },
+        { x: 0, scale: 1, rotation: 0, opacity: 1, duration: 0.48, ease: "power3.out" },
+        1.92,
+      );
+      tl.to("#word-ganha", { x: 40, opacity: 0, duration: 0.24, ease: "power2.in" }, 2.86);
+
+      tl.fromTo(
+        "#word-motion span",
+        { y: 76, rotation: 4, opacity: 0 },
+        { y: 0, rotation: 0, opacity: 1, duration: 0.54, stagger: 0.075, ease: "back.out(1.5)" },
+        3.18,
+      );
+      tl.to("#word-motion", { x: -24, opacity: 0, duration: 0.32, ease: "power2.in" }, 5.9);
+
+      tl.fromTo(
+        "#brand-lockup",
+        { x: -70, scale: 0.9, opacity: 0 },
+        { x: 0, scale: 1, opacity: 1, duration: 0.52, ease: "back.out(1.35)" },
+        6.32,
+      );
+      tl.fromTo(
+        "#brand-caption",
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
+        6.58,
+      );
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
