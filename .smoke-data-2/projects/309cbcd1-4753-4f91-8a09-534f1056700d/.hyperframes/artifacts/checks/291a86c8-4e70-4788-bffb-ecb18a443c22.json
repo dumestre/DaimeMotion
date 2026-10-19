@@ -1,0 +1,483 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "filesScanned": 2
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": false,
+    "errorCount": 2,
+    "warningCount": 0,
+    "infoCount": 6,
+    "findings": [
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 3,
+        "selector": "#phase-imagine",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1553.22,
+          "top": 95,
+          "right": 1762,
+          "bottom": 124,
+          "width": 208.78,
+          "height": 29
+        },
+        "containerSelector": "#phase-form",
+        "text": "01 / IMAGINAR",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/intro.html",
+        "bbox": {
+          "x": 1553.22,
+          "y": 95,
+          "width": 208.78,
+          "height": 29
+        },
+        "firstSeen": 2.481,
+        "lastSeen": 5.086,
+        "occurrences": 24,
+        "heldMs": 2605.0000000000005,
+        "times": [
+          2.481,
+          2.605,
+          2.729,
+          2.853,
+          2.977,
+          3,
+          3.101,
+          3.225,
+          3.349,
+          3.473,
+          3.597,
+          3.722,
+          3.846,
+          3.97,
+          4.094,
+          4.218,
+          4.3,
+          4.342,
+          4.466,
+          4.59,
+          4.714,
+          4.838,
+          4.962,
+          5.086
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 4.3,
+        "selector": "#phase-form",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 1537.16,
+          "top": 95,
+          "right": 1762,
+          "bottom": 124,
+          "width": 224.84,
+          "height": 29
+        },
+        "containerSelector": "#phase-move",
+        "text": "02 / DAR FORMA",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/intro.html",
+        "bbox": {
+          "x": 1537.16,
+          "y": 95,
+          "width": 224.84,
+          "height": 29
+        },
+        "firstSeen": 3.97,
+        "lastSeen": 5.086,
+        "occurrences": 11,
+        "heldMs": 1116,
+        "times": [
+          3.97,
+          4.094,
+          4.218,
+          4.3,
+          4.342,
+          4.466,
+          4.59,
+          4.714,
+          4.838,
+          4.962,
+          5.086
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 0.9,
+        "selector": "div.wt-grid > span:nth-of-type(3) > span:nth-of-type(2)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 406.08,
+          "top": 279.16,
+          "right": 553.06,
+          "bottom": 389.31,
+          "width": 146.98,
+          "height": 110.16
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(3)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 410.94,
+          "top": 282.8,
+          "right": 548.2,
+          "bottom": 385.67,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 4.86,
+          "right": 4.86,
+          "top": 3.64,
+          "bottom": 3.64
+        },
+        "dataAttributes": {
+          "data-start-opacity": "0.8558547149226069"
+        },
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 406.08,
+          "y": 279.16,
+          "width": 146.98,
+          "height": 110.16
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 0.9,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          0.9
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 0.9,
+        "selector": "div.wt-grid > span:nth-of-type(14) > span:nth-of-type(2)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 266.32,
+          "top": 380.16,
+          "right": 418.29,
+          "bottom": 494.06,
+          "width": 151.97,
+          "height": 113.89
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(14)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 273.67,
+          "top": 385.67,
+          "right": 410.94,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 7.35,
+          "right": 7.35,
+          "top": 5.51,
+          "bottom": 5.51
+        },
+        "dataAttributes": {
+          "data-start-opacity": "0.7490248784981668"
+        },
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 266.32,
+          "y": 380.16,
+          "width": 151.97,
+          "height": 113.89
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 0.9,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          0.9
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 0.9,
+        "selector": "div.wt-grid > span:nth-of-type(29) > span:nth-of-type(2)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 676.25,
+          "top": 481.64,
+          "right": 831.95,
+          "bottom": 598.33,
+          "width": 155.7,
+          "height": 116.69
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(29)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 685.47,
+          "top": 488.55,
+          "right": 822.73,
+          "bottom": 591.42,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 9.22,
+          "right": 9.22,
+          "top": 6.91,
+          "bottom": 6.91
+        },
+        "dataAttributes": {
+          "data-start-opacity": "0.8928823212534189"
+        },
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 676.25,
+          "y": 481.64,
+          "width": 155.7,
+          "height": 116.69
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 0.9,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          0.9
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(24) > span:nth-of-type(2)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 1637.74,
+          "top": 379.24,
+          "right": 1792.18,
+          "bottom": 494.98,
+          "width": 154.44,
+          "height": 115.74
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(24)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 1646.33,
+          "top": 385.67,
+          "right": 1783.59,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 8.59,
+          "right": 8.59,
+          "top": 6.43,
+          "bottom": 6.43
+        },
+        "dataAttributes": {
+          "data-start-opacity": "0.9378045103140176"
+        },
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 1637.74,
+          "y": 379.24,
+          "width": 154.44,
+          "height": 115.74
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 2.2,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.2
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(45) > span:nth-of-type(2)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 1230.79,
+          "top": 588.62,
+          "right": 1375.54,
+          "bottom": 697.1,
+          "width": 144.75,
+          "height": 108.48
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(45)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 1234.53,
+          "top": 591.42,
+          "right": 1371.8,
+          "bottom": 694.3,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 3.74,
+          "right": 3.74,
+          "top": 2.8,
+          "bottom": 2.8
+        },
+        "dataAttributes": {
+          "data-start-opacity": "0.8973845709115267"
+        },
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 1230.79,
+          "y": 588.62,
+          "width": 144.75,
+          "height": 108.48
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 2.2,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.2
+        ]
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(60) > span:nth-of-type(2)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 1639.84,
+          "top": 689.43,
+          "right": 1790.09,
+          "bottom": 802.05,
+          "width": 150.25,
+          "height": 112.62
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(60)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 1646.33,
+          "top": 694.3,
+          "right": 1783.59,
+          "bottom": 797.19,
+          "width": 137.27,
+          "height": 102.89
+        },
+        "overflow": {
+          "left": 6.49,
+          "right": 6.5,
+          "top": 4.87,
+          "bottom": 4.86
+        },
+        "dataAttributes": {
+          "data-start-opacity": "0.8512409912981093"
+        },
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 1639.84,
+          "y": 689.43,
+          "width": 150.25,
+          "height": 112.62
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 2.2,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          2.2
+        ]
+      }
+    ],
+    "duration": 9.8,
+    "samples": [
+      0.3,
+      0.9,
+      2.2,
+      3,
+      4.3,
+      5.8,
+      7.8,
+      9.2
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 8,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "specPath": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\index.motion.json",
+    "samples": 197
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0.3,
+      0.9,
+      3,
+      5.8,
+      9.2
+    ],
+    "checked": 41,
+    "passed": 41
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": true,
+    "files": [
+      ".hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-00-at-0.3s.png",
+      ".hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-01-at-0.9s.png",
+      ".hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-02-at-3.0s.png",
+      ".hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-03-at-5.8s.png",
+      ".hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-04-at-9.2s.png"
+    ],
+    "times": [
+      0.3,
+      0.9,
+      3,
+      5.8,
+      9.2
+    ],
+    "findingFiles": [
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\finding-00-content_overlap.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\finding-01-content_overlap.png"
+    ]
+  }
+}

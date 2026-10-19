@@ -1,0 +1,10 @@
+{
+  "duration": 9.8,
+  "assertions": [
+    { "kind": "appearsBy", "selector": "#idea-wordmark", "bySec": 1.1 },
+    { "kind": "appearsBy", "selector": "#brand-lockup", "bySec": 5.6 },
+    { "kind": "before", "a": "#idea-wordmark", "b": "#brand-lockup" },
+    { "kind": "staysInFrame", "selector": "#brand-lockup" },
+    { "kind": "keepsMoving", "withinSelector": "#main-root", "maxStaticSec": 2.8 }
+  ]
+}

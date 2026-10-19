@@ -1,5 +1,16 @@
 [
   {
+    "id": "309cbcd1-4753-4f91-8a09-534f1056700d",
+    "name": "Daime Motion - Vinheta-manifesto",
+    "description": "Uma ideia se acende, ganha ritmo e vira movimento - uma vinheta-manifesto curta para apresentar o Daime Motion.",
+    "aspectRatio": "16:9",
+    "resolution": "landscape",
+    "frameRate": 30,
+    "createdAt": "2026-10-18T23:43:00.426Z",
+    "updatedAt": "2026-10-18T23:43:00.426Z",
+    "directory": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d"
+  },
+  {
     "id": "8f489abf-b5a4-4687-96eb-13f435923d27",
     "name": "Projeto HyperFrames",
     "description": "",

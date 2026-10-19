@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Daime Motion — Vinheta-manifesto</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #0c1814;
+        --surface: #14231c;
+        --fg: #f2ecdd;
+        --muted: #b7b29f;
+        --brand: #d6aa61;
+        --accent: #e7c27a;
+        --border: rgba(214, 170, 97, 0.5);
+        --font-display: "Montserrat", sans-serif;
+        --font-body: "IBM Plex Mono", monospace;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        background: var(--bg);
+      }
+
+      body {
+        color: var(--fg);
+        font-family: var(--font-body);
+      }
+
+      #main-root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        isolation: isolate;
+        background: var(--bg);
+      }
+
+      .ambient,
+      .frame-grid,
+      .safe-frame,
+      .orbit-art {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .ambient {
+        z-index: 0;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 22% 30%, rgba(101, 120, 78, 0.28), transparent 40%),
+          radial-gradient(ellipse at 80% 72%, rgba(170, 120, 55, 0.17), transparent 38%);
+      }
+
+      .frame-grid {
+        z-index: 0;
+        inset: 0;
+        opacity: 0;
+        background-image:
+          linear-gradient(rgba(217, 199, 160, 0.075) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(217, 199, 160, 0.075) 1px, transparent 1px);
+        background-size: 160px 160px;
+        mask-image: radial-gradient(ellipse at center, #000 24%, transparent 92%);
+      }
+
+      .safe-frame {
+        z-index: 1;
+        inset: 76px;
+        border: 1px solid rgba(214, 170, 97, 0.28);
+        opacity: 0;
+      }
+
+      .safe-frame::before,
+      .safe-frame::after {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        content: "";
+        border-color: var(--brand);
+        border-style: solid;
+        opacity: 0.8;
+      }
+
+      .safe-frame::before {
+        top: -1px;
+        left: -1px;
+        border-width: 2px 0 0 2px;
+      }
+
+      .safe-frame::after {
+        right: -1px;
+        bottom: -1px;
+        border-width: 0 2px 2px 0;
+      }
+
+      .orbit-art {
+        z-index: 3;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .intro-host,
+      .wordmark-host,
+      .logo-host {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .intro-host {
+        z-index: 4;
+      }
+
+      .wordmark-host {
+        z-index: 2;
+        --bg: transparent;
+        --surface: rgba(18, 34, 27, 0.94);
+        --fg: #f2ecdd;
+        --muted: #9c9b82;
+        --brand: #d6aa61;
+        --accent: #e7c27a;
+        --border: rgba(214, 170, 97, 0.5);
+        --radius: 2px;
+        --font-body: "IBM Plex Mono", monospace;
+        --font-display: "Montserrat", sans-serif;
+      }
+
+      .logo-host {
+        z-index: 5;
+        --bg: rgba(12, 24, 20, 0.94);
+        --fg: #f2ecdd;
+        --muted: #b7b29f;
+        --brand: #d6aa61;
+        --accent: #e7c27a;
+        --font-body: "IBM Plex Mono", monospace;
+        --font-display: "Montserrat", sans-serif;
+        --font-mono: "IBM Plex Mono", monospace;
+        --space-2: 22px;
+        --space-3: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="main-root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="9.8"
+      data-width="1920"
+      data-height="1080"
+      data-fps="30"
+    >
+      <div class="ambient" data-layout-ignore="true" aria-hidden="true"></div>
+      <div id="frame-grid" class="frame-grid" data-layout-ignore="true" aria-hidden="true"></div>
+      <div id="safe-frame" class="safe-frame" data-layout-ignore="true" aria-hidden="true"></div>
+
+      <svg
+        class="orbit-art"
+        viewBox="0 0 1920 1080"
+        preserveAspectRatio="none"
+        data-layout-ignore="true"
+        aria-hidden="true"
+      >
+        <g id="orbit-rotation" transform-origin="960 540">
+          <ellipse
+            id="orbit-ring"
+            cx="960"
+            cy="500"
+            rx="760"
+            ry="250"
+            fill="none"
+            stroke="#d6aa61"
+            stroke-width="2"
+            stroke-opacity="0.4"
+            stroke-dasharray="1000"
+            stroke-dashoffset="1000"
+            pathLength="1000"
+          />
+          <circle cx="1720" cy="500" r="7" fill="#e7c27a" />
+          <circle cx="200" cy="500" r="4" fill="#e7c27a" fill-opacity="0.74" />
+        </g>
+      </svg>
+
+      <div
+        id="intro-scene"
+        class="intro-host clip"
+        data-composition-id="intro"
+        data-composition-src="compositions/intro.html"
+        data-start="0"
+        data-duration="5.1"
+        data-track-index="1"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+
+      <div
+        id="idea-wordmark"
+        class="wordmark-host clip"
+        data-composition-id="wordmark-tiles"
+        data-composition-src="compositions/components/wordmark-tiles.html"
+        data-start="0.35"
+        data-duration="4.7"
+        data-track-index="2"
+        data-width="1920"
+        data-height="1080"
+        data-variable-values='{"text":"IDEIA","columns":12,"waveStagger":32}'
+      ></div>
+
+      <div
+        id="brand-lockup"
+        class="logo-host clip"
+        data-composition-id="logo-brand-close"
+        data-composition-src="compositions/components/logo-brand-close.html"
+        data-start="5.05"
+        data-duration="4.75"
+        data-track-index="5"
+        data-width="1920"
+        data-height="1080"
+        data-variable-values='{"wordmark":"DAIME MOTION","tagline":"IDEIAS EM MOVIMENTO","url":"","accent":"green","exit":"none"}'
+      ></div>
+    </div>
+
+    <script>
+      const timeline = gsap.timeline({ paused: true });
+
+      timeline.fromTo(
+        "#frame-grid",
+        { opacity: 0 },
+        { opacity: 0.34, duration: 0.75, ease: "sine.out" },
+        0.18,
+      );
+      timeline.fromTo(
+        "#safe-frame",
+        { opacity: 0, scale: 0.985 },
+        { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" },
+        0.22,
+      );
+      timeline.fromTo(
+        "#orbit-ring",
+        { strokeDashoffset: 1000 },
+        { strokeDashoffset: 0, duration: 1.25, ease: "power2.out" },
+        0.36,
+      );
+      timeline.fromTo(
+        "#orbit-rotation",
+        { rotation: -9, transformOrigin: "50% 50%" },
+        { rotation: 9, duration: 8.9, ease: "sine.inOut" },
+        0.28,
+      );
+
+      window.__timelines["main"] = timeline;
+      timeline.seek(0);
+    </script>
+  </body>
+</html>

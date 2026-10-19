@@ -1,0 +1,28 @@
+{
+  "category": "logo-reveal",
+  "duration_s": 9.8,
+  "fps": 30,
+  "canvas": {
+    "w": 1920,
+    "h": 1080,
+    "aspect": "16:9"
+  },
+  "style": "Vinheta cinematográfica autoral: verde-floresta quase preto, luz âmbar, tipografia geométrica e detalhes de processo; ideia em mosaico, progressão forma/ritmo e assinatura final em pausa.",
+  "palette": ["#0C1814", "#F2ECDD", "#14231C", "#D6AA61", "#E7C27A"],
+  "font": "Montserrat",
+  "beats": [0.35, 2.43, 3.84, 5.05, 7.65],
+  "export": "mp4",
+  "asset_needs": [],
+  "block": "logo-brand-close",
+  "customize": {
+    "opening": "Usar wordmark-tiles para resolver IDEIA em mosaico determinístico.",
+    "brand_close": "Usar logo-brand-close com DAIME MOTION, IDEIAS EM MOVIMENTO, sem URL e saída none.",
+    "timing": "Revelação da palavra nos primeiros cinco segundos; assinatura entra em 5.05s e segura até o fim.",
+    "media": "Sem assets externos e sem áudio; composição tipográfica e vetorial local."
+  },
+  "content": {
+    "logo": "DAIME MOTION (wordmark tipográfico local)",
+    "tagline": "IDEIAS EM MOVIMENTO",
+    "url": ""
+  }
+}

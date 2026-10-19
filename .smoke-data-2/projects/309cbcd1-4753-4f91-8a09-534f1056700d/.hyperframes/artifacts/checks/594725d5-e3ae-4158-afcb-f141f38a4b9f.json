@@ -1,0 +1,3294 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": false,
+    "errorCount": 80,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 0.9,
+        "selector": "div.wt-grid > span:nth-of-type(27) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 460.83,
+          "top": 357.08,
+          "right": 1461.84,
+          "bottom": 721.88,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(27) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 914px; resize the container to at least ~1051px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 410.94,
+          "top": 488.55,
+          "right": 548.2,
+          "bottom": 591.42,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "right": 913.64,
+          "top": 131.47,
+          "bottom": 130.46
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.83,
+          "y": 357.08,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.48,
+          "top": 318.59,
+          "right": 1462.5,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.48,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(2) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.16,
+          "top": 318.59,
+          "right": 1462.17,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.16,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.83,
+          "top": 318.59,
+          "right": 1461.84,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.83,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(13) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.48,
+          "top": 317.8,
+          "right": 1462.5,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.48,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(14) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.16,
+          "top": 317.8,
+          "right": 1462.17,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.16,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(25) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.48,
+          "top": 316.98,
+          "right": 1462.5,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.48,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(26) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.16,
+          "top": 316.98,
+          "right": 1462.17,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.16,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(27) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.83,
+          "top": 316.98,
+          "right": 1461.84,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.83,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(28) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 460.48,
+          "top": 357.08,
+          "right": 1461.5,
+          "bottom": 721.88,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(28) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 776px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 548.2,
+          "top": 488.55,
+          "right": 685.47,
+          "bottom": 591.42,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 87.72,
+          "right": 776.03,
+          "top": 131.47,
+          "bottom": 130.46
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.48,
+          "y": 357.08,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(28) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.48,
+          "top": 316.98,
+          "right": 1461.5,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.93,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.48,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(29) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 460.16,
+          "top": 357.08,
+          "right": 1461.17,
+          "bottom": 721.88,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(29) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 638px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 685.47,
+          "top": 488.55,
+          "right": 822.73,
+          "bottom": 591.42,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 225.31,
+          "right": 638.44,
+          "top": 131.47,
+          "bottom": 130.46
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.16,
+          "y": 357.08,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(29) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.16,
+          "top": 316.98,
+          "right": 1461.17,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.16,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(37) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.48,
+          "top": 316.19,
+          "right": 1462.5,
+          "bottom": 761.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.48,
+          "y": 316.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(38) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.16,
+          "top": 316.19,
+          "right": 1462.17,
+          "bottom": 761.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.16,
+          "y": 316.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(39) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 460.83,
+          "top": 356.29,
+          "right": 1461.84,
+          "bottom": 721.09,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(39) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 914px; resize the container to at least ~1051px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 410.94,
+          "top": 591.42,
+          "right": 548.2,
+          "bottom": 694.3,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "right": 913.64,
+          "top": 235.13,
+          "bottom": 26.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.83,
+          "y": 356.29,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(39) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.83,
+          "top": 316.19,
+          "right": 1461.84,
+          "bottom": 761.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.83,
+          "y": 316.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(49) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.48,
+          "top": 315.38,
+          "right": 1462.5,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.48,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 0.9,
+        "lastSeen": 4.3,
+        "occurrences": 4,
+        "heldMs": 799.9999999999998,
+        "times": [
+          0.9,
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(4) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.48,
+          "top": 318.59,
+          "right": 1461.5,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.48,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.16,
+          "top": 318.59,
+          "right": 1461.17,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.16,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(6) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.81,
+          "top": 318.59,
+          "right": 1460.83,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.81,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(7) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.48,
+          "top": 318.59,
+          "right": 1460.5,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.48,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(8) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.16,
+          "top": 318.59,
+          "right": 1460.17,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.16,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(9) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.81,
+          "top": 318.59,
+          "right": 1459.83,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.81,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(10) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.48,
+          "top": 318.59,
+          "right": 1459.5,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.48,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(11) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.14,
+          "top": 318.59,
+          "right": 1459.16,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.14,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(12) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 457.81,
+          "top": 318.59,
+          "right": 1458.83,
+          "bottom": 763.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 457.81,
+          "y": 318.59,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 460.83,
+          "top": 357.9,
+          "right": 1461.84,
+          "bottom": 722.7,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 914px; resize the container to at least ~1051px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 410.94,
+          "top": 385.67,
+          "right": 548.2,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "right": 913.64,
+          "top": 27.77,
+          "bottom": 234.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.83,
+          "y": 357.9,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.83,
+          "top": 317.8,
+          "right": 1461.84,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(16) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.83,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(16) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 460.48,
+          "top": 357.9,
+          "right": 1461.5,
+          "bottom": 722.7,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(16) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 776px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 548.2,
+          "top": 385.67,
+          "right": 685.47,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 87.72,
+          "right": 776.03,
+          "top": 27.77,
+          "bottom": 234.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.48,
+          "y": 357.9,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(16) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.48,
+          "top": 317.8,
+          "right": 1461.5,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.93,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.48,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(17) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 460.16,
+          "top": 357.9,
+          "right": 1461.17,
+          "bottom": 722.7,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(17) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 638px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 685.47,
+          "top": 385.67,
+          "right": 822.73,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 225.31,
+          "right": 638.44,
+          "top": 27.77,
+          "bottom": 234.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.16,
+          "y": 357.9,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(17) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.16,
+          "top": 317.8,
+          "right": 1461.17,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.16,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(18) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 459.81,
+          "top": 357.9,
+          "right": 1460.83,
+          "bottom": 722.7,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(18) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 501px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 822.73,
+          "top": 385.67,
+          "right": 960,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 362.92,
+          "right": 500.83,
+          "top": 27.77,
+          "bottom": 234.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.81,
+          "y": 357.9,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(18) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.81,
+          "top": 317.8,
+          "right": 1460.83,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.81,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(19) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 459.48,
+          "top": 357.9,
+          "right": 1460.5,
+          "bottom": 722.7,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(19) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 501px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 960,
+          "top": 385.67,
+          "right": 1097.27,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 500.52,
+          "right": 363.23,
+          "top": 27.77,
+          "bottom": 234.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.48,
+          "y": 357.9,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(19) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.48,
+          "top": 317.8,
+          "right": 1460.5,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.48,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(20) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 459.16,
+          "top": 357.9,
+          "right": 1460.17,
+          "bottom": 722.7,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(20) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 638px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 1097.27,
+          "top": 385.67,
+          "right": 1234.53,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 638.11,
+          "right": 225.64,
+          "top": 27.77,
+          "bottom": 234.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.16,
+          "y": 357.9,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(20) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.16,
+          "top": 317.8,
+          "right": 1460.17,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.16,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(21) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 458.81,
+          "top": 357.9,
+          "right": 1459.83,
+          "bottom": 722.7,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(21) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 776px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 1234.53,
+          "top": 385.67,
+          "right": 1371.8,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 775.72,
+          "right": 88.03,
+          "top": 27.77,
+          "bottom": 234.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.81,
+          "y": 357.9,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(21) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.81,
+          "top": 317.8,
+          "right": 1459.83,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.93,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.81,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(22) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 458.48,
+          "top": 357.9,
+          "right": 1459.5,
+          "bottom": 722.7,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(22) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 913px; resize the container to at least ~1051px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 1371.8,
+          "top": 385.67,
+          "right": 1509.06,
+          "bottom": 488.55,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 913.32,
+          "top": 27.77,
+          "bottom": 234.15
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.48,
+          "y": 357.9,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(22) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.48,
+          "top": 317.8,
+          "right": 1459.5,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.48,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(23) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.7,
+          "top": 317.86,
+          "right": 1459.22,
+          "bottom": 762.63,
+          "width": 1000.52,
+          "height": 444.78
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.7,
+          "y": 317.86,
+          "width": 1000.52,
+          "height": 444.78
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(30) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 459.81,
+          "top": 357.08,
+          "right": 1460.83,
+          "bottom": 721.88,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(30) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 501px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 822.73,
+          "top": 488.55,
+          "right": 960,
+          "bottom": 591.42,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 362.92,
+          "right": 500.83,
+          "top": 131.47,
+          "bottom": 130.46
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.81,
+          "y": 357.08,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(30) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.81,
+          "top": 316.98,
+          "right": 1460.83,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.81,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(31) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 459.48,
+          "top": 357.08,
+          "right": 1460.5,
+          "bottom": 721.88,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(31) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 501px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 960,
+          "top": 488.55,
+          "right": 1097.27,
+          "bottom": 591.42,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 500.52,
+          "right": 363.23,
+          "top": 131.47,
+          "bottom": 130.46
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.48,
+          "y": 357.08,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(31) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.48,
+          "top": 316.98,
+          "right": 1460.5,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.48,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(32) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 459.16,
+          "top": 357.08,
+          "right": 1460.17,
+          "bottom": 721.88,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(32) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 638px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 1097.27,
+          "top": 488.55,
+          "right": 1234.53,
+          "bottom": 591.42,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 638.11,
+          "right": 225.64,
+          "top": 131.47,
+          "bottom": 130.46
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.16,
+          "y": 357.08,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(32) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.16,
+          "top": 316.98,
+          "right": 1460.17,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.16,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(33) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 465.48,
+          "top": 318.75,
+          "right": 1458.59,
+          "bottom": 760.23,
+          "width": 993.11,
+          "height": 441.48
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.93,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 465.48,
+          "y": 318.75,
+          "width": 993.11,
+          "height": 441.48
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(40) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 460.48,
+          "top": 356.29,
+          "right": 1461.5,
+          "bottom": 721.09,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(40) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 776px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 548.2,
+          "top": 591.42,
+          "right": 685.47,
+          "bottom": 694.3,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 87.72,
+          "right": 776.03,
+          "top": 235.13,
+          "bottom": 26.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.48,
+          "y": 356.29,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(40) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.48,
+          "top": 316.19,
+          "right": 1461.5,
+          "bottom": 761.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.93,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.48,
+          "y": 316.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(41) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 460.16,
+          "top": 356.29,
+          "right": 1461.17,
+          "bottom": 721.09,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(41) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 638px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 685.47,
+          "top": 591.42,
+          "right": 822.73,
+          "bottom": 694.3,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 225.31,
+          "right": 638.44,
+          "top": 235.13,
+          "bottom": 26.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.16,
+          "y": 356.29,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(41) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.16,
+          "top": 316.19,
+          "right": 1461.17,
+          "bottom": 761.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.16,
+          "y": 316.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(42) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 459.81,
+          "top": 356.29,
+          "right": 1460.83,
+          "bottom": 721.09,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(42) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 501px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 822.73,
+          "top": 591.42,
+          "right": 960,
+          "bottom": 694.3,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 362.92,
+          "right": 500.83,
+          "top": 235.13,
+          "bottom": 26.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.81,
+          "y": 356.29,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(42) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.81,
+          "top": 316.19,
+          "right": 1460.83,
+          "bottom": 761.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.81,
+          "y": 316.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(43) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.02,
+          "top": 317.07,
+          "right": 1459.33,
+          "bottom": 760.87,
+          "width": 998.31,
+          "height": 443.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.02,
+          "y": 317.07,
+          "width": 998.31,
+          "height": 443.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(44) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 482.34,
+          "top": 326.9,
+          "right": 1450.52,
+          "bottom": 757.31,
+          "width": 968.18,
+          "height": 430.4
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 482.34,
+          "y": 326.9,
+          "width": 968.18,
+          "height": 430.4
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(50) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 461.16,
+          "top": 315.38,
+          "right": 1462.17,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 461.16,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(51) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.83,
+          "top": 315.38,
+          "right": 1461.84,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.83,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(52) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.48,
+          "top": 315.38,
+          "right": 1461.5,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.48,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(53) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 460.16,
+          "top": 315.38,
+          "right": 1461.17,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 460.16,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(54) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.81,
+          "top": 315.38,
+          "right": 1460.83,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.81,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(55) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.48,
+          "top": 315.38,
+          "right": 1460.5,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.48,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(56) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 459.16,
+          "top": 315.38,
+          "right": 1460.17,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.16,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(57) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.81,
+          "top": 315.38,
+          "right": 1459.83,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.81,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(58) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.48,
+          "top": 315.38,
+          "right": 1459.5,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.48,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 2.2,
+        "selector": "div.wt-grid > span:nth-of-type(59) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 477.73,
+          "top": 322.91,
+          "right": 1461.23,
+          "bottom": 760.12,
+          "width": 983.5,
+          "height": 437.21
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 477.73,
+          "y": 322.91,
+          "width": 983.5,
+          "height": 437.21
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(24) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 457.81,
+          "top": 317.8,
+          "right": 1458.83,
+          "bottom": 762.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 457.81,
+          "y": 317.8,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(33) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 458.81,
+          "top": 357.08,
+          "right": 1459.83,
+          "bottom": 721.88,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(33) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 776px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 1234.53,
+          "top": 488.55,
+          "right": 1371.8,
+          "bottom": 591.42,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 775.72,
+          "right": 88.03,
+          "top": 131.47,
+          "bottom": 130.46
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.81,
+          "y": 357.08,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(43) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 459.48,
+          "top": 356.29,
+          "right": 1460.5,
+          "bottom": 721.09,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(43) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 501px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 960,
+          "top": 591.42,
+          "right": 1097.27,
+          "bottom": 694.3,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 500.52,
+          "right": 363.23,
+          "top": 235.13,
+          "bottom": 26.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.48,
+          "y": 356.29,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(44) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 459.16,
+          "top": 356.29,
+          "right": 1460.17,
+          "bottom": 721.09,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(44) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 638px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 1097.27,
+          "top": 591.42,
+          "right": 1234.53,
+          "bottom": 694.3,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 638.11,
+          "right": 225.64,
+          "top": 235.13,
+          "bottom": 26.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 459.16,
+          "y": 356.29,
+          "width": 1001.01,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(45) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 458.81,
+          "top": 356.29,
+          "right": 1459.83,
+          "bottom": 721.09,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(45) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 776px; resize the container to at least ~1001px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 1234.53,
+          "top": 591.42,
+          "right": 1371.8,
+          "bottom": 694.3,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 775.72,
+          "right": 88.03,
+          "top": 235.13,
+          "bottom": 26.79
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.81,
+          "y": 356.29,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(45) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.81,
+          "top": 316.19,
+          "right": 1459.83,
+          "bottom": 761.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.93,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.81,
+          "y": 316.19,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(60) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 457.81,
+          "top": 315.38,
+          "right": 1458.83,
+          "bottom": 760.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 457.81,
+          "y": 315.38,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 2.2,
+        "lastSeen": 4.3,
+        "occurrences": 3,
+        "heldMs": 799.9999999999998,
+        "times": [
+          2.2,
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(34) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 458.48,
+          "top": 357.08,
+          "right": 1459.5,
+          "bottom": 721.88,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(34) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Text is 1001px x 365px inside 137px x 103px and overflows by up to 913px; resize the container to at least ~1051px x 365px or shrink font-size from 365px to ~50px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 1371.8,
+          "top": 488.55,
+          "right": 1509.06,
+          "bottom": 591.42,
+          "width": 137.27,
+          "height": 102.88
+        },
+        "overflow": {
+          "left": 913.32,
+          "top": 131.47,
+          "bottom": 130.46
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.48,
+          "y": 357.08,
+          "width": 1001.02,
+          "height": 364.8
+        },
+        "firstSeen": 3,
+        "lastSeen": 4.3,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(34) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.48,
+          "top": 316.98,
+          "right": 1459.5,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 0.96,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.48,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 3,
+        "lastSeen": 4.3,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(35) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 458.14,
+          "top": 316.98,
+          "right": 1459.16,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 458.14,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 3,
+        "lastSeen": 4.3,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          3,
+          4.3
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "error",
+        "time": 3,
+        "selector": "div.wt-grid > span:nth-of-type(36) > span:nth-of-type(1) > span:nth-of-type(1)",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 457.81,
+          "top": 316.98,
+          "right": 1458.83,
+          "bottom": 761.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "containerSelector": "div.wt-grid > span:nth-of-type(15) > span:nth-of-type(1)",
+        "text": "IDEIA",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "compositions/components/wordmark-tiles.html",
+        "bbox": {
+          "x": 457.81,
+          "y": 316.98,
+          "width": 1001.02,
+          "height": 445
+        },
+        "firstSeen": 3,
+        "lastSeen": 4.3,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          3,
+          4.3
+        ]
+      }
+    ],
+    "duration": 9.8,
+    "samples": [
+      0.3,
+      0.9,
+      2.2,
+      3,
+      4.3,
+      5.8,
+      7.8,
+      9.2
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 220,
+    "truncated": true
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "specPath": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\index.motion.json",
+    "samples": 197
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0.3,
+      0.9,
+      3,
+      5.8,
+      9.2
+    ],
+    "checked": 129,
+    "passed": 129
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": true,
+    "files": [
+      ".hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-00-at-0.3s.png",
+      ".hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-01-at-0.9s.png",
+      ".hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-02-at-3.0s.png",
+      ".hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-03-at-5.8s.png",
+      ".hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-04-at-9.2s.png"
+    ],
+    "times": [
+      0.3,
+      0.9,
+      3,
+      5.8,
+      9.2
+    ],
+    "findingFiles": [
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-00-text_box_overflow.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-01-text_occluded.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-02-text_occluded.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-03-text_occluded.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-04-text_occluded.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-05-text_occluded.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-06-text_occluded.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-07-text_occluded.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-08-text_occluded.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-09-text_box_overflow.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-10-text_occluded.png",
+      "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-11-text_box_overflow.png"
+    ]
+  }
+}

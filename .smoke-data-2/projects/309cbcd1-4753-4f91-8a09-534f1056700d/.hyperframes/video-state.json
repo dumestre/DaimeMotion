@@ -1,0 +1,1066 @@
+{
+  "version": 1,
+  "historyId": "4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0",
+  "currentRevision": "e2971a12-17d6-486b-873e-6fd2323f1713",
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "ec519d3cdcb4ada5f5fd409a214220a96d6b0c88e243ab31fb28af046a67290e",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\ec\\ec519d3cdcb4ada5f5fd409a214220a96d6b0c88e243ab31fb28af046a67290e"
+    },
+    "CLAUDE.md": {
+      "hash": "1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\1d\\1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5"
+    },
+    "hyperframes.json": {
+      "hash": "731f6acd43ea9fee88bcf701bf184a59b24bfb8637d38955df42444271e8fe5a",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\73\\731f6acd43ea9fee88bcf701bf184a59b24bfb8637d38955df42444271e8fe5a"
+    },
+    "index.html": {
+      "hash": "e61394f3490b03d4933b1d1bbd02fd73c6c20e0d1362ca1e0d6a2130a5dbd9f3",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\e6\\e61394f3490b03d4933b1d1bbd02fd73c6c20e0d1362ca1e0d6a2130a5dbd9f3"
+    },
+    "meta.json": {
+      "hash": "5e495e733d4b3bb56cc9cc2a41ad0bc3d92b4f81667cfef388fd1af0589e748e",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\5e\\5e495e733d4b3bb56cc9cc2a41ad0bc3d92b4f81667cfef388fd1af0589e748e"
+    },
+    "package.json": {
+      "hash": "0676e00b4354e371aab76a7d8e3d2d919211289f826bc839db4954fbcd2ad091",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\06\\0676e00b4354e371aab76a7d8e3d2d919211289f826bc839db4954fbcd2ad091"
+    },
+    "BRIEF.md": {
+      "hash": "2ccbb2e047f3733637181e2ebae02c2476e4508bb56a6cbd4ffae63298b145f0",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\2c\\2ccbb2e047f3733637181e2ebae02c2476e4508bb56a6cbd4ffae63298b145f0"
+    },
+    "compositions/components/logo-brand-close.html": {
+      "hash": "34fdcd73614c8310c9e1c67d91f737d4500bb9800607e3b572140fc83c045eef",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\34\\34fdcd73614c8310c9e1c67d91f737d4500bb9800607e3b572140fc83c045eef"
+    },
+    "compositions/components/wordmark-tiles.html": {
+      "hash": "ae9a68672e8cc3ceb36f46106d0bb31e201d6aa62513375584fec30127364a5f",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\ae\\ae9a68672e8cc3ceb36f46106d0bb31e201d6aa62513375584fec30127364a5f"
+    },
+    "frame.md": {
+      "hash": "62f2c34a8da2ffc7abf2bb541db47cba6472a6dce8f5350b4e29ac2d3ee2a40d",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\62\\62f2c34a8da2ffc7abf2bb541db47cba6472a6dce8f5350b4e29ac2d3ee2a40d"
+    },
+    "hyperframes.lock.json": {
+      "hash": "a46a2b6b6ab2b058504b38750ec252a14cbf63b486baf3ee096e88eb3272c5d6",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\a4\\a46a2b6b6ab2b058504b38750ec252a14cbf63b486baf3ee096e88eb3272c5d6"
+    },
+    "index.motion.json": {
+      "hash": "3cc25f70de845ef4ed878447b2a1c07b1e1aae1e3a6047c21ce6ab9ecaa85ab7",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\3c\\3cc25f70de845ef4ed878447b2a1c07b1e1aae1e3a6047c21ce6ab9ecaa85ab7"
+    },
+    "shot-plan.json": {
+      "hash": "c45643499217cef32a34865279c6b10f3f27319064dfec495d3220ad1e104688",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\c4\\c45643499217cef32a34865279c6b10f3f27319064dfec495d3220ad1e104688"
+    },
+    "compositions/intro.html": {
+      "hash": "2cf2ac41bae0c17caf08b36038e65f9befd0f34b35497b54ec74e02319a5cab7",
+      "content": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\2c\\2cf2ac41bae0c17caf08b36038e65f9befd0f34b35497b54ec74e02319a5cab7"
+    }
+  },
+  "revisions": {
+    "8c476ccb-1ee6-4698-aa27-db85d77e5b20": {
+      "actor": {
+        "kind": "agent",
+        "name": "Copilot"
+      },
+      "label": "Create Daime Motion manifesto animation",
+      "startedAt": 1792367006134,
+      "endedAt": 1792367354295.4324,
+      "files": {
+        "BRIEF.md": {
+          "before": null,
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\2c\\2ccbb2e047f3733637181e2ebae02c2476e4508bb56a6cbd4ffae63298b145f0"
+        },
+        "compositions/components/logo-brand-close.html": {
+          "before": null,
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\34\\34fdcd73614c8310c9e1c67d91f737d4500bb9800607e3b572140fc83c045eef"
+        },
+        "compositions/components/wordmark-tiles.html": {
+          "before": null,
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\dc\\dc49efcbb2423e6a269f2160b767573323da5f08a9c0eceb580e695d3c2d8b02"
+        },
+        "frame.md": {
+          "before": null,
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\62\\62f2c34a8da2ffc7abf2bb541db47cba6472a6dce8f5350b4e29ac2d3ee2a40d"
+        },
+        "hyperframes.json": {
+          "before": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\53\\53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\73\\731f6acd43ea9fee88bcf701bf184a59b24bfb8637d38955df42444271e8fe5a"
+        },
+        "hyperframes.lock.json": {
+          "before": null,
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\a4\\a46a2b6b6ab2b058504b38750ec252a14cbf63b486baf3ee096e88eb3272c5d6"
+        },
+        "index.html": {
+          "before": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\43\\431ac0afb084517708653dc819bae7a352d5038e21d80ede80ca70aa9e6db76e",
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\14\\14f4ff193697705c178e6e53a42b8fdf579661aac668f34981777ae62d6a8364"
+        },
+        "index.motion.json": {
+          "before": null,
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\3c\\3cc25f70de845ef4ed878447b2a1c07b1e1aae1e3a6047c21ce6ab9ecaa85ab7"
+        },
+        "shot-plan.json": {
+          "before": null,
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\c4\\c45643499217cef32a34865279c6b10f3f27319064dfec495d3220ad1e104688"
+        }
+      }
+    },
+    "3f857c6c-2bea-4dcd-bd09-8034e9f3a062": {
+      "actor": {
+        "kind": "agent",
+        "name": "Copilot"
+      },
+      "label": "Create Daime Motion manifesto animation",
+      "startedAt": 1792367006134,
+      "endedAt": 1792367592231.0723,
+      "files": {
+        "compositions/components/wordmark-tiles.html": {
+          "before": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\dc\\dc49efcbb2423e6a269f2160b767573323da5f08a9c0eceb580e695d3c2d8b02",
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\ae\\ae9a68672e8cc3ceb36f46106d0bb31e201d6aa62513375584fec30127364a5f"
+        },
+        "compositions/intro.html": {
+          "before": null,
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\be\\be1315e7f780d7d0948c1d8fe611ec48efccc9562ac5649556133375e26fbda6"
+        },
+        "index.html": {
+          "before": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\14\\14f4ff193697705c178e6e53a42b8fdf579661aac668f34981777ae62d6a8364",
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\4f\\4fd556d0bce8dfd100159800fb2065ab23e59ed51246e0ae736710425ba01029"
+        }
+      }
+    },
+    "838a4c32-587c-4ec0-9f5b-1289567558ec": {
+      "actor": {
+        "kind": "agent",
+        "name": "Copilot"
+      },
+      "label": "Validate and refine Daime Motion manifesto",
+      "startedAt": 1792367715770,
+      "endedAt": 1792367725900.0715,
+      "files": {
+        "compositions/intro.html": {
+          "before": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\be\\be1315e7f780d7d0948c1d8fe611ec48efccc9562ac5649556133375e26fbda6",
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\2c\\2cf2ac41bae0c17caf08b36038e65f9befd0f34b35497b54ec74e02319a5cab7"
+        }
+      }
+    },
+    "e2971a12-17d6-486b-873e-6fd2323f1713": {
+      "actor": {
+        "kind": "agent",
+        "name": "Copilot"
+      },
+      "label": "Validate and refine Daime Motion manifesto",
+      "startedAt": 1792367715770,
+      "endedAt": 1792367812994.7842,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\4f\\4fd556d0bce8dfd100159800fb2065ab23e59ed51246e0ae736710425ba01029",
+          "after": "C:\\Users\\DJDUM\\.cache\\hyperframes\\history\\4d1e251c-6f2d-4a40-a466-2ebd6c1b82a0\\blobs\\e6\\e61394f3490b03d4933b1d1bbd02fd73c6c20e0d1362ca1e0d6a2130a5dbd9f3"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "e2971a12-17d6-486b-873e-6fd2323f1713",
+      "id": "451b31d0-4fcc-471a-be67-e4e6a5587135"
+    },
+    "revisions": {
+      "8c476ccb-1ee6-4698-aa27-db85d77e5b20": [
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+          "scope": "project",
+          "report": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\checks\\594725d5-e3ae-4158-afcb-f141f38a4b9f.json",
+          "metadata": {
+            "ok": false,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "at": [
+                0.3,
+                0.9,
+                2.2,
+                3,
+                4.3,
+                5.8,
+                7.8,
+                9.2
+              ],
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": true,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "200dbc2cb8e8c3c75ab50220b24ceff5512b9e82321ab9cc31f250296d5c0274",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "3f857c6c-2bea-4dcd-bd09-8034e9f3a062": [
+        {
+          "id": "291a86c8-4e70-4788-bffb-ecb18a443c22",
+          "scope": "project",
+          "report": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\checks\\291a86c8-4e70-4788-bffb-ecb18a443c22.json",
+          "metadata": {
+            "ok": false,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "at": [
+                0.3,
+                0.9,
+                2.2,
+                3,
+                4.3,
+                5.8,
+                7.8,
+                9.2
+              ],
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": true,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792367665913,
+          "contentHash": "52f92f0f2eb202e3aa3546e85f63011b2d7575e260256d4a95551d710bb4a923",
+          "revision": "3f857c6c-2bea-4dcd-bd09-8034e9f3a062",
+          "inputFingerprint": "5aea9084b1a8abe078b689e657959cb1be74b16dab55e5435b95cd5305d5b67f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "838a4c32-587c-4ec0-9f5b-1289567558ec": [
+        {
+          "id": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1",
+          "scope": "project",
+          "report": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\checks\\bdcef04f-c1b7-45b3-a803-994a3e8e65f1.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "at": [
+                0.3,
+                0.9,
+                2.2,
+                3,
+                4.3,
+                5.8,
+                7.8,
+                9.2
+              ],
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": true,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792367778933,
+          "contentHash": "35386dea8f1ee54b06d07a6c671051c1754ad84d43c874191f740e2d6d8add3b",
+          "revision": "838a4c32-587c-4ec0-9f5b-1289567558ec",
+          "inputFingerprint": "a3bfd20d86f67de14bcbcd6d26ce5ab1fe93f21e4a7ce7ab1996c4d2d09ab1ef",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "e2971a12-17d6-486b-873e-6fd2323f1713": [
+        {
+          "id": "451b31d0-4fcc-471a-be67-e4e6a5587135",
+          "scope": "project",
+          "report": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\checks\\451b31d0-4fcc-471a-be67-e4e6a5587135.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "at": [
+                0.3,
+                0.9,
+                2.2,
+                3,
+                4.3,
+                5.8,
+                7.8,
+                9.2
+              ],
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": true,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792367877285,
+          "contentHash": "c6a519befd33b7f91312746e0164170885838374479cea926a2e26500296e9ae",
+          "revision": "e2971a12-17d6-486b-873e-6fd2323f1713",
+          "inputFingerprint": "f24aef78787debed88594009c8f56ea25555d385ef30dda93b040c77afae9dae",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": {
+      "revision": "e2971a12-17d6-486b-873e-6fd2323f1713",
+      "id": "451b31d0-4fcc-471a-be67-e4e6a5587135-4"
+    },
+    "revisions": {
+      "8c476ccb-1ee6-4698-aa27-db85d77e5b20": [
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-0",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-00-at-0.3s.png",
+          "time": 0.3,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "b64959aac0c43571aec1f14fdbd91a0eeb2b99348555f720659c8924368ff77c",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-1",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-01-at-0.9s.png",
+          "time": 0.9,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "87f7507a4b774dfeba4ccaa075fa2b1d13dcf9b554eca4b303868f507dacaee9",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-2",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-02-at-3.0s.png",
+          "time": 3,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "d1475a137fea8b1d396af14f48f100e5a3391029fee4b17cc145f1a11400df69",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-3",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-03-at-5.8s.png",
+          "time": 5.8,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "62d20d04787caafaee6dee8251fb87b23c04c1d75021cd12aa21d6a34715b925",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-4",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\frame-04-at-9.2s.png",
+          "time": 9.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "eba6386c71891becc417373af38ec400e5b19de6475196a49a60f6f9783ec807",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-0",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-00-text_box_overflow.png",
+          "time": 0.9,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-00-text_box_overflow.png",
+              "time": 0.9,
+              "bbox": {
+                "x": 460.83,
+                "y": 357.08,
+                "width": 1001.01,
+                "height": 364.8
+              }
+            },
+            "width": 3147,
+            "height": 1239
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "272a2d641a714834b3a0741d53c91855351e8c736dafe0db6f8377a67edd0f0f",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-1",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-01-text_occluded.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-01-text_occluded.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 461.48,
+                "y": 318.59,
+                "width": 1001.02,
+                "height": 445
+              }
+            },
+            "width": 3150,
+            "height": 1479
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "fc7190d5d2e2b6a05468094927c656443b93856a911a0b95239f730ba0f58c17",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-2",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-02-text_occluded.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-02-text_occluded.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 461.16,
+                "y": 318.59,
+                "width": 1001.02,
+                "height": 445
+              }
+            },
+            "width": 3147,
+            "height": 1479
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "583fd315de9128a88541c9234f2ba5ea3d47ca3b4142a1c353f550ab2f1beb41",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-3",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-03-text_occluded.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-03-text_occluded.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 460.83,
+                "y": 318.59,
+                "width": 1001.02,
+                "height": 445
+              }
+            },
+            "width": 3147,
+            "height": 1479
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "583fd315de9128a88541c9234f2ba5ea3d47ca3b4142a1c353f550ab2f1beb41",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-4",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-04-text_occluded.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-04-text_occluded.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 461.48,
+                "y": 317.8,
+                "width": 1001.02,
+                "height": 445
+              }
+            },
+            "width": 3150,
+            "height": 1479
+          },
+          "createdAt": 1792367441712,
+          "contentHash": "ff70844aab32f43a79d8a5d46c44e4a38e2be15d088537cc8895e8111795eeae",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-5",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-05-text_occluded.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-05-text_occluded.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 461.16,
+                "y": 317.8,
+                "width": 1001.02,
+                "height": 445
+              }
+            },
+            "width": 3147,
+            "height": 1479
+          },
+          "createdAt": 1792367441713,
+          "contentHash": "929b2994cd33f8dd047755b39a03d37e03f5dbb2ce63e994423331f8251a928d",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-6",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-06-text_occluded.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-06-text_occluded.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 461.48,
+                "y": 316.98,
+                "width": 1001.02,
+                "height": 445
+              }
+            },
+            "width": 3150,
+            "height": 1479
+          },
+          "createdAt": 1792367441713,
+          "contentHash": "fb0cc83080610d835f1ceb10c91d7b28bbed6fcedd4860d586d383f59e3ccd56",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-7",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-07-text_occluded.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-07-text_occluded.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 461.16,
+                "y": 316.98,
+                "width": 1001.02,
+                "height": 445
+              }
+            },
+            "width": 3147,
+            "height": 1479
+          },
+          "createdAt": 1792367441713,
+          "contentHash": "aa02b835f593c6aad465d0e05a37cff55da805c1f70ac4900c63cad0178bd2d4",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-8",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-08-text_occluded.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-08-text_occluded.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 460.83,
+                "y": 316.98,
+                "width": 1001.02,
+                "height": 445
+              }
+            },
+            "width": 3147,
+            "height": 1479
+          },
+          "createdAt": 1792367441713,
+          "contentHash": "aa02b835f593c6aad465d0e05a37cff55da805c1f70ac4900c63cad0178bd2d4",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-9",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-09-text_box_overflow.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-09-text_box_overflow.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 460.48,
+                "y": 357.08,
+                "width": 1001.02,
+                "height": 364.8
+              }
+            },
+            "width": 3150,
+            "height": 1239
+          },
+          "createdAt": 1792367441713,
+          "contentHash": "730769611102011cac38041d2ede80d0b36fbb4116de031b2d8d6f0ec196b261",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-10",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-10-text_occluded.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-10-text_occluded.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 460.48,
+                "y": 316.98,
+                "width": 1001.02,
+                "height": 445
+              }
+            },
+            "width": 3150,
+            "height": 1479
+          },
+          "createdAt": 1792367441714,
+          "contentHash": "e9b6cc236c5cefb9f81802a9289ca0f3785147f58a8a21a51a15fe4fb87cafeb",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "594725d5-e3ae-4158-afcb-f141f38a4b9f-crop-11",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\83b51c1c-e65b-49a0-b999-bc5417138ab6\\finding-11-text_box_overflow.png",
+          "time": 2.2,
+          "metadata": {
+            "checkId": "594725d5-e3ae-4158-afcb-f141f38a4b9f",
+            "finding": {
+              "filename": "finding-11-text_box_overflow.png",
+              "time": 2.2,
+              "bbox": {
+                "x": 460.16,
+                "y": 357.08,
+                "width": 1001.01,
+                "height": 364.8
+              }
+            },
+            "width": 3147,
+            "height": 1239
+          },
+          "createdAt": 1792367441714,
+          "contentHash": "53b7963a65cd2ebfed0396c9ea1b418e84130b29adf322e840c0843e5838ce7f",
+          "revision": "8c476ccb-1ee6-4698-aa27-db85d77e5b20",
+          "inputFingerprint": "6c64e7f2d7894781b8ea2604a43a68c43a8f255518d71ef1e5217cee13b5b72b",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "3f857c6c-2bea-4dcd-bd09-8034e9f3a062": [
+        {
+          "id": "291a86c8-4e70-4788-bffb-ecb18a443c22-0",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-00-at-0.3s.png",
+          "time": 0.3,
+          "metadata": {
+            "checkId": "291a86c8-4e70-4788-bffb-ecb18a443c22",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367665913,
+          "contentHash": "34c11c99a96f0611066e722f942df1123a0c5379f30f0cd655c510a14d5a7ccc",
+          "revision": "3f857c6c-2bea-4dcd-bd09-8034e9f3a062",
+          "inputFingerprint": "5aea9084b1a8abe078b689e657959cb1be74b16dab55e5435b95cd5305d5b67f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "291a86c8-4e70-4788-bffb-ecb18a443c22-1",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-01-at-0.9s.png",
+          "time": 0.9,
+          "metadata": {
+            "checkId": "291a86c8-4e70-4788-bffb-ecb18a443c22",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367665913,
+          "contentHash": "e3084b40f33b6750200f7cb8689bca730f28b44f67499d4280affc57ec6d640d",
+          "revision": "3f857c6c-2bea-4dcd-bd09-8034e9f3a062",
+          "inputFingerprint": "5aea9084b1a8abe078b689e657959cb1be74b16dab55e5435b95cd5305d5b67f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "291a86c8-4e70-4788-bffb-ecb18a443c22-2",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-02-at-3.0s.png",
+          "time": 3,
+          "metadata": {
+            "checkId": "291a86c8-4e70-4788-bffb-ecb18a443c22",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367665913,
+          "contentHash": "adccdc2c73f67787d72b3c479cd6fe8d2e312799948f9dd16c3d24b5e9e43f22",
+          "revision": "3f857c6c-2bea-4dcd-bd09-8034e9f3a062",
+          "inputFingerprint": "5aea9084b1a8abe078b689e657959cb1be74b16dab55e5435b95cd5305d5b67f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "291a86c8-4e70-4788-bffb-ecb18a443c22-3",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-03-at-5.8s.png",
+          "time": 5.8,
+          "metadata": {
+            "checkId": "291a86c8-4e70-4788-bffb-ecb18a443c22",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367665914,
+          "contentHash": "01de78f5f93fab16374da0eb86e6efd10bf13679f5c8c9260b3ab1c3884ea045",
+          "revision": "3f857c6c-2bea-4dcd-bd09-8034e9f3a062",
+          "inputFingerprint": "5aea9084b1a8abe078b689e657959cb1be74b16dab55e5435b95cd5305d5b67f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "291a86c8-4e70-4788-bffb-ecb18a443c22-4",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\frame-04-at-9.2s.png",
+          "time": 9.2,
+          "metadata": {
+            "checkId": "291a86c8-4e70-4788-bffb-ecb18a443c22",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367665914,
+          "contentHash": "1134e0c9e57e22894ad6d4fc2208e80ea7f744741b2b6508e65916cc559791af",
+          "revision": "3f857c6c-2bea-4dcd-bd09-8034e9f3a062",
+          "inputFingerprint": "5aea9084b1a8abe078b689e657959cb1be74b16dab55e5435b95cd5305d5b67f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "291a86c8-4e70-4788-bffb-ecb18a443c22-crop-0",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\finding-00-content_overlap.png",
+          "time": 3,
+          "metadata": {
+            "checkId": "291a86c8-4e70-4788-bffb-ecb18a443c22",
+            "finding": {
+              "filename": "finding-00-content_overlap.png",
+              "time": 3,
+              "bbox": {
+                "x": 1553.22,
+                "y": 95,
+                "width": 208.78,
+                "height": 29
+              }
+            },
+            "width": 771,
+            "height": 231
+          },
+          "createdAt": 1792367665914,
+          "contentHash": "7f713214daddd4528fd6870223630009e39e1d6930a41887b0606afd7de309d0",
+          "revision": "3f857c6c-2bea-4dcd-bd09-8034e9f3a062",
+          "inputFingerprint": "5aea9084b1a8abe078b689e657959cb1be74b16dab55e5435b95cd5305d5b67f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "291a86c8-4e70-4788-bffb-ecb18a443c22-crop-1",
+          "scope": "finding",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\ccafa012-f53a-4087-99fe-77b39ff42040\\finding-01-content_overlap.png",
+          "time": 4.3,
+          "metadata": {
+            "checkId": "291a86c8-4e70-4788-bffb-ecb18a443c22",
+            "finding": {
+              "filename": "finding-01-content_overlap.png",
+              "time": 4.3,
+              "bbox": {
+                "x": 1537.16,
+                "y": 95,
+                "width": 224.84,
+                "height": 29
+              }
+            },
+            "width": 819,
+            "height": 231
+          },
+          "createdAt": 1792367665915,
+          "contentHash": "2805d01dcf28fb15f21709c8b93a6ab1a0bc3d0c7f9253c173be8fdf2aa45be7",
+          "revision": "3f857c6c-2bea-4dcd-bd09-8034e9f3a062",
+          "inputFingerprint": "5aea9084b1a8abe078b689e657959cb1be74b16dab55e5435b95cd5305d5b67f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "838a4c32-587c-4ec0-9f5b-1289567558ec": [
+        {
+          "id": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1-0",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\85cb2bdd-be9c-4f7e-91a9-c4974e6beab8\\frame-00-at-0.3s.png",
+          "time": 0.3,
+          "metadata": {
+            "checkId": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367778933,
+          "contentHash": "34c11c99a96f0611066e722f942df1123a0c5379f30f0cd655c510a14d5a7ccc",
+          "revision": "838a4c32-587c-4ec0-9f5b-1289567558ec",
+          "inputFingerprint": "a3bfd20d86f67de14bcbcd6d26ce5ab1fe93f21e4a7ce7ab1996c4d2d09ab1ef",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1-1",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\85cb2bdd-be9c-4f7e-91a9-c4974e6beab8\\frame-01-at-0.9s.png",
+          "time": 0.9,
+          "metadata": {
+            "checkId": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367778934,
+          "contentHash": "e3084b40f33b6750200f7cb8689bca730f28b44f67499d4280affc57ec6d640d",
+          "revision": "838a4c32-587c-4ec0-9f5b-1289567558ec",
+          "inputFingerprint": "a3bfd20d86f67de14bcbcd6d26ce5ab1fe93f21e4a7ce7ab1996c4d2d09ab1ef",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1-2",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\85cb2bdd-be9c-4f7e-91a9-c4974e6beab8\\frame-02-at-3.0s.png",
+          "time": 3,
+          "metadata": {
+            "checkId": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367778935,
+          "contentHash": "839d2a038d052d8e4779ae1a5c7680eeebbdbbdfb3724b11f0649a795ec47779",
+          "revision": "838a4c32-587c-4ec0-9f5b-1289567558ec",
+          "inputFingerprint": "a3bfd20d86f67de14bcbcd6d26ce5ab1fe93f21e4a7ce7ab1996c4d2d09ab1ef",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1-3",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\85cb2bdd-be9c-4f7e-91a9-c4974e6beab8\\frame-03-at-5.8s.png",
+          "time": 5.8,
+          "metadata": {
+            "checkId": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367778935,
+          "contentHash": "779f97c2166f11e1e7366c2a697439e4dbb3e7a3021392fca2da7dc50ff5edd1",
+          "revision": "838a4c32-587c-4ec0-9f5b-1289567558ec",
+          "inputFingerprint": "a3bfd20d86f67de14bcbcd6d26ce5ab1fe93f21e4a7ce7ab1996c4d2d09ab1ef",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1-4",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\85cb2bdd-be9c-4f7e-91a9-c4974e6beab8\\frame-04-at-9.2s.png",
+          "time": 9.2,
+          "metadata": {
+            "checkId": "bdcef04f-c1b7-45b3-a803-994a3e8e65f1",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367778935,
+          "contentHash": "b0cf54d8be580f792ade5b6051f0616dabe468e91574e80f12ea3b31ea44cd98",
+          "revision": "838a4c32-587c-4ec0-9f5b-1289567558ec",
+          "inputFingerprint": "a3bfd20d86f67de14bcbcd6d26ce5ab1fe93f21e4a7ce7ab1996c4d2d09ab1ef",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ],
+      "e2971a12-17d6-486b-873e-6fd2323f1713": [
+        {
+          "id": "451b31d0-4fcc-471a-be67-e4e6a5587135-0",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\669d38b8-debb-4efe-8230-b1591137ffae\\frame-00-at-0.3s.png",
+          "time": 0.3,
+          "metadata": {
+            "checkId": "451b31d0-4fcc-471a-be67-e4e6a5587135",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367877285,
+          "contentHash": "48733b8fc179944cbb018abc95eaeea3ac32ba2132b24c5e70191c38f41eed94",
+          "revision": "e2971a12-17d6-486b-873e-6fd2323f1713",
+          "inputFingerprint": "f24aef78787debed88594009c8f56ea25555d385ef30dda93b040c77afae9dae",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "451b31d0-4fcc-471a-be67-e4e6a5587135-1",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\669d38b8-debb-4efe-8230-b1591137ffae\\frame-01-at-0.9s.png",
+          "time": 0.9,
+          "metadata": {
+            "checkId": "451b31d0-4fcc-471a-be67-e4e6a5587135",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367877286,
+          "contentHash": "c273c0e34b76d507a9cc7f948e380f9c26ba5e24cfd8e896d9f1d1ffcc473dab",
+          "revision": "e2971a12-17d6-486b-873e-6fd2323f1713",
+          "inputFingerprint": "f24aef78787debed88594009c8f56ea25555d385ef30dda93b040c77afae9dae",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "451b31d0-4fcc-471a-be67-e4e6a5587135-2",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\669d38b8-debb-4efe-8230-b1591137ffae\\frame-02-at-3.0s.png",
+          "time": 3,
+          "metadata": {
+            "checkId": "451b31d0-4fcc-471a-be67-e4e6a5587135",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367877287,
+          "contentHash": "d417cc358dd17801ad776759122e774a4c8b907d4475f13af08f1c2645c1e514",
+          "revision": "e2971a12-17d6-486b-873e-6fd2323f1713",
+          "inputFingerprint": "f24aef78787debed88594009c8f56ea25555d385ef30dda93b040c77afae9dae",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "451b31d0-4fcc-471a-be67-e4e6a5587135-3",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\669d38b8-debb-4efe-8230-b1591137ffae\\frame-03-at-5.8s.png",
+          "time": 5.8,
+          "metadata": {
+            "checkId": "451b31d0-4fcc-471a-be67-e4e6a5587135",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367877287,
+          "contentHash": "e95680511b61be1ade5350c351af9bb0eb99086e012739672c2bf69231c4c5b6",
+          "revision": "e2971a12-17d6-486b-873e-6fd2323f1713",
+          "inputFingerprint": "f24aef78787debed88594009c8f56ea25555d385ef30dda93b040c77afae9dae",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        },
+        {
+          "id": "451b31d0-4fcc-471a-be67-e4e6a5587135-4",
+          "scope": "full",
+          "image": "D:\\Dev\\Porjetos\\DaimeMotion\\.smoke-data-2\\projects\\309cbcd1-4753-4f91-8a09-534f1056700d\\.hyperframes\\artifacts\\snapshots\\669d38b8-debb-4efe-8230-b1591137ffae\\frame-04-at-9.2s.png",
+          "time": 9.2,
+          "metadata": {
+            "checkId": "451b31d0-4fcc-471a-be67-e4e6a5587135",
+            "width": 1920,
+            "height": 1080
+          },
+          "createdAt": 1792367877287,
+          "contentHash": "832dba042f7753eb63d93e990fb8511d97abcf98f79d397c02e67ff552b66046",
+          "revision": "e2971a12-17d6-486b-873e-6fd2323f1713",
+          "inputFingerprint": "f24aef78787debed88594009c8f56ea25555d385ef30dda93b040c77afae9dae",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": []
+  }
+}

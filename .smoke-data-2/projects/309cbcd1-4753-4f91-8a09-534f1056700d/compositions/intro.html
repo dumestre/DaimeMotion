@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Daime Motion — Intro</title>
+  </head>
+  <body>
+    <template>
+      <div id="intro-root" data-composition-id="intro" data-start="0" data-duration="5.1" data-fps="30">
+        <style>
+          #intro-root {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            color: var(--fg);
+            font-family: var(--font-body);
+          }
+
+          .scene-header {
+            position: absolute;
+            top: 96px;
+            right: 158px;
+            left: 158px;
+            height: 32px;
+          }
+
+          .brand-stamp,
+          .phase-stamp {
+            position: absolute;
+            top: 0;
+            display: block;
+            margin: 0;
+            font-size: 22px;
+            line-height: 1.3;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+          }
+
+          .brand-stamp {
+            left: 0;
+            color: var(--fg);
+          }
+
+          .phase-stamp {
+            right: 0;
+            color: var(--accent);
+            text-align: right;
+          }
+
+          .copy-stack {
+            position: absolute;
+            right: 158px;
+            bottom: 158px;
+            left: 158px;
+            min-height: 96px;
+          }
+
+          .copy-line {
+            position: absolute;
+            inset: 0 auto auto 0;
+            display: block;
+            max-width: 1500px;
+            margin: 0;
+            color: var(--fg);
+            font-family: var(--font-display);
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.12;
+            letter-spacing: -0.045em;
+            opacity: 0;
+          }
+
+          #copy-form {
+            color: var(--accent);
+            font-size: 74px;
+          }
+
+          #copy-motion {
+            color: var(--fg);
+            font-size: 70px;
+          }
+
+          .journey {
+            position: absolute;
+            right: 158px;
+            bottom: 82px;
+            left: 158px;
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            color: var(--muted);
+            font-size: 22px;
+            line-height: 1;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+          }
+
+          .journey-step {
+            display: block;
+            flex: 0 0 auto;
+            color: var(--muted);
+            white-space: nowrap;
+          }
+
+          .journey-rail {
+            position: relative;
+            display: block;
+            flex: 1 1 auto;
+            height: 2px;
+            overflow: hidden;
+            background: rgba(214, 170, 97, 0.26);
+          }
+
+          .journey-fill {
+            position: absolute;
+            inset: 0;
+            display: block;
+            background: var(--brand);
+            transform-origin: left center;
+          }
+        </style>
+
+        <header class="scene-header">
+          <p class="brand-stamp">DAIME MOTION / ESTÚDIO CRIATIVO</p>
+          <p id="phase-imagine" class="phase-stamp">01 / IMAGINAR</p>
+          <p id="phase-form" class="phase-stamp">02 / DAR FORMA</p>
+          <p id="phase-move" class="phase-stamp">03 / MOVIMENTAR</p>
+        </header>
+
+        <div class="copy-stack">
+          <p id="copy-start" class="copy-line">TUDO COMEÇA COM UMA IDEIA.</p>
+          <p id="copy-form" class="copy-line">GANHA FORMA.</p>
+          <p id="copy-motion" class="copy-line">E GANHA MOVIMENTO.</p>
+        </div>
+
+        <div class="journey">
+          <span class="journey-step">Imaginar</span>
+          <span class="journey-rail" aria-hidden="true">
+            <span id="journey-fill" class="journey-fill"></span>
+          </span>
+          <span class="journey-step">Dar forma</span>
+          <span class="journey-rail" aria-hidden="true">
+            <span id="journey-fill-final" class="journey-fill"></span>
+          </span>
+          <span class="journey-step">Movimentar</span>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+        <script>
+          const introTimeline = gsap.timeline({ paused: true });
+
+          introTimeline.fromTo(
+            "#phase-imagine",
+            { opacity: 0, y: -18 },
+            { opacity: 1, y: 0, duration: 0.48, ease: "expo.out" },
+            0.32,
+          );
+          introTimeline.to("#phase-imagine", { opacity: 0, duration: 0.18, ease: "power1.in" }, 2.24);
+          introTimeline.fromTo(
+            "#phase-form",
+            { opacity: 0, y: -14 },
+            { opacity: 1, y: 0, duration: 0.42, ease: "power2.out" },
+            2.5,
+          );
+          introTimeline.to("#phase-form", { opacity: 0, duration: 0.17, ease: "power1.in" }, 3.65);
+          introTimeline.fromTo(
+            "#phase-move",
+            { opacity: 0, x: 24 },
+            { opacity: 1, x: 0, duration: 0.46, ease: "back.out(1.4)" },
+            3.9,
+          );
+
+          introTimeline.fromTo(
+            "#copy-start",
+            { opacity: 0, x: -72 },
+            { opacity: 1, x: 0, duration: 0.58, ease: "expo.out" },
+            0.62,
+          );
+          introTimeline.to("#copy-start", { opacity: 0, x: -44, duration: 0.3, ease: "power2.in" }, 2.17);
+          introTimeline.fromTo(
+            "#copy-form",
+            { opacity: 0, y: 42, scale: 0.96 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.54, ease: "back.out(1.35)" },
+            2.43,
+          );
+          introTimeline.to("#copy-form", { opacity: 0, x: 52, duration: 0.28, ease: "power2.in" }, 3.62);
+          introTimeline.fromTo(
+            "#copy-motion",
+            { opacity: 0, scale: 0.92 },
+            { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" },
+            3.84,
+          );
+          introTimeline.to("#copy-motion", { opacity: 0, y: -24, duration: 0.24, ease: "power2.in" }, 4.76);
+
+          introTimeline.fromTo(
+            "#journey-fill",
+            { scaleX: 0 },
+            { scaleX: 1, duration: 2.15, ease: "none" },
+            0.42,
+          );
+          introTimeline.fromTo(
+            "#journey-fill-final",
+            { scaleX: 0 },
+            { scaleX: 1, duration: 2.1, ease: "none" },
+            2.55,
+          );
+
+          window.__timelines["intro"] = introTimeline;
+          introTimeline.seek(0);
+        </script>
+      </div>
+    </template>
+  </body>
+</html>
