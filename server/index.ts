@@ -18,12 +18,8 @@ import { PathSafetyError, resolveWithinDirectory, sanitizeFilename as safeFilena
 import { installProjectGuidance } from "./project-guidance.js";
 
 const port = Number(process.env.DAIME_PORT ?? 4317);
-const localDataRoot =
-  process.env.DAIMEMOTION_HOME ??
-  (process.env.LOCALAPPDATA
-    ? path.join(process.env.LOCALAPPDATA, "DaimeMotion")
-    : path.join(os.homedir(), ".daime-motion"));
-const dataRoot = path.resolve(localDataRoot);
+const projectRoot = path.resolve(process.cwd());
+const dataRoot = path.join(projectRoot, "data");
 const projectsRoot = path.join(dataRoot, "projects");
 const referencesRoot = path.join(dataRoot, "references");
 const uploadsRoot = path.join(dataRoot, "uploads");

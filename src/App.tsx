@@ -26,6 +26,41 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
+
+function DaimeLogo({ size = 28 }: { size?: number }) {
+  const uid = "daime-logo";
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 320 316"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id={`${uid}-top`} x1="34" y1="17.5" x2="284" y2="172.5" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F2EFE8" />
+          <stop offset="1" stopColor="#B6B0A5" />
+        </linearGradient>
+        <linearGradient id={`${uid}-mid`} x1="14" y1="137.5" x2="309" y2="262.5" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#D6D0C5" />
+          <stop offset="1" stopColor="#8C877D" />
+        </linearGradient>
+        <linearGradient id={`${uid}-bottom`} x1="9" y1="232.5" x2="314" y2="352.5" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#A39D92" />
+          <stop offset="1" stopColor="#494640" />
+        </linearGradient>
+      </defs>
+
+      <g stroke="#191816" strokeOpacity=".18" strokeWidth="2" strokeLinejoin="round">
+        <path d="M148 4.5C156 -0.166667 164 -0.166667 172 4.5L312 85.5C321.333 90.8333 321.333 96.5 312 102.5L172 183.5C164 188.167 156 188.167 148 183.5L8 102.5C-1.33333 96.5 -1.33333 90.8333 8 85.5L148 4.5Z" fill={`url(#${uid}-top)`} />
+        <path d="M8 152.5C1.33333 148.5 1.33333 144.5 8 140.5L39 122.5L148 185.5C156 190.167 164 190.167 172 185.5L281 122.5L312 140.5C318.667 144.5 318.667 148.5 312 152.5L172 233.5C164 238.167 156 238.167 148 233.5L8 152.5Z" fill={`url(#${uid}-mid)`} />
+        <path d="M8 230.5C1.33333 226.5 1.33333 222.5 8 218.5L39 200.5L148 263.5C156 268.167 164 268.167 172 263.5L281 200.5L312 218.5C318.667 222.5 318.667 226.5 312 230.5L172 311.5C164 316.167 156 316.167 148 311.5L8 230.5Z" fill={`url(#${uid}-bottom)`} />
+      </g>
+    </svg>
+  );
+}
 import type {
   ApiError,
   AspectRatio,
@@ -466,8 +501,8 @@ export default function App() {
     <div className="app-shell">
       <aside className="sidebar">
         <button className="brand" onClick={() => goTo("projects")} aria-label="Daime Motion — projetos">
-          <span className="brand-icon"><Clapperboard size={19} strokeWidth={2.3} /></span>
-          <span>daime<span className="brand-light">motion</span></span>
+          <span className="brand-icon"><DaimeLogo size={28} /></span>
+          <span>Daime<span className="brand-light">Motion</span></span>
         </button>
         <div className="sidebar-label">ESTÚDIO</div>
         <nav className="side-nav" aria-label="Navegação principal">
@@ -668,7 +703,7 @@ function ProjectsPage({
           <div className="project-card-actions"><button className="button small secondary" onClick={() => onOpen(item)}>Abrir projeto <ExternalLink size={13} /></button><div className="menu-actions"><button className="icon-button" onClick={() => onDuplicate(item)} title="Duplicar"><Copy size={15} /></button><button className="icon-button danger-icon" onClick={() => onDelete(item)} title="Excluir"><MoreHorizontal size={17} /></button></div></div>
         </article>)}
         <button className="new-project-card" onClick={onCreate}><span><Plus size={21} /></span><strong>Criar outra composição</strong><small>Comece com um projeto HyperFrames</small></button>
-      </div> : <div className="empty-projects"><div className="empty-icon"><Clapperboard size={25} /></div><h2>Seu próximo vídeo começa aqui</h2><p>Crie uma composição HyperFrames e transforme uma ideia em vídeo.</p><button className="button primary" onClick={onCreate}><Plus size={17} /> Criar primeiro projeto</button></div>}
+      </div> : <div className="empty-projects"><div className="empty-icon"><DaimeLogo size={32} /></div><h2>Seu próximo vídeo começa aqui</h2><p>Crie uma composição HyperFrames e transforme uma ideia em vídeo.</p><button className="button primary" onClick={onCreate}><Plus size={17} /> Criar primeiro projeto</button></div>}
       <div className="workspace-note"><span className="status-dot online" /><span>Projetos e mídia ficam no seu computador. Nada é enviado sem sua autorização.</span></div>
     </section>
   );
@@ -783,7 +818,7 @@ function TaskStatus({ status }: { status: TaskSnapshot["status"] }) {
 }
 
 function EmptySelection({ onProjects }: { onProjects: () => void }) {
-  return <section className="page-content"><div className="empty-projects"><div className="empty-icon"><Clapperboard size={25} /></div><h2>Escolha um projeto</h2><p>Abra um projeto para entrar no estúdio.</p><button className="button primary" onClick={onProjects}>Ver projetos</button></div></section>;
+  return <section className="page-content"><div className="empty-projects"><div className="empty-icon"><DaimeLogo size={32} /></div><h2>Escolha um projeto</h2><p>Abra um projeto para entrar no estúdio.</p><button className="button primary" onClick={onProjects}>Ver projetos</button></div></section>;
 }
 
 function MediaPage({ project, files, busy, onImport, onChooseProject }: { project: Project | null; files: ProjectFile[]; busy: boolean; onImport: (file: File) => void; onChooseProject: () => void }) {
