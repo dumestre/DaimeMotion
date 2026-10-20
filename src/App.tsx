@@ -70,6 +70,7 @@ import type {
   ProjectTemplate,
   TaskSnapshot,
   ToolStatus,
+  TranscriptSummary,
 } from "./shared/types";
 
 type Section = "projects" | "studio" | "media" | "references" | "templates" | "settings";
@@ -170,6 +171,8 @@ export default function App() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [transcribing, setTranscribing] = useState("");
+  const [transcript, setTranscript] = useState<TranscriptSummary | null>(null);
 
   const warmupRef = useRef<Set<string>>(new Set());
 
@@ -247,6 +250,8 @@ export default function App() {
     setPlayerUrl("");
     setPreviewReviewed(false);
     setError("");
+    setTranscript(null);
+    setTranscribing("");
     void refreshFiles(item.id).catch((reason: Error) => setError(reason.message));
   }
 
@@ -438,6 +443,28 @@ export default function App() {
     }
   }
 
+  async function transcribeFile(file: ProjectFile) {
+    if (!project) return;
+    setError("");
+    setNotice("");
+    setTranscribing(file.path);
+    try {
+      const summary = await api<TranscriptSummary>(`/api/projects/${project.id}/transcribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: file.path }),
+      });
+      setTranscript(summary);
+      await refreshFiles(project.id);
+      await refreshProjects();
+      setNotice(`Transcrição de ${file.name} concluída (${summary.segments} segmentos).`);
+    } catch (reason) {
+      setError((reason as Error).message);
+    } finally {
+      setTranscribing("");
+    }
+  }
+
   async function addReference(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!referenceFile || busy) return;
@@ -579,7 +606,7 @@ export default function App() {
         )}
         {section === "studio" && !project && <EmptySelection onProjects={() => goTo("projects")} />}
         {section === "media" && (
-          <MediaPage project={project} files={files} busy={busy} onImport={importFile} onChooseProject={() => goTo("projects")} />
+          <MediaPage project={project} files={files} busy={busy} transcribing={transcribing} transcript={transcript} onTranscribe={transcribeFile} onDismissTranscript={() => setTranscript(null)} onImport={importFile} onChooseProject={() => goTo("projects")} />
         )}
         {section === "references" && (
           <ReferencesPage
@@ -827,15 +854,21 @@ function EmptySelection({ onProjects }: { onProjects: () => void }) {
   return <section className="page-content"><div className="empty-projects"><div className="empty-icon"><DaimeLogo size={32} /></div><h2>Escolha um projeto</h2><p>Abra um projeto para entrar no estúdio.</p><button className="button primary" onClick={onProjects}>Ver projetos</button></div></section>;
 }
 
-function MediaPage({ project, files, busy, onImport, onChooseProject }: { project: Project | null; files: ProjectFile[]; busy: boolean; onImport: (file: File) => void; onChooseProject: () => void }) {
+function MediaPage({ project, files, busy, transcribing, transcript, onTranscribe, onDismissTranscript, onImport, onChooseProject }: { project: Project | null; files: ProjectFile[]; busy: boolean; transcribing: string; transcript: TranscriptSummary | null; onTranscribe: (file: ProjectFile) => void; onDismissTranscript: () => void; onImport: (file: File) => void; onChooseProject: () => void }) {
   if (!project) return <section className="page-content"><div className="page-heading"><div><span className="eyebrow">BIBLIOTECA LOCAL</span><h1>Biblioteca de mídia</h1><p>Os arquivos importados permanecem no projeto selecionado.</p></div></div><div className="empty-projects"><div className="empty-icon"><FolderOpen size={25} /></div><h2>Selecione um projeto primeiro</h2><p>A mídia é organizada separadamente para cada vídeo.</p><button className="button primary" onClick={onChooseProject}>Abrir projetos</button></div></section>;
   return <section className="page-content media-page">
     <div className="page-heading"><div><span className="eyebrow">ASSETS DO PROJETO</span><h1>Biblioteca de mídia</h1><p>Arquivos locais associados a <strong>{project.name}</strong>.</p></div><label className="button primary upload-button"><Upload size={16} /> Importar arquivo<input type="file" accept="audio/*,image/*,video/*,.ttf,.otf,.woff,.woff2" disabled={busy} onChange={(event) => { const file = event.target.files?.[0]; if (file) onImport(file); event.target.value = ""; }} /></label></div>
     <div className="privacy-note"><Activity size={16} /><span><strong>Privado por padrão.</strong> Arquivos ficam em {project.directory}; não são enviados para serviços externos.</span></div>
-    <div className="media-table"><div className="media-table-head"><span>ARQUIVO</span><span>TIPO</span><span>TAMANHO</span><span>LOCALIZAÇÃO</span></div>
+    {transcript && <div className="transcript-panel">
+      <div className="panel-header"><div><h2>Transcrição · {transcript.source}</h2><span className="panel-subtitle">{transcript.segments} segmentos · idioma {transcript.language}</span></div><button className="icon-button" onClick={onDismissTranscript} aria-label="Fechar transcrição"><X size={15} /></button></div>
+      <div className="transcript-body"><p>{transcript.text}</p></div>
+      <div className="transcript-footer"><code>{transcript.transcriptPath}</code><code>{transcript.srtPath}</code></div>
+    </div>}
+    <div className="media-table"><div className="media-table-head"><span>ARQUIVO</span><span>TIPO</span><span>TAMANHO</span><span>LOCALIZAÇÃO</span><span>TRANSCRIÇÃO</span></div>
       {files.filter((file) => ["audio", "image", "video", "font"].includes(file.kind)).map((file) => {
         const Icon = fileIcon(file.kind);
-        return <div className="media-row" key={file.path}><div className="media-name"><span className={`asset-icon ${file.kind}`}><Icon size={16} /></span><span><strong>{file.name}</strong><small>{file.kind === "audio" ? "Áudio" : file.kind === "image" ? "Imagem" : file.kind === "video" ? "Vídeo" : "Fonte"}{file.duration !== null ? ` · ${formatDuration(file.duration)}` : ""}</small></span></div><span className="type-pill">{file.kind}</span><span>{formatSize(file.size)}</span><code>{file.path}</code></div>;
+        const canTranscribe = file.kind === "audio" || file.kind === "video";
+        return <div className="media-row" key={file.path}><div className="media-name"><span className={`asset-icon ${file.kind}`}><Icon size={16} /></span><span><strong>{file.name}</strong><small>{file.kind === "audio" ? "Áudio" : file.kind === "image" ? "Imagem" : file.kind === "video" ? "Vídeo" : "Fonte"}{file.duration !== null ? ` · ${formatDuration(file.duration)}` : ""}</small></span></div><span className="type-pill">{file.kind}</span><span>{formatSize(file.size)}</span><code>{file.path}</code>{canTranscribe ? <button className="button small secondary" disabled={busy || Boolean(transcribing)} onClick={() => onTranscribe(file)}>{transcribing === file.path ? <><LoaderCircle className="spin" size={13} /> Transcrevendo</> : <><AudioLines size={13} /> Transcrever</>}</button> : <span className="muted">—</span>}</div>;
       })}
       {!files.some((file) => ["audio", "image", "video", "font"].includes(file.kind)) && <div className="empty-table"><ImagePlus size={20} /><strong>Nenhuma mídia neste projeto</strong><span>Importe áudios, imagens e vídeos suportados.</span></div>}
     </div>

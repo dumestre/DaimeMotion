@@ -32,16 +32,47 @@ export interface ApprovedReference {
 }
 
 export interface ToolStatus {
-  name: "OpenCode" | "HyperFrames" | "FFmpeg";
+  name: "OpenCode" | "HyperFrames" | "FFmpeg" | "whisper.cpp";
   available: boolean;
   version: string | null;
   installHint: string;
 }
 
+export interface TranscriptSegment {
+  start: number;
+  end: number;
+  text: string;
+}
+
+export interface TranscriptWord {
+  start: number;
+  end: number;
+  text: string;
+}
+
+export interface Transcript {
+  source: string;
+  language: string;
+  model: string;
+  generatedAt: string;
+  segments: TranscriptSegment[];
+  words: TranscriptWord[];
+  text: string;
+}
+
+export interface TranscriptSummary {
+  source: string;
+  transcriptPath: string;
+  srtPath: string;
+  language: string;
+  segments: number;
+  text: string;
+}
+
 export interface TaskSnapshot {
   id: string;
   projectId: string;
-  kind: "agent" | "render";
+  kind: "agent" | "render" | "transcribe";
   status: "running" | "completed" | "failed" | "cancelled";
   output: string[];
   error: string | null;

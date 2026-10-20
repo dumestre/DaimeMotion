@@ -98,6 +98,23 @@ deterministic three.js scene. When editing or extending a 3D scene, follow the
   duration auto-inference. Register the paused GSAP timeline under the root
   composition ID as usual for any HTML/caption motion layered over the canvas.
 
+## Transcribe audio and video locally
+
+Daime Motion can transcribe audio or video assets with the local whisper.cpp
+engine (no upload, no cloud). From the media library, choose "Transcrever" on an
+audio or video asset. The app:
+
+- Converts the asset to 16 kHz mono WAV with FFmpeg, then runs `whisper-cli`
+  with word-level timestamps (`-ml 1 -sow -ojf -osrt`).
+- Writes `transcripts/<asset>.json` (segments, word timings, language) and
+  `transcripts/<asset>.srt` into the project.
+
+Requirements: `whisper-cli` on the `PATH`, a model at `data/models/ggml-base.bin`
+(or `DAIME_WHISPER_MODEL`), and FFmpeg. When a transcript exists, you can use its
+segments or word timings to synchronize captions, cuts and other motion with the
+spoken audio inside the composition. Do not claim a transcription succeeded
+without the generated files; report the real `whisper-cli` output when it fails.
+
 ## Validate the exact change
 
 After editing a composition:
