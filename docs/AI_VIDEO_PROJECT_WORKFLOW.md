@@ -100,20 +100,43 @@ deterministic three.js scene. When editing or extending a 3D scene, follow the
 
 ## Transcribe audio and video locally
 
-Daime Motion can transcribe audio or video assets with the local whisper.cpp
-engine (no upload, no cloud). From the media library, choose "Transcrever" on an
-audio or video asset. The app:
+Daime Motion can transcribe audio or video assets with two local engines (no
+upload, no cloud). From the media library, pick the engine and choose
+"Transcrever" on an audio or video asset:
 
-- Converts the asset to 16 kHz mono WAV with FFmpeg, then runs `whisper-cli`
-  with word-level timestamps (`-ml 1 -sow -ojf -osrt`).
-- Writes `transcripts/<asset>.json` (segments, word timings, language) and
-  `transcripts/<asset>.srt` into the project.
+- **whisper.cpp** (`whisper-cli`): converts to 16 kHz mono WAV with FFmpeg, then
+  runs `whisper-cli -m <model> -ojf -osrt -ml 1 -sow`.
+- **whisper (Python)** (`openai-whisper`): runs `python -m whisper <wav> --model
+  turbo --output_format json --word_timestamps True` after the same FFmpeg
+  conversion.
 
-Requirements: `whisper-cli` on the `PATH`, a model at `data/models/ggml-base.bin`
-(or `DAIME_WHISPER_MODEL`), and FFmpeg. When a transcript exists, you can use its
+Both engines write `transcripts/<asset>.json` (segments, word timings,
+language) and `transcripts/<asset>.srt` into the project. Requirements:
+FFmpeg; for whisper.cpp a model at `data/models/ggml-base.bin` (or
+`DAIME_WHISPER_MODEL`) and `whisper-cli` on the `PATH`; for the Python engine the
+`openai-whisper` package and `python` on the `PATH` (model selectable via
+`DAIME_WHISPER_PYTHON_MODEL`, default `turbo`). When a transcript exists, use its
 segments or word timings to synchronize captions, cuts and other motion with the
-spoken audio inside the composition. Do not claim a transcription succeeded
-without the generated files; report the real `whisper-cli` output when it fails.
+spoken audio. Do not claim a transcription succeeded without the generated
+files; report the real engine output when it fails.
+
+## Cut dead space with auto-editor
+
+Daime Motion can run the local `auto-editor` engine (https://auto-editor.com) to
+trim silence or motionless sections from an audio or video asset. From the media
+library, set the cut method and the output mode, then choose "Editar" on an
+audio or video asset:
+
+- **Corte** `audio` (silence, default) or `motion` (motionlessness).
+- **Saída** a trimmed video/audio file, or an editor project: Premiere (`--export
+  premiere`), Resolve (`--export resolve`) or a clip sequence (`--export
+  clip-sequence`).
+
+Everything is written to the project's `exports/` folder; nothing is uploaded.
+Requirements: `auto-editor` on the `PATH` (see
+https://auto-editor.com/installing) and FFmpeg. Auto-editing is never started
+automatically and never replaces the original asset; treat the output as a new
+file and report the real `auto-editor` output when it fails.
 
 ## Validate the exact change
 

@@ -58,4 +58,30 @@ describe("whisper transcription helpers", () => {
     const parsed = parseWhisperJson(JSON.stringify({ transcription: [{ offsets: { from: 0, to: 1000 }, text: "hi" }] }));
     expect(parsed.language).toBe("auto");
   });
+
+  it("parses the openai/whisper (Python) JSON shape with word timings", () => {
+    const raw = JSON.stringify({
+      text: "Olá mundo",
+      language: "pt",
+      segments: [
+        {
+          id: 0,
+          start: 0,
+          end: 1.5,
+          text: " Olá mundo",
+          words: [
+            { word: "Olá", start: 0, end: 0.7 },
+            { word: "mundo", start: 0.7, end: 1.5 },
+          ],
+        },
+      ],
+    });
+    const parsed = parseWhisperJson(raw);
+    expect(parsed.language).toBe("pt");
+    expect(parsed.segments).toEqual([{ start: 0, end: 1.5, text: "Olá mundo" }]);
+    expect(parsed.words).toEqual([
+      { start: 0, end: 0.7, text: "Olá" },
+      { start: 0.7, end: 1.5, text: "mundo" },
+    ]);
+  });
 });

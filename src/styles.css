@@ -238,10 +238,18 @@ button:disabled { cursor: not-allowed !important; opacity: .55; }
 .global-skills-warning > svg { flex: 0 0 auto; color: #e3bb75; }
 
 .media-page .page-heading { align-items: center; }
+.media-heading-actions { display: flex; align-items: flex-end; gap: 12px; }
+.engine-picker { display: grid; gap: 5px; color: var(--muted); font: 9px var(--mono); letter-spacing: .7px; text-transform: uppercase; }
+.engine-picker .select-wrap select { min-width: 160px; }
+.autoedit-bar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; margin-top: 19px; border: 1px solid var(--line); border-radius: 9px; padding: 13px 16px; background: var(--surface); }
+.autoedit-title { display: flex; align-items: center; gap: 8px; color: var(--text); font-size: 11px; }
+.autoedit-title svg { color: var(--detail); }
+.autoedit-field { display: grid; gap: 5px; color: var(--muted); font: 9px var(--mono); letter-spacing: .7px; text-transform: uppercase; }
+.autoedit-field .select-wrap select { min-width: 190px; }
 .privacy-note { display: flex; align-items: center; gap: 9px; border: 1px solid var(--line); border-radius: 7px; padding: 12px; background: var(--surface); color: var(--detail); font-size: 10px; }
 .privacy-note strong { color: var(--text); }
 .media-table { overflow: hidden; margin-top: 19px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
-.media-table-head, .media-row { display: grid; grid-template-columns: minmax(190px, 1.4fr) 80px 100px minmax(140px, 1fr) 120px; align-items: center; gap: 13px; padding: 0 16px; }
+.media-table-head, .media-row { display: grid; grid-template-columns: minmax(180px, 1.4fr) 74px 92px minmax(130px, 1fr) 118px 108px; align-items: center; gap: 12px; padding: 0 16px; }
 .media-table-head { min-height: 38px; border-bottom: 1px solid var(--line); color: var(--muted); font: 9px var(--mono); letter-spacing: .7px; }
 .media-row { min-height: 58px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 10px; }
 .media-name { display: flex; align-items: center; gap: 9px; min-width: 0; }

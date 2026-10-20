@@ -16,6 +16,7 @@ import type {
   TranscriptSegment,
   TranscriptSummary,
   TranscriptWord,
+  TranscriptionEngine,
 } from "../src/shared/types.js";
 import { PathSafetyError, resolveWithinDirectory, sanitizeFilename as safeFilename } from "./path-safety.js";
 import { installProjectGuidance } from "./project-guidance.js";
@@ -211,7 +212,9 @@ function cliArguments(name: string, args: string[]): { command: string; args: st
         ? "Instale e configure o OpenCode para enviar instruções."
         : name === "whisper-cli"
           ? "Instale o whisper.cpp e garanta que o whisper-cli esteja no PATH para transcrever áudios."
-          : "Instale o HyperFrames CLI e o FFmpeg conforme a documentação oficial.";
+          : name === "auto-editor"
+            ? "Instale o Auto-Editor (https://auto-editor.com/installing) e adicione-o ao PATH para cortar silêncios."
+            : "Instale o HyperFrames CLI e o FFmpeg conforme a documentação oficial.";
     throw new HttpError(503, `${name} não foi encontrado. ${help}`);
   }
   return { command: resolved.command, args: [...resolved.prefixArgs, ...args] };
@@ -437,26 +440,19 @@ function whisperModelPath(): string | null {
   return null;
 }
 
-async function readWhisperOutput(jsonBase: string): Promise<{ segments: TranscriptSegment[]; words: TranscriptWord[]; language: string }> {
-  let raw: string;
-  try {
-    raw = await fs.readFile(`${jsonBase}.json`, "utf8");
-  } catch (error) {
-    throw new HttpError(502, `O whisper.cpp não gerou o arquivo JSON esperado: ${(error as Error).message}`);
-  }
-  try {
-    return parseWhisperJson(raw);
-  } catch (error) {
-    throw new HttpError(502, `Não foi possível interpretar a saída JSON do whisper.cpp: ${(error as Error).message}`);
-  }
+function whisperPythonModel(): string {
+  const configured = process.env.DAIME_WHISPER_PYTHON_MODEL?.trim();
+  return configured || "turbo";
 }
 
-async function transcribeProjectMedia(project: Project, source: ProjectFile): Promise<TranscriptSummary> {
-  if (source.kind !== "audio" && source.kind !== "video") {
-    throw new HttpError(400, "Somente áudios e vídeos podem ser transcritos.");
-  }
-  const projectDir = safeProjectDirectory(project.id);
-  const sourcePath = assertInside(projectDir, path.join(projectDir, source.path));
+interface TranscriptionResult {
+  segments: TranscriptSegment[];
+  words: TranscriptWord[];
+  language: string;
+  model: string;
+}
+
+async function runWhisperCpp(projectDir: string, base: string, wavPath: string): Promise<TranscriptionResult> {
   const modelPath = whisperModelPath();
   if (!modelPath) {
     throw new HttpError(503, "Nenhum modelo do whisper.cpp foi encontrado. Coloque ggml-base.bin em data/models ou defina DAIME_WHISPER_MODEL.");
@@ -464,22 +460,6 @@ async function transcribeProjectMedia(project: Project, source: ProjectFile): Pr
   if (!resolveCli("whisper-cli")) {
     throw new HttpError(503, "whisper-cli não foi encontrado no PATH. Instale o whisper.cpp e adicione o binário ao PATH.");
   }
-  const workDir = path.join(projectDir, ".daime-transcripts");
-  await fs.mkdir(workDir, { recursive: true });
-  const stem = path.basename(source.path, path.extname(source.path)).replace(/[^\w.-]+/g, "_").slice(0, 60) || "media";
-  const base = path.join(workDir, `${stem}-${Date.now().toString(36)}`);
-  const wavPath = `${base}.wav`;
-
-  const ffmpeg = await runCapture(
-    "ffmpeg",
-    ["-hide_banner", "-loglevel", "error", "-y", "-i", sourcePath, "-vn", "-ac", "1", "-ar", "16000", "-c:a", "pcm_s16le", wavPath],
-    projectDir,
-    180_000,
-  );
-  if (ffmpeg.code !== 0) {
-    throw new HttpError(502, `O FFmpeg falhou ao preparar o áudio para transcrição. Saída: ${ffmpeg.output || "sem detalhes"}`);
-  }
-
   const whisper = await runCapture(
     "whisper-cli",
     ["-m", modelPath, "-f", wavPath, "-ojf", "-osrt", "-ml", "1", "-sow", "-of", base, "-np"],
@@ -487,49 +467,134 @@ async function transcribeProjectMedia(project: Project, source: ProjectFile): Pr
     900_000,
   );
   if (whisper.code !== 0) {
-    await fs.rm(wavPath, { force: true }).catch(() => undefined);
     throw new HttpError(502, `O whisper.cpp falhou ao transcrever. Saída: ${whisper.output || "sem detalhes"}`);
   }
+  let raw: string;
+  try {
+    raw = await fs.readFile(`${base}.json`, "utf8");
+  } catch (error) {
+    throw new HttpError(502, `O whisper.cpp não gerou o arquivo JSON esperado: ${(error as Error).message}`);
+  }
+  let parsed: { segments: TranscriptSegment[]; words: TranscriptWord[]; language: string };
+  try {
+    parsed = parseWhisperJson(raw);
+  } catch (error) {
+    throw new HttpError(502, `Não foi possível interpretar a saída JSON do whisper.cpp: ${(error as Error).message}`);
+  }
+  return { ...parsed, model: path.basename(modelPath) };
+}
 
-  const { segments, words, language } = await readWhisperOutput(base);
-  if (segments.length === 0) {
+async function runWhisperPython(projectDir: string, wavPath: string): Promise<TranscriptionResult> {
+  const outputDir = path.join(path.dirname(wavPath), `python-${path.basename(wavPath, ".wav")}`);
+  await fs.mkdir(outputDir, { recursive: true });
+  const model = whisperPythonModel();
+  const python = resolveCli("python") ? "python" : resolveCli("python3") ? "python3" : null;
+  if (!python) {
+    throw new HttpError(503, "O interpretador Python não foi encontrado no PATH. Instale o Python e o pacote openai-whisper.");
+  }
+  const whisper = await runCapture(
+    python,
+    [
+      "-m", "whisper", wavPath,
+      "--model", model,
+      "--output_dir", outputDir,
+      "--output_format", "json",
+      "--word_timestamps", "True",
+      "--fp16", "False",
+      "--verbose", "False",
+    ],
+    projectDir,
+    1_800_000,
+  );
+  if (whisper.code !== 0) {
+    throw new HttpError(502, `O whisper (Python) falhou ao transcrever. Saída: ${whisper.output || "sem detalhes"}`);
+  }
+  const jsonPath = path.join(outputDir, `${path.basename(wavPath, ".wav")}.json`);
+  let raw: string;
+  try {
+    raw = await fs.readFile(jsonPath, "utf8");
+  } catch (error) {
+    throw new HttpError(502, `O whisper (Python) não gerou o arquivo JSON esperado: ${(error as Error).message}`);
+  }
+  let parsed: { segments: TranscriptSegment[]; words: TranscriptWord[]; language: string };
+  try {
+    parsed = parseWhisperJson(raw);
+  } catch (error) {
+    throw new HttpError(502, `Não foi possível interpretar a saída JSON do whisper: ${(error as Error).message}`);
+  }
+  return { ...parsed, model: `openai/whisper ${model}` };
+}
+
+async function transcribeProjectMedia(
+  project: Project,
+  source: ProjectFile,
+  engine: TranscriptionEngine,
+): Promise<TranscriptSummary> {
+  if (source.kind !== "audio" && source.kind !== "video") {
+    throw new HttpError(400, "Somente áudios e vídeos podem ser transcritos.");
+  }
+  const projectDir = safeProjectDirectory(project.id);
+  const sourcePath = assertInside(projectDir, path.join(projectDir, source.path));
+  const workDir = path.join(projectDir, ".daime-transcripts");
+  await fs.mkdir(workDir, { recursive: true });
+  const stem = path.basename(source.path, path.extname(source.path)).replace(/[^\w.-]+/g, "_").slice(0, 60) || "media";
+  const base = path.join(workDir, `${stem}-${Date.now().toString(36)}`);
+  const wavPath = `${base}.wav`;
+
+  try {
+    const ffmpeg = await runCapture(
+      "ffmpeg",
+      ["-hide_banner", "-loglevel", "error", "-y", "-i", sourcePath, "-vn", "-ac", "1", "-ar", "16000", "-c:a", "pcm_s16le", wavPath],
+      projectDir,
+      180_000,
+    );
+    if (ffmpeg.code !== 0) {
+      throw new HttpError(502, `O FFmpeg falhou ao preparar o áudio para transcrição. Saída: ${ffmpeg.output || "sem detalhes"}`);
+    }
+
+    const result = engine === "whisper-python"
+      ? await runWhisperPython(projectDir, wavPath)
+      : await runWhisperCpp(projectDir, base, wavPath);
+
+    if (result.segments.length === 0) {
+      throw new HttpError(422, "Nenhuma fala foi reconhecida neste arquivo.");
+    }
+
+    const transcript: Transcript = {
+      source: source.path,
+      language: result.language,
+      model: result.model,
+      generatedAt: new Date().toISOString(),
+      segments: result.segments,
+      words: result.words,
+      text: result.segments.map((segment) => segment.text).join(" ").trim(),
+    };
+
+    const transcriptsDir = path.join(projectDir, "transcripts");
+    await fs.mkdir(transcriptsDir, { recursive: true });
+    const transcriptPath = assertInside(projectDir, path.join(transcriptsDir, `${stem}.json`));
+    const srtPath = assertInside(projectDir, path.join(transcriptsDir, `${stem}.srt`));
+    await fs.writeFile(transcriptPath, JSON.stringify(transcript, null, 2), "utf8");
+    await fs.writeFile(srtPath, segmentsToSrt(result.segments), "utf8");
+
+    const projects = await readProjects();
+    const current = projects.find((item) => item.id === project.id);
+    if (current) {
+      current.updatedAt = new Date().toISOString();
+      await writeProjects(projects);
+    }
+
+    return {
+      source: source.path,
+      transcriptPath: path.relative(projectDir, transcriptPath).split(path.sep).join("/"),
+      srtPath: path.relative(projectDir, srtPath).split(path.sep).join("/"),
+      language: result.language,
+      segments: result.segments.length,
+      text: transcript.text,
+    };
+  } finally {
     await fs.rm(wavPath, { force: true }).catch(() => undefined);
-    throw new HttpError(422, "O whisper.cpp não reconheceu fala neste arquivo.");
   }
-
-  const transcript: Transcript = {
-    source: source.path,
-    language,
-    model: path.basename(modelPath),
-    generatedAt: new Date().toISOString(),
-    segments,
-    words,
-    text: segments.map((segment) => segment.text).join(" ").trim(),
-  };
-
-  const transcriptsDir = path.join(projectDir, "transcripts");
-  await fs.mkdir(transcriptsDir, { recursive: true });
-  const transcriptPath = assertInside(projectDir, path.join(transcriptsDir, `${stem}.json`));
-  const srtPath = assertInside(projectDir, path.join(transcriptsDir, `${stem}.srt`));
-  await fs.writeFile(transcriptPath, JSON.stringify(transcript, null, 2), "utf8");
-  await fs.writeFile(srtPath, segmentsToSrt(segments), "utf8");
-  await fs.rm(wavPath, { force: true }).catch(() => undefined);
-
-  const projects = await readProjects();
-  const current = projects.find((item) => item.id === project.id);
-  if (current) {
-    current.updatedAt = new Date().toISOString();
-    await writeProjects(projects);
-  }
-
-  return {
-    source: source.path,
-    transcriptPath: path.relative(projectDir, transcriptPath).split(path.sep).join("/"),
-    srtPath: path.relative(projectDir, srtPath).split(path.sep).join("/"),
-    language,
-    segments: segments.length,
-    text: transcript.text,
-  };
 }
 
 async function startTask(
@@ -650,6 +715,8 @@ app.get("/api/health", async (_request, response, next) => {
       getToolStatus("HyperFrames", "hyperframes", ["--version"], "Instale o HyperFrames CLI pela documentação oficial."),
       getToolStatus("FFmpeg", "ffmpeg", ["-version"], "Instale o FFmpeg e adicione-o ao PATH."),
       getToolStatus("whisper.cpp", "whisper-cli", ["--help"], "Compile o whisper.cpp e adicione o whisper-cli ao PATH."),
+      getToolStatus("whisper", "python", ["-m", "whisper", "--help"], "Instale o Python e o pacote openai-whisper (pip install -U openai-whisper)."),
+      getToolStatus("auto-editor", "auto-editor", ["--version"], "Instale o Auto-Editor (https://auto-editor.com/installing) e adicione-o ao PATH."),
     ]);
     response.json({ ok: true, dataDirectory: dataRoot, tools });
   } catch (error) {
@@ -1075,6 +1142,70 @@ app.post("/api/projects/:id/preview/stop", projectMiddleware, (request, response
   response.status(204).end();
 });
 
+const autoEditMethods = new Set(["audio", "motion", "none"]);
+const autoEditExports = new Set(["default", "premiere", "resolve", "final-cut-pro", "shotcut", "kdenlive", "clip-sequence"]);
+
+app.post("/api/projects/:id/auto-edit", projectMiddleware, async (request, response, next) => {
+  try {
+    const project = await getProject(routeId(request));
+    if (!resolveCli("auto-editor")) {
+      throw new HttpError(503, "auto-editor não foi encontrado no PATH. Instale o Auto-Editor (https://auto-editor.com/installing).");
+    }
+    if ([...tasks.values()].some(({ snapshot }) => snapshot.projectId === project.id && snapshot.status === "running")) {
+      throw new HttpError(409, "Aguarde ou cancele a tarefa atual antes de editar automaticamente.");
+    }
+    const requestedPath = typeof request.body?.path === "string" ? request.body.path.trim() : "";
+    if (!requestedPath) throw new HttpError(400, "Escolha um arquivo de áudio ou vídeo do projeto.");
+    const projectDir = safeProjectDirectory(project.id);
+    const files = await listProjectFiles(projectDir);
+    const source = files.find((file) => file.path === requestedPath);
+    if (!source) throw new HttpError(404, "O arquivo informado não existe neste projeto.");
+    if (source.kind !== "audio" && source.kind !== "video") {
+      throw new HttpError(400, "Somente áudios e vídeos podem ser editados automaticamente.");
+    }
+    const edit = typeof request.body?.edit === "string" ? request.body.edit : "audio";
+    if (!autoEditMethods.has(edit)) {
+      throw new HttpError(400, "Método de corte inválido. Use 'audio' ou 'motion'.");
+    }
+    const exportMode = typeof request.body?.export === "string" ? request.body.export : "default";
+    if (!autoEditExports.has(exportMode)) {
+      throw new HttpError(400, "Modo de exportação inválido.");
+    }
+    const margin = typeof request.body?.margin === "string" ? request.body.margin.trim() : "";
+    if (margin && !/^\d+(?:\.\d+)?(?:s|sec|secs|ms)?(?:,\d+(?:\.\d+)?(?:s|sec|secs|ms)?)?$/.test(margin)) {
+      throw new HttpError(400, "Margem inválida. Use segundos, ex.: 0.2s ou 0.3s,1.5s.");
+    }
+
+    const sourcePath = assertInside(projectDir, path.join(projectDir, source.path));
+    const exportsDir = path.join(projectDir, "exports");
+    await fs.mkdir(exportsDir, { recursive: true });
+    const stem = path.basename(source.path, path.extname(source.path)).replace(/[^\w.-]+/g, "_").slice(0, 60) || "media";
+    const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\..+/, "");
+
+    const args = [sourcePath, "--no-open", "--quiet"];
+    if (edit !== "audio") args.push("--edit", edit);
+    if (margin) args.push("--margin", margin);
+
+    if (exportMode !== "default") {
+      args.push("--export", exportMode);
+      const ext = exportMode === "clip-sequence" ? "txt" : "xml";
+      const outputPath = assertInside(projectDir, path.join(exportsDir, `${stem}-autoedit-${stamp}.${ext}`));
+      args.push("--output", outputPath);
+      const snapshot = await startTask(project, "auto-edit", "auto-editor", args);
+      response.status(202).json({ task: snapshot, outputPath });
+      return;
+    }
+
+    const extension = [".mp3", ".wav", ".aac", ".m4a", ".flac", ".ogg"].includes(path.extname(source.name).toLowerCase()) ? ".m4a" : ".mp4";
+    const outputPath = assertInside(projectDir, path.join(exportsDir, `${stem}-autoedit-${stamp}${extension}`));
+    args.push("--output", outputPath);
+    const snapshot = await startTask(project, "auto-edit", "auto-editor", args);
+    response.status(202).json({ task: snapshot, outputPath });
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.post("/api/projects/:id/export", projectMiddleware, async (request, response, next) => {
   try {
     const project = await getProject(routeId(request));
@@ -1132,11 +1263,12 @@ app.post("/api/projects/:id/transcribe", projectMiddleware, async (request, resp
     }
     const requestedPath = typeof request.body?.path === "string" ? request.body.path.trim() : "";
     if (!requestedPath) throw new HttpError(400, "Escolha um arquivo de áudio ou vídeo do projeto.");
+    const engine: TranscriptionEngine = request.body?.engine === "whisper-python" ? "whisper-python" : "whisper-cpp";
     const projectDir = safeProjectDirectory(project.id);
     const files = await listProjectFiles(projectDir);
     const source = files.find((file) => file.path === requestedPath);
     if (!source) throw new HttpError(404, "O arquivo informado não existe neste projeto.");
-    const summary = await transcribeProjectMedia(project, source);
+    const summary = await transcribeProjectMedia(project, source, engine);
     response.status(201).json(summary);
   } catch (error) {
     next(error);

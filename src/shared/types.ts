@@ -32,11 +32,13 @@ export interface ApprovedReference {
 }
 
 export interface ToolStatus {
-  name: "OpenCode" | "HyperFrames" | "FFmpeg" | "whisper.cpp";
+  name: "OpenCode" | "HyperFrames" | "FFmpeg" | "whisper.cpp" | "whisper" | "auto-editor";
   available: boolean;
   version: string | null;
   installHint: string;
 }
+
+export type TranscriptionEngine = "whisper-cpp" | "whisper-python";
 
 export interface TranscriptSegment {
   start: number;
@@ -72,7 +74,7 @@ export interface TranscriptSummary {
 export interface TaskSnapshot {
   id: string;
   projectId: string;
-  kind: "agent" | "render" | "transcribe";
+  kind: "agent" | "render" | "transcribe" | "auto-edit";
   status: "running" | "completed" | "failed" | "cancelled";
   output: string[];
   error: string | null;
