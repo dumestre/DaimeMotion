@@ -272,7 +272,7 @@ export default function App() {
       const created = await api<Project>("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...draft, allowGlobalSkills }),
+        body: JSON.stringify({ ...draft, templateId: selectedTemplateId, allowGlobalSkills }),
       });
       setProjects((current) => [created, ...current]);
       setModal(null);

@@ -78,6 +78,26 @@ When adding or changing a scene:
 - Do not add a new visual treatment, music, narration or other capability
   outside the user's request without asking first.
 
+## Author three.js scenes safely
+
+Some templates (`music-video-3d`, `vertical-social-3d`, `square-promo-3d`) seed a
+deterministic three.js scene. When editing or extending a 3D scene, follow the
+`/hyperframes-animation` adapter rules for Three.js:
+
+- Load three.js from the importmap already in the file (pinned to
+  `three@0.186.0`); keep the `three` and `three/addons/` entries on the same
+  version. Do not fetch models or textures at seek time.
+- Create the scene, camera, renderer, materials and assets synchronously. Set a
+  fixed `renderer.setSize(width, height, false)` and `setPixelRatio(1)` matching
+  the root `data-width` / `data-height`; never depend on device pixel ratio.
+- Render from HyperFrames time only. Listen for the `hf-seek` event, read
+  `event.detail.time` (or `window.__hfThreeTime`), and call one `renderAt(time)`
+  that derives every value from `time`. Do not use `requestAnimationFrame`,
+  `renderer.setAnimationLoop`, `Date.now`, `performance.now`, or clock deltas.
+- Keep `data-duration` on the root composition; the `three` adapter has no
+  duration auto-inference. Register the paused GSAP timeline under the root
+  composition ID as usual for any HTML/caption motion layered over the canvas.
+
 ## Validate the exact change
 
 After editing a composition:

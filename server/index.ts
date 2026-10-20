@@ -1,7 +1,6 @@
 import { spawn, type ChildProcess } from "node:child_process";
 import { existsSync, promises as fs } from "node:fs";
 import http from "node:http";
-import os from "node:os";
 import path from "node:path";
 import express, { type ErrorRequestHandler, type NextFunction, type Request, type Response } from "express";
 import multer from "multer";
@@ -16,6 +15,7 @@ import type {
 } from "../src/shared/types.js";
 import { PathSafetyError, resolveWithinDirectory, sanitizeFilename as safeFilename } from "./path-safety.js";
 import { installProjectGuidance } from "./project-guidance.js";
+import { isTemplateId, seedProjectComposition, type TemplateId } from "./templates.js";
 
 const port = Number(process.env.DAIME_PORT ?? 4317);
 const projectRoot = path.resolve(process.cwd());
@@ -56,6 +56,33 @@ const templates: ProjectTemplate[] = [
     resolution: "square",
     frameRate: 30,
     style: "Hierarquia clara, enquadramento central e contraste forte.",
+  },
+  {
+    id: "music-video-3d",
+    name: "Videoclipe 3D",
+    description: "Composição 3D com malha wireframe e câmera animada.",
+    aspectRatio: "16:9",
+    resolution: "landscape",
+    frameRate: 30,
+    style: "Sólido 3D orbitando, wireframe e profundidade de câmera.",
+  },
+  {
+    id: "vertical-social-3d",
+    name: "Social vertical 3D",
+    description: "Vídeo vertical com cena tridimensional.",
+    aspectRatio: "9:16",
+    resolution: "portrait",
+    frameRate: 30,
+    style: "Objeto 3D central, leitura rápida e contraste forte.",
+  },
+  {
+    id: "square-promo-3d",
+    name: "Promo quadrado 3D",
+    description: "Peça promocional quadrada com volume 3D.",
+    aspectRatio: "1:1",
+    resolution: "square",
+    frameRate: 30,
+    style: "Volume tridimensional centralizado e enquadramento simétrico.",
   },
 ];
 
@@ -339,6 +366,7 @@ function validateProjectRequest(body: unknown): {
   aspectRatio: AspectRatio;
   resolution: string;
   frameRate: number;
+  templateId: TemplateId;
 } {
   if (!body || typeof body !== "object") throw new HttpError(400, "Informe os dados do projeto.");
   const value = body as Record<string, unknown>;
@@ -348,6 +376,7 @@ function validateProjectRequest(body: unknown): {
   const aspectRatio = value.aspectRatio;
   const resolution = value.resolution;
   const frameRate = value.frameRate;
+  const templateId = isTemplateId(value.templateId) ? value.templateId : "music-video";
   if (name.length < 1 || name.length > 80) throw new HttpError(400, "O nome deve ter entre 1 e 80 caracteres.");
   if (description.length > 500) throw new HttpError(400, "A descrição pode ter no máximo 500 caracteres.");
   if (typeof aspectRatio !== "string" || !ratios.includes(aspectRatio as AspectRatio)) {
@@ -373,7 +402,7 @@ function validateProjectRequest(body: unknown): {
   if (typeof frameRate !== "number" || ![24, 25, 30, 50, 60].includes(frameRate)) {
     throw new HttpError(400, "Taxa de quadros não suportada.");
   }
-  return { name, description, aspectRatio: aspectRatio as AspectRatio, resolution, frameRate };
+  return { name, description, aspectRatio: aspectRatio as AspectRatio, resolution, frameRate, templateId };
 }
 
 async function applyFrameRate(projectDir: string, frameRate: number): Promise<void> {
@@ -542,6 +571,16 @@ app.post("/api/projects", async (request, response, next) => {
       throw new HttpError(500, `O HyperFrames não conseguiu inicializar o projeto. ${result.output}`);
     }
     await applyFrameRate(projectDir, input.frameRate);
+    try {
+      await seedProjectComposition(projectDir, {
+        templateId: input.templateId,
+        name: input.name,
+        resolution: input.resolution,
+        frameRate: input.frameRate,
+      });
+    } catch (error) {
+      console.error(`Falha ao semear a composição do template ${input.templateId}: ${(error as Error).message}`);
+    }
     const now = new Date().toISOString();
     const project: Project = {
       id,
