@@ -22,6 +22,7 @@ import { PathSafetyError, resolveWithinDirectory, sanitizeFilename as safeFilena
 import { installProjectGuidance } from "./project-guidance.js";
 import { isTemplateId, seedProjectComposition, type TemplateId } from "./templates.js";
 import { parseWhisperJson, segmentsToSrt } from "./transcription.js";
+import { generateTts, ptBrVoices, type TtsOptions } from "./tts.js";
 
 const port = Number(process.env.DAIME_PORT ?? 4317);
 const projectRoot = path.resolve(process.cwd());
@@ -1316,6 +1317,57 @@ app.post("/api/projects/:id/warmup", projectMiddleware, async (request, response
       },
     );
     response.status(204).end();
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/tts/voices", (_request, response) => response.json(ptBrVoices));
+
+app.post("/api/projects/:id/tts", projectMiddleware, async (request, response, next) => {
+  try {
+    const project = await getProject(routeId(request));
+    const text = typeof request.body?.text === "string" ? request.body.text.trim() : "";
+    if (!text || text.length > 5_000) {
+      throw new HttpError(400, "O texto deve ter entre 1 e 5.000 caracteres.");
+    }
+    const voiceId = typeof request.body?.voiceId === "string" ? request.body.voiceId : undefined;
+    const rate = typeof request.body?.rate === "string" ? request.body.rate : undefined;
+    const pitch = typeof request.body?.pitch === "string" ? request.body.pitch : undefined;
+    const volume = typeof request.body?.volume === "string" ? request.body.volume : undefined;
+    const filename = typeof request.body?.filename === "string" ? request.body.filename.trim() : "";
+    if (filename && (filename.length > 100 || /[<>:"/\\|?*\u0000-\u001f]/.test(filename))) {
+      throw new HttpError(400, "Nome de arquivo inválido.");
+    }
+
+    const projectDir = safeProjectDirectory(project.id);
+    const assetsDir = path.join(projectDir, "assets");
+    await fs.mkdir(assetsDir, { recursive: true });
+
+    const stem = filename
+      ? filename.replace(/\.mp3$/i, "")
+      : `narracao-${Date.now().toString(36)}`;
+    const outputName = `${stem}.mp3`;
+    const outputPath = assertInside(projectDir, path.join(assetsDir, outputName));
+
+    const ttsOptions: TtsOptions = { text, voiceId, rate, pitch, volume };
+    await generateTts(outputPath, ttsOptions);
+
+    const stat = await fs.stat(outputPath);
+
+    const projects = await readProjects();
+    const current = projects.find((item) => item.id === project.id);
+    if (current) {
+      current.updatedAt = new Date().toISOString();
+      await writeProjects(projects);
+    }
+
+    response.status(201).json({
+      name: outputName,
+      path: `assets/${outputName}`,
+      size: stat.size,
+      voice: voiceId || "pt-BR-FranciscaNeural",
+    });
   } catch (error) {
     next(error);
   }

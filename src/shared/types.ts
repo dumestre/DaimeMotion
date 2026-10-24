@@ -95,3 +95,17 @@ export interface ProjectTemplate {
 export interface ApiError {
   error: string;
 }
+
+export interface TtsVoice {
+  id: string;
+  name: string;
+  gender: "feminino" | "masculino";
+}
+
+export interface TtsGenerateResult {
+  name: string;
+  path: string;
+  size: number;
+  voice: string;
+}
+

@@ -15,6 +15,7 @@ import {
   FolderOpen,
   ImagePlus,
   LoaderCircle,
+  Mic,
   MonitorPlay,
   MoreHorizontal,
   Plus,
@@ -73,6 +74,8 @@ import type {
   ToolStatus,
   TranscriptSummary,
   TranscriptionEngine,
+  TtsGenerateResult,
+  TtsVoice,
 } from "./shared/types";
 
 type Section = "projects" | "studio" | "media" | "references" | "templates" | "settings";
@@ -168,8 +171,14 @@ export default function App() {
   const [draft, setDraft] = useState<ProjectDraft>(emptyDraft);
   const [selectedTemplateId, setSelectedTemplateId] = useState("music-video");
   const [allowGlobalSkills, setAllowGlobalSkills] = useState(false);
-  const [modal, setModal] = useState<"create" | "export" | null>(null);
+  const [modal, setModal] = useState<"create" | "export" | "tts" | null>(null);
   const [exportName, setExportName] = useState("video-final");
+  const [ttsVoices, setTtsVoices] = useState<TtsVoice[]>([]);
+  const [ttsText, setTtsText] = useState("");
+  const [ttsVoiceId, setTtsVoiceId] = useState("pt-BR-FranciscaNeural");
+  const [ttsRate, setTtsRate] = useState("+0%");
+  const [ttsFilename, setTtsFilename] = useState("");
+  const [ttsBusy, setTtsBusy] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -208,12 +217,14 @@ export default function App() {
       api<Project[]>("/api/projects"),
       api<ProjectTemplate[]>("/api/templates"),
       api<{ dataDirectory: string; tools: ToolStatus[] }>("/api/health"),
+      api<TtsVoice[]>("/api/tts/voices").catch(() => []),
     ])
-      .then(([savedProjects, savedTemplates, health]) => {
+      .then(([savedProjects, savedTemplates, health, loadedVoices]) => {
         setProjects(savedProjects);
         setTemplates(savedTemplates);
         setDataDirectory(health.dataDirectory);
         setTools(health.tools);
+        if (loadedVoices && loadedVoices.length > 0) setTtsVoices(loadedVoices);
         if (selectedId && savedProjects.some((item) => item.id === selectedId)) {
           setSection("studio");
           void refreshFiles(selectedId);
@@ -491,6 +502,35 @@ export default function App() {
     }
   }
 
+  async function generateNarration(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!project || !ttsText.trim() || ttsBusy) return;
+    setError("");
+    setTtsBusy(true);
+    try {
+      const result = await api<TtsGenerateResult>(`/api/projects/${project.id}/tts`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: ttsText.trim(),
+          voiceId: ttsVoiceId,
+          rate: ttsRate,
+          filename: ttsFilename.trim() || undefined,
+        }),
+      });
+      await refreshFiles(project.id);
+      await refreshProjects();
+      setNotice(`Narração gerada com sucesso: ${result.name} (${formatSize(result.size)}).`);
+      setModal(null);
+      setTtsText("");
+      setTtsFilename("");
+    } catch (reason) {
+      setError((reason as Error).message);
+    } finally {
+      setTtsBusy(false);
+    }
+  }
+
   async function addReference(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!referenceFile || busy) return;
@@ -625,6 +665,7 @@ export default function App() {
             onPlayback={startPlayback}
             onStopPlayback={stopPlayback}
             onImport={importFile}
+            onOpenTts={() => setModal("tts")}
             onExport={() => { setExportName("video-final"); setExportDestination("exports"); setPreviewReviewed(false); setModal("export"); }}
             onOpenExports={openExports}
             onMedia={() => goTo("media")}
@@ -632,7 +673,7 @@ export default function App() {
         )}
         {section === "studio" && !project && <EmptySelection onProjects={() => goTo("projects")} />}
         {section === "media" && (
-          <MediaPage project={project} files={files} busy={busy} transcribing={transcribing} transcript={transcript} engine={transcribeEngine} onEngine={setTranscribeEngine} onTranscribe={transcribeFile} onDismissTranscript={() => setTranscript(null)} autoEditing={autoEditing} autoEditMethod={autoEditMethod} autoEditMode={autoEditMode} onAutoEditMethod={setAutoEditMethod} onAutoEditMode={setAutoEditMode} onAutoEdit={autoEditFile} onImport={importFile} onChooseProject={() => goTo("projects")} />
+          <MediaPage project={project} files={files} busy={busy} transcribing={transcribing} transcript={transcript} engine={transcribeEngine} onEngine={setTranscribeEngine} onTranscribe={transcribeFile} onDismissTranscript={() => setTranscript(null)} autoEditing={autoEditing} autoEditMethod={autoEditMethod} autoEditMode={autoEditMode} onAutoEditMethod={setAutoEditMethod} onAutoEditMode={setAutoEditMode} onAutoEdit={autoEditFile} onImport={importFile} onOpenTts={() => setModal("tts")} onChooseProject={() => goTo("projects")} />
         )}
         {section === "references" && (
           <ReferencesPage
@@ -718,6 +759,57 @@ export default function App() {
           </form>
         </div>
       )}
+      {modal === "tts" && (
+        <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setModal(null); }}>
+          <form className="dialog tts-dialog" onSubmit={generateNarration}>
+            <div className="dialog-heading">
+              <div><span className="eyebrow">ÁUDIO & NARRAÇÃO</span><h2>Gerar narração (Texto para Fala)</h2><p>Síntese de voz neural natural em português brasileiro (Edge TTS).</p></div>
+              <button type="button" className="icon-button" onClick={() => setModal(null)} aria-label="Fechar"><X size={18} /></button>
+            </div>
+            <label className="field-label">Texto da narração
+              <textarea autoFocus required maxLength={5000} rows={5} value={ttsText} onChange={(event) => setTtsText(event.target.value)} placeholder="Digite ou cole aqui o texto que será narrado..." />
+              <div className="prompt-hint"><span>O áudio será salvo em formato MP3 diretamente na pasta assets/ do projeto.</span><span>{ttsText.length}/5.000</span></div>
+            </label>
+            <div className="field-row">
+              <label className="field-label">Voz (Português - Brasil)
+                <span className="select-wrap"><select value={ttsVoiceId} onChange={(event) => setTtsVoiceId(event.target.value)}>
+                  {(ttsVoices.length > 0 ? ttsVoices : [
+                    { id: "pt-BR-FranciscaNeural", name: "Francisca", gender: "feminino" },
+                    { id: "pt-BR-AntonioNeural", name: "Antônio", gender: "masculino" },
+                    { id: "pt-BR-BrendaNeural", name: "Brenda", gender: "feminino" },
+                    { id: "pt-BR-DonatoNeural", name: "Donato", gender: "masculino" },
+                    { id: "pt-BR-LeticiaNeural", name: "Letícia", gender: "feminino" },
+                    { id: "pt-BR-FabioNeural", name: "Fábio", gender: "masculino" },
+                    { id: "pt-BR-ManuelaNeural", name: "Manuela", gender: "feminino" },
+                    { id: "pt-BR-NicolauNeural", name: "Nicolau", gender: "masculino" },
+                  ]).map((v) => (
+                    <option key={v.id} value={v.id}>{v.name} ({v.gender})</option>
+                  ))}
+                </select><ChevronDown size={15} /></span>
+              </label>
+              <label className="field-label">Velocidade da fala
+                <span className="select-wrap"><select value={ttsRate} onChange={(event) => setTtsRate(event.target.value)}>
+                  <option value="-30%">-30% · Muito lenta</option>
+                  <option value="-15%">-15% · Mais lenta</option>
+                  <option value="+0%">Normal (100%)</option>
+                  <option value="+15%">+15% · Dinâmica</option>
+                  <option value="+30%">+30% · Rápida</option>
+                </select><ChevronDown size={15} /></span>
+              </label>
+            </div>
+            <label className="field-label">Nome do arquivo <span className="optional">opcional</span>
+              <input maxLength={80} value={ttsFilename} onChange={(event) => setTtsFilename(event.target.value)} placeholder="Ex.: narracao-intro (deixe em branco para gerar automático)" />
+            </label>
+            <div className="dialog-actions">
+              <button type="button" className="button secondary" onClick={() => setModal(null)}>Cancelar</button>
+              <button className="button primary" disabled={ttsBusy || !ttsText.trim()}>
+                {ttsBusy ? <LoaderCircle className="spin" size={16} /> : <Mic size={16} />}
+                {ttsBusy ? "Gerando áudio..." : "Gerar narração MP3"}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
@@ -787,6 +879,7 @@ function StudioPage({
   onExport,
   onOpenExports,
   onMedia,
+  onOpenTts,
 }: {
   project: Project;
   files: ProjectFile[];
@@ -806,6 +899,7 @@ function StudioPage({
   onExport: () => void;
   onOpenExports: () => void;
   onMedia: () => void;
+  onOpenTts: () => void;
 }) {
   const mediaFiles = files.filter((file) => ["audio", "image", "video", "font"].includes(file.kind));
   return (
@@ -827,7 +921,7 @@ function StudioPage({
             <div className="preview-footer"><span><span className={`status-dot ${playerUrl ? "online" : ""}`} /> {previewReviewed ? "Animação revisada" : "Player local"}</span><span>{playerUrl ? "Animação em tempo real · sem renderização de vídeo" : "A renderização MP4 é uma etapa separada"}</span></div>
           </div>
           <div className="panel assets-panel">
-            <div className="panel-header"><div><h2>Assets do projeto</h2><span className="panel-subtitle">{mediaFiles.length} arquivos de mídia</span></div><div className="asset-actions"><button className="text-button" onClick={onMedia}>Ver biblioteca</button><label className="button small secondary upload-button"><Upload size={14} /> Importar<input type="file" accept="audio/*,image/*,video/*,.ttf,.otf,.woff,.woff2" onChange={(event) => { const file = event.target.files?.[0]; if (file) onImport(file); event.target.value = ""; }} /></label></div></div>
+            <div className="panel-header"><div><h2>Assets do projeto</h2><span className="panel-subtitle">{mediaFiles.length} arquivos de mídia</span></div><div className="asset-actions"><button className="text-button" onClick={onMedia}>Ver biblioteca</button><button type="button" className="button small secondary" onClick={onOpenTts}><Mic size={13} /> Narração</button><label className="button small secondary upload-button"><Upload size={14} /> Importar<input type="file" accept="audio/*,image/*,video/*,.ttf,.otf,.woff,.woff2" onChange={(event) => { const file = event.target.files?.[0]; if (file) onImport(file); event.target.value = ""; }} /></label></div></div>
             {mediaFiles.length ? <div className="asset-strip">{mediaFiles.slice(0, 6).map((file) => {
               const Icon = fileIcon(file.kind);
               return <div className="asset-item" key={file.path}><span className={`asset-icon ${file.kind}`}><Icon size={16} /></span><span className="asset-name">{file.name}</span><small>{formatSize(file.size)}{file.duration !== null ? ` · ${formatDuration(file.duration)}` : ""}</small></div>;
@@ -880,11 +974,11 @@ function EmptySelection({ onProjects }: { onProjects: () => void }) {
   return <section className="page-content"><div className="empty-projects"><div className="empty-icon"><DaimeLogo size={32} /></div><h2>Escolha um projeto</h2><p>Abra um projeto para entrar no estúdio.</p><button className="button primary" onClick={onProjects}>Ver projetos</button></div></section>;
 }
 
-function MediaPage({ project, files, busy, transcribing, transcript, engine, onEngine, onTranscribe, onDismissTranscript, autoEditing, autoEditMethod, autoEditMode, onAutoEditMethod, onAutoEditMode, onAutoEdit, onImport, onChooseProject }: { project: Project | null; files: ProjectFile[]; busy: boolean; transcribing: string; transcript: TranscriptSummary | null; engine: TranscriptionEngine; onEngine: (engine: TranscriptionEngine) => void; onTranscribe: (file: ProjectFile) => void; onDismissTranscript: () => void; autoEditing: string; autoEditMethod: "audio" | "motion"; autoEditMode: "video" | "premiere" | "resolve" | "clip-sequence"; onAutoEditMethod: (value: "audio" | "motion") => void; onAutoEditMode: (value: "video" | "premiere" | "resolve" | "clip-sequence") => void; onAutoEdit: (file: ProjectFile) => void; onImport: (file: File) => void; onChooseProject: () => void }) {
+function MediaPage({ project, files, busy, transcribing, transcript, engine, onEngine, onTranscribe, onDismissTranscript, autoEditing, autoEditMethod, autoEditMode, onAutoEditMethod, onAutoEditMode, onAutoEdit, onImport, onOpenTts, onChooseProject }: { project: Project | null; files: ProjectFile[]; busy: boolean; transcribing: string; transcript: TranscriptSummary | null; engine: TranscriptionEngine; onEngine: (engine: TranscriptionEngine) => void; onTranscribe: (file: ProjectFile) => void; onDismissTranscript: () => void; autoEditing: string; autoEditMethod: "audio" | "motion"; autoEditMode: "video" | "premiere" | "resolve" | "clip-sequence"; onAutoEditMethod: (value: "audio" | "motion") => void; onAutoEditMode: (value: "video" | "premiere" | "resolve" | "clip-sequence") => void; onAutoEdit: (file: ProjectFile) => void; onImport: (file: File) => void; onOpenTts: () => void; onChooseProject: () => void }) {
   if (!project) return <section className="page-content"><div className="page-heading"><div><span className="eyebrow">BIBLIOTECA LOCAL</span><h1>Biblioteca de mídia</h1><p>Os arquivos importados permanecem no projeto selecionado.</p></div></div><div className="empty-projects"><div className="empty-icon"><FolderOpen size={25} /></div><h2>Selecione um projeto primeiro</h2><p>A mídia é organizada separadamente para cada vídeo.</p><button className="button primary" onClick={onChooseProject}>Abrir projetos</button></div></section>;
   const mediaBusy = busy || Boolean(transcribing) || Boolean(autoEditing);
   return <section className="page-content media-page">
-    <div className="page-heading"><div><span className="eyebrow">ASSETS DO PROJETO</span><h1>Biblioteca de mídia</h1><p>Arquivos locais associados a <strong>{project.name}</strong>.</p></div><div className="media-heading-actions"><label className="engine-picker">Transcrição local<span className="select-wrap"><select value={engine} disabled={mediaBusy} onChange={(event) => onEngine(event.target.value as TranscriptionEngine)}><option value="whisper-cpp">whisper.cpp</option><option value="whisper-python">whisper (Python)</option></select><ChevronDown size={15} /></span></label><label className="button primary upload-button"><Upload size={16} /> Importar arquivo<input type="file" accept="audio/*,image/*,video/*,.ttf,.otf,.woff,.woff2" disabled={busy} onChange={(event) => { const file = event.target.files?.[0]; if (file) onImport(file); event.target.value = ""; }} /></label></div></div>
+    <div className="page-heading"><div><span className="eyebrow">ASSETS DO PROJETO</span><h1>Biblioteca de mídia</h1><p>Arquivos locais associados a <strong>{project.name}</strong>.</p></div><div className="media-heading-actions"><button type="button" className="button secondary" onClick={onOpenTts} disabled={mediaBusy}><Mic size={15} /> Gerar narração (TTS)</button><label className="engine-picker">Transcrição local<span className="select-wrap"><select value={engine} disabled={mediaBusy} onChange={(event) => onEngine(event.target.value as TranscriptionEngine)}><option value="whisper-cpp">whisper.cpp</option><option value="whisper-python">whisper (Python)</option></select><ChevronDown size={15} /></span></label><label className="button primary upload-button"><Upload size={16} /> Importar arquivo<input type="file" accept="audio/*,image/*,video/*,.ttf,.otf,.woff,.woff2" disabled={busy} onChange={(event) => { const file = event.target.files?.[0]; if (file) onImport(file); event.target.value = ""; }} /></label></div></div>
     <div className="privacy-note"><Activity size={16} /><span><strong>Privado por padrão.</strong> Arquivos ficam em {project.directory}; não são enviados para serviços externos.</span></div>
     <div className="autoedit-bar"><div className="autoedit-title"><Scissors size={15} /><span><strong>Edição automática</strong> (auto-editor)</span></div><label className="autoedit-field">Corte<span className="select-wrap"><select value={autoEditMethod} disabled={mediaBusy} onChange={(event) => onAutoEditMethod(event.target.value as "audio" | "motion")}><option value="audio">Silêncio (áudio)</option><option value="motion">Imobilidade (movimento)</option></select><ChevronDown size={14} /></span></label><label className="autoedit-field">Saída<span className="select-wrap"><select value={autoEditMode} disabled={mediaBusy} onChange={(event) => onAutoEditMode(event.target.value as "video" | "premiere" | "resolve" | "clip-sequence")}><option value="video">Vídeo/áudio cortado</option><option value="premiere">Projeto Premiere (XML)</option><option value="resolve">Projeto Resolve</option><option value="clip-sequence">Sequência de clipes</option></select><ChevronDown size={14} /></span></label></div>
     {transcript && <div className="transcript-panel">

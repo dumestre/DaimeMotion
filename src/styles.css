@@ -224,6 +224,7 @@ button:disabled { cursor: not-allowed !important; opacity: .55; }
 .static-field { min-height: 37px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 6px; padding: 0 10px; color: var(--muted); font-size: 10px; font-weight: 400; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--line); padding-top: 16px; margin-top: 20px; }
 .export-dialog { width: min(460px, 100%); }
+.tts-dialog { width: min(540px, 100%); }
 .export-destination { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 6px; padding: 11px; background: var(--surface); color: var(--detail); }
 .export-destination div { display: grid; gap: 4px; min-width: 0; }
 .export-destination strong { color: var(--text); font-size: 10px; }
