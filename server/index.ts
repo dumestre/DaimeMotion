@@ -21,8 +21,7 @@ import type {
 import { PathSafetyError, resolveWithinDirectory, sanitizeFilename as safeFilename } from "./path-safety.js";
 import { installProjectGuidance } from "./project-guidance.js";
 import { isTemplateId, seedProjectComposition, type TemplateId } from "./templates.js";
-import { parseWhisperJson, segmentsToSrt } from "./transcription.js";
-import { generateTts, ptBrVoices, type TtsOptions } from "./tts.js";
+import { generateTts, getCachedVoiceSample, ptBrVoices, synthesizeTtsBuffer, warmupVoiceSamples, type TtsOptions } from "./tts.js";
 
 const port = Number(process.env.DAIME_PORT ?? 4317);
 const projectRoot = path.resolve(process.cwd());
@@ -30,6 +29,7 @@ const dataRoot = path.join(projectRoot, "data");
 const projectsRoot = path.join(dataRoot, "projects");
 const referencesRoot = path.join(dataRoot, "references");
 const uploadsRoot = path.join(dataRoot, "uploads");
+const ttsCacheDir = path.join(dataRoot, "tts-cache");
 const projectIndexPath = path.join(dataRoot, "projects.json");
 const referencesIndexPath = path.join(dataRoot, "references.json");
 const applicationRoot = path.resolve(process.cwd());
@@ -1324,6 +1324,48 @@ app.post("/api/projects/:id/warmup", projectMiddleware, async (request, response
 
 app.get("/api/tts/voices", (_request, response) => response.json(ptBrVoices));
 
+app.get("/api/tts/preview", async (request, response, next) => {
+  try {
+    const voiceId = typeof request.query.voiceId === "string" ? request.query.voiceId : "pt-BR-FranciscaNeural";
+    const rate = typeof request.query.rate === "string" ? request.query.rate : undefined;
+    const textQuery = typeof request.query.text === "string" ? request.query.text.trim() : "";
+
+    let buffer: Buffer;
+    if (!textQuery && (!rate || rate === "+0%")) {
+      // Amostra ultra-rápida pré-gravada em cache de disco (resposta instantânea)
+      buffer = await getCachedVoiceSample(ttsCacheDir, voiceId);
+    } else {
+      // Frase curta de teste para resposta rápida (máx. 60 caracteres)
+      const text = textQuery ? textQuery.slice(0, 60) : "Olá! Testando a voz.";
+      buffer = await synthesizeTtsBuffer({ text, voiceId, rate });
+    }
+
+    response.setHeader("Content-Type", "audio/mpeg");
+    response.setHeader("Cache-Control", "public, max-age=86400");
+    response.send(buffer);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post("/api/projects/:id/open-studio", projectMiddleware, async (request, response, next) => {
+  try {
+    const project = await getProject(routeId(request));
+    const projectDir = safeProjectDirectory(project.id);
+    const invocation = cliArguments("hyperframes", ["preview", "--open"]);
+    const child = spawn(invocation.command, invocation.args, {
+      cwd: projectDir,
+      shell: false,
+      detached: true,
+      stdio: "ignore",
+    });
+    child.unref();
+    response.json({ ok: true, message: `HyperFrames Studio aberto para ${project.name}.` });
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.post("/api/projects/:id/tts", projectMiddleware, async (request, response, next) => {
   try {
     const project = await getProject(routeId(request));
@@ -1399,6 +1441,8 @@ app.get("/{*splat}", (_request, response, next) => {
 await fs.mkdir(projectsRoot, { recursive: true });
 await fs.mkdir(referencesRoot, { recursive: true });
 await fs.mkdir(uploadsRoot, { recursive: true });
+await fs.mkdir(ttsCacheDir, { recursive: true });
+void warmupVoiceSamples(ttsCacheDir).catch(() => {});
 const server = app.listen(port, "127.0.0.1", () => {
   console.log(`Daime Motion disponível em http://127.0.0.1:${port}`);
   console.log(`Biblioteca local: ${dataRoot}`);

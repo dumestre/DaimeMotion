@@ -18,13 +18,16 @@ import {
   Mic,
   MonitorPlay,
   MoreHorizontal,
+  Play,
   Plus,
   Scissors,
   Settings2,
   Sparkles,
+  Square,
   Trash2,
   Upload,
   Video,
+  Volume2,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -179,6 +182,9 @@ export default function App() {
   const [ttsRate, setTtsRate] = useState("+0%");
   const [ttsFilename, setTtsFilename] = useState("");
   const [ttsBusy, setTtsBusy] = useState(false);
+  const [previewPlaying, setPreviewPlaying] = useState<string | null>(null);
+  const [previewVoiceLoading, setPreviewVoiceLoading] = useState(false);
+  const audioPreviewRef = useRef<HTMLAudioElement | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -521,6 +527,7 @@ export default function App() {
       await refreshFiles(project.id);
       await refreshProjects();
       setNotice(`Narração gerada com sucesso: ${result.name} (${formatSize(result.size)}).`);
+      stopVoicePreview();
       setModal(null);
       setTtsText("");
       setTtsFilename("");
@@ -529,6 +536,50 @@ export default function App() {
     } finally {
       setTtsBusy(false);
     }
+  }
+
+  function stopVoicePreview() {
+    if (audioPreviewRef.current) {
+      audioPreviewRef.current.pause();
+      audioPreviewRef.current = null;
+    }
+    setPreviewPlaying(null);
+    setPreviewVoiceLoading(false);
+  }
+
+  function playVoicePreview(voiceId: string, customText?: string) {
+    if (previewPlaying === voiceId) {
+      stopVoicePreview();
+      return;
+    }
+    stopVoicePreview();
+
+    setPreviewVoiceLoading(true);
+    setPreviewPlaying(voiceId);
+
+    const params = new URLSearchParams({
+      voiceId,
+      rate: ttsRate,
+    });
+    if (customText && customText.trim()) {
+      params.set("text", customText.trim().slice(0, 180));
+    }
+
+    const audio = new Audio(`/api/tts/preview?${params.toString()}`);
+    audioPreviewRef.current = audio;
+
+    audio.oncanplaythrough = () => {
+      setPreviewVoiceLoading(false);
+    };
+    audio.play().catch(() => {
+      stopVoicePreview();
+    });
+    audio.onended = () => {
+      stopVoicePreview();
+    };
+    audio.onerror = () => {
+      stopVoicePreview();
+    };
   }
 
   async function addReference(event: React.FormEvent<HTMLFormElement>) {
@@ -760,33 +811,88 @@ export default function App() {
         </div>
       )}
       {modal === "tts" && (
-        <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setModal(null); }}>
+        <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) { stopVoicePreview(); setModal(null); } }}>
           <form className="dialog tts-dialog" onSubmit={generateNarration}>
             <div className="dialog-heading">
-              <div><span className="eyebrow">ÁUDIO & NARRAÇÃO</span><h2>Gerar narração (Texto para Fala)</h2><p>Síntese de voz neural natural em português brasileiro (Edge TTS).</p></div>
-              <button type="button" className="icon-button" onClick={() => setModal(null)} aria-label="Fechar"><X size={18} /></button>
+              <div><span className="eyebrow">ÁUDIO & NARRAÇÃO</span><h2>Gerar narração (Texto para Fala)</h2><p>Vozes neurais em português brasileiro com prévia de áudio em tempo real.</p></div>
+              <button type="button" className="icon-button" onClick={() => { stopVoicePreview(); setModal(null); }} aria-label="Fechar"><X size={18} /></button>
             </div>
+
             <label className="field-label">Texto da narração
-              <textarea autoFocus required maxLength={5000} rows={5} value={ttsText} onChange={(event) => setTtsText(event.target.value)} placeholder="Digite ou cole aqui o texto que será narrado..." />
-              <div className="prompt-hint"><span>O áudio será salvo em formato MP3 diretamente na pasta assets/ do projeto.</span><span>{ttsText.length}/5.000</span></div>
+              <textarea autoFocus required maxLength={5000} rows={4} value={ttsText} onChange={(event) => setTtsText(event.target.value)} placeholder="Digite ou cole aqui o roteiro que será narrado..." />
+              <div className="prompt-hint"><span>O áudio final será salvo em formato MP3 na pasta assets/ do projeto.</span><span>{ttsText.length}/5.000</span></div>
             </label>
-            <div className="field-row">
-              <label className="field-label">Voz (Português - Brasil)
-                <span className="select-wrap"><select value={ttsVoiceId} onChange={(event) => setTtsVoiceId(event.target.value)}>
-                  {(ttsVoices.length > 0 ? ttsVoices : [
-                    { id: "pt-BR-FranciscaNeural", name: "Francisca", gender: "feminino" },
-                    { id: "pt-BR-AntonioNeural", name: "Antônio", gender: "masculino" },
-                    { id: "pt-BR-BrendaNeural", name: "Brenda", gender: "feminino" },
-                    { id: "pt-BR-DonatoNeural", name: "Donato", gender: "masculino" },
-                    { id: "pt-BR-LeticiaNeural", name: "Letícia", gender: "feminino" },
-                    { id: "pt-BR-FabioNeural", name: "Fábio", gender: "masculino" },
-                    { id: "pt-BR-ManuelaNeural", name: "Manuela", gender: "feminino" },
-                    { id: "pt-BR-NicolauNeural", name: "Nicolau", gender: "masculino" },
-                  ]).map((v) => (
-                    <option key={v.id} value={v.id}>{v.name} ({v.gender})</option>
-                  ))}
-                </select><ChevronDown size={15} /></span>
-              </label>
+
+            <div>
+              <div className="voice-picker-label">
+                <span>Escolha a voz (clique para selecionar ou ouça uma amostra):</span>
+                <span className="optional">{ttsVoices.length || 8} vozes disponíveis</span>
+              </div>
+              <div className="voice-picker-grid">
+                {(ttsVoices.length > 0 ? ttsVoices : [
+                  { id: "pt-BR-FranciscaNeural", name: "Francisca", gender: "feminino" },
+                  { id: "pt-BR-AntonioNeural", name: "Antônio", gender: "masculino" },
+                  { id: "pt-BR-BrendaNeural", name: "Brenda", gender: "feminino" },
+                  { id: "pt-BR-DonatoNeural", name: "Donato", gender: "masculino" },
+                  { id: "pt-BR-LeticiaNeural", name: "Letícia", gender: "feminino" },
+                  { id: "pt-BR-FabioNeural", name: "Fábio", gender: "masculino" },
+                  { id: "pt-BR-ManuelaNeural", name: "Manuela", gender: "feminino" },
+                  { id: "pt-BR-NicolauNeural", name: "Nicolau", gender: "masculino" },
+                ]).map((v) => {
+                  const isSelected = ttsVoiceId === v.id;
+                  const isPlaying = previewPlaying === v.id;
+                  return (
+                    <div
+                      key={v.id}
+                      className={`voice-card ${isSelected ? "selected" : ""}`}
+                      onClick={() => setTtsVoiceId(v.id)}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <div className="voice-card-info">
+                        <span className="voice-card-name">{v.name}</span>
+                        <span className="voice-card-gender">{v.gender}</span>
+                      </div>
+                      <button
+                        type="button"
+                        className={`voice-preview-btn ${isPlaying ? "playing" : ""}`}
+                        title={isPlaying ? "Parar prévia" : `Ouvir amostra de ${v.name}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          playVoicePreview(v.id);
+                        }}
+                      >
+                        {isPlaying ? (
+                          previewVoiceLoading ? <LoaderCircle className="spin" size={12} /> : <Square size={10} fill="currentColor" />
+                        ) : (
+                          <Play size={10} fill="currentColor" />
+                        )}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="tts-quick-preview">
+              <span>Testar como soa o texto digitado com a voz e velocidade atuais:</span>
+              <button
+                type="button"
+                className="button small secondary"
+                onClick={() => playVoicePreview(ttsVoiceId, ttsText)}
+              >
+                {previewPlaying === ttsVoiceId && previewVoiceLoading ? (
+                  <LoaderCircle className="spin" size={13} />
+                ) : previewPlaying === ttsVoiceId ? (
+                  <Square size={13} fill="currentColor" />
+                ) : (
+                  <Volume2 size={13} />
+                )}
+                {previewPlaying === ttsVoiceId ? "Parar prévia" : "Ouvir texto"}
+              </button>
+            </div>
+
+            <div className="field-row" style={{ marginTop: 12 }}>
               <label className="field-label">Velocidade da fala
                 <span className="select-wrap"><select value={ttsRate} onChange={(event) => setTtsRate(event.target.value)}>
                   <option value="-30%">-30% · Muito lenta</option>
@@ -796,12 +902,13 @@ export default function App() {
                   <option value="+30%">+30% · Rápida</option>
                 </select><ChevronDown size={15} /></span>
               </label>
+              <label className="field-label">Nome do arquivo <span className="optional">opcional</span>
+                <input maxLength={80} value={ttsFilename} onChange={(event) => setTtsFilename(event.target.value)} placeholder="Ex.: narracao-intro" />
+              </label>
             </div>
-            <label className="field-label">Nome do arquivo <span className="optional">opcional</span>
-              <input maxLength={80} value={ttsFilename} onChange={(event) => setTtsFilename(event.target.value)} placeholder="Ex.: narracao-intro (deixe em branco para gerar automático)" />
-            </label>
+
             <div className="dialog-actions">
-              <button type="button" className="button secondary" onClick={() => setModal(null)}>Cancelar</button>
+              <button type="button" className="button secondary" onClick={() => { stopVoicePreview(); setModal(null); }}>Cancelar</button>
               <button className="button primary" disabled={ttsBusy || !ttsText.trim()}>
                 {ttsBusy ? <LoaderCircle className="spin" size={16} /> : <Mic size={16} />}
                 {ttsBusy ? "Gerando áudio..." : "Gerar narração MP3"}

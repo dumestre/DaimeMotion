@@ -39,10 +39,9 @@ export interface TtsOptions {
 }
 
 /**
- * Gera áudio de fala a partir de texto usando o Microsoft Edge TTS.
- * Salva o resultado como arquivo MP3 no caminho especificado.
+ * Sintetiza áudio de fala em memória e retorna o Buffer MP3.
  */
-export async function generateTts(outputPath: string, options: TtsOptions): Promise<void> {
+export async function synthesizeTtsBuffer(options: TtsOptions): Promise<Buffer> {
   const voiceId = options.voiceId && ptBrVoices.some((v) => v.id === options.voiceId)
     ? options.voiceId
     : defaultVoiceId;
@@ -55,5 +54,67 @@ export async function generateTts(outputPath: string, options: TtsOptions): Prom
 
   const result = await tts.synthesize();
   const arrayBuffer = await result.audio.arrayBuffer();
-  await fs.writeFile(outputPath, Buffer.from(arrayBuffer));
+  return Buffer.from(arrayBuffer);
 }
+
+/**
+ * Retorna uma frase de amostra curta e direta para prévia em tempo real.
+ */
+export function getVoiceSamplePhrase(voiceId: string): string {
+  const voice = ptBrVoices.find((v) => v.id === voiceId);
+  if (!voice) return "Olá! Sou uma voz de narração.";
+  const artigo = voice.gender === "feminino" ? "a" : "o";
+  return `Olá! Sou ${artigo} ${voice.name}.`;
+}
+
+/**
+ * Obtém ou gera em cache uma amostra de áudio pré-gravada em MP3 para a voz selecionada.
+ * Resposta instantânea (0ms) se já estiver no cache.
+ */
+export async function getCachedVoiceSample(cacheDir: string, voiceId: string): Promise<Buffer> {
+  await fs.mkdir(cacheDir, { recursive: true });
+  const safeId = voiceId.replace(/[^\w-]/g, "");
+  const samplePath = `${cacheDir}/${safeId}.mp3`;
+
+  try {
+    return await fs.readFile(samplePath);
+  } catch {
+    const text = getVoiceSamplePhrase(voiceId);
+    const buffer = await synthesizeTtsBuffer({ text, voiceId, rate: "+0%" });
+    await fs.writeFile(samplePath, buffer).catch(() => {});
+    return buffer;
+  }
+}
+
+/**
+ * Pré-carrega em background as amostras em MP3 de todas as vozes para que o preview seja instantâneo.
+ */
+export async function warmupVoiceSamples(cacheDir: string): Promise<void> {
+  await fs.mkdir(cacheDir, { recursive: true });
+  for (const voice of ptBrVoices) {
+    const safeId = voice.id.replace(/[^\w-]/g, "");
+    const samplePath = `${cacheDir}/${safeId}.mp3`;
+    try {
+      await fs.access(samplePath);
+    } catch {
+      try {
+        const text = getVoiceSamplePhrase(voice.id);
+        const buffer = await synthesizeTtsBuffer({ text, voiceId: voice.id, rate: "+0%" });
+        await fs.writeFile(samplePath, buffer);
+      } catch {
+        // Ignora erros individuais de aquecimento
+      }
+    }
+  }
+}
+
+/**
+ * Gera áudio de fala a partir de texto usando o Microsoft Edge TTS.
+ * Salva o resultado como arquivo MP3 no caminho especificado.
+ */
+export async function generateTts(outputPath: string, options: TtsOptions): Promise<void> {
+  const buffer = await synthesizeTtsBuffer(options);
+  await fs.writeFile(outputPath, buffer);
+}
+
+
