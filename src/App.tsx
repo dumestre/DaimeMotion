@@ -833,8 +833,8 @@ export default function App() {
             </div>
 
             <label className="field-label">Texto da narração
-              <textarea autoFocus required maxLength={5000} rows={4} value={ttsText} onChange={(event) => setTtsText(event.target.value)} placeholder="Digite ou cole aqui o roteiro que será narrado..." />
-              <div className="prompt-hint"><span>O áudio final será salvo em formato MP3 na pasta assets/ do projeto.</span><span>{ttsText.length}/5.000</span></div>
+              <textarea autoFocus required rows={6} value={ttsText} onChange={(event) => setTtsText(event.target.value)} placeholder="Digite ou cole aqui o roteiro que será narrado (sem limite de caracteres)..." />
+              <div className="prompt-hint"><span>O áudio final será salvo em formato MP3 na pasta assets/ do projeto.</span><span>{ttsText ? `${ttsText.length.toLocaleString("pt-BR")} caracteres · sem limite` : "Sem limite de tamanho"}</span></div>
             </label>
 
             <div>

@@ -1371,8 +1371,8 @@ app.post("/api/projects/:id/tts", projectMiddleware, async (request, response, n
   try {
     const project = await getProject(routeId(request));
     const text = typeof request.body?.text === "string" ? request.body.text.trim() : "";
-    if (!text || text.length > 5_000) {
-      throw new HttpError(400, "O texto deve ter entre 1 e 5.000 caracteres.");
+    if (!text) {
+      throw new HttpError(400, "Informe o texto da narração.");
     }
     const voiceId = typeof request.body?.voiceId === "string" ? request.body.voiceId : undefined;
     const rate = typeof request.body?.rate === "string" ? request.body.rate : undefined;

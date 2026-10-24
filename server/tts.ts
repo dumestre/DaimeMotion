@@ -39,22 +39,88 @@ export interface TtsOptions {
 }
 
 /**
+ * Divide textos longos de forma inteligente respeitando parágrafos e pontuação
+ * para permitir sintetizar narrações de qualquer tamanho sem limite de caracteres.
+ */
+export function splitTextIntoChunks(text: string, maxChunkSize = 2500): string[] {
+  if (text.length <= maxChunkSize) return [text];
+
+  const chunks: string[] = [];
+  const paragraphs = text.split(/(\r?\n)+/);
+  let currentChunk = "";
+
+  for (const part of paragraphs) {
+    if (!part || !part.trim()) continue;
+
+    if (currentChunk.length + part.length + 1 <= maxChunkSize) {
+      currentChunk = currentChunk ? `${currentChunk}\n${part}` : part;
+    } else {
+      if (currentChunk) {
+        chunks.push(currentChunk);
+        currentChunk = "";
+      }
+
+      if (part.length <= maxChunkSize) {
+        currentChunk = part;
+      } else {
+        const sentences = part.split(/(?<=[.!?])\s+/);
+        for (const sentence of sentences) {
+          if (currentChunk.length + sentence.length + 1 <= maxChunkSize) {
+            currentChunk = currentChunk ? `${currentChunk} ${sentence}` : sentence;
+          } else {
+            if (currentChunk) chunks.push(currentChunk);
+            if (sentence.length <= maxChunkSize) {
+              currentChunk = sentence;
+            } else {
+              for (let i = 0; i < sentence.length; i += maxChunkSize) {
+                chunks.push(sentence.slice(i, i + maxChunkSize));
+              }
+              currentChunk = "";
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if (currentChunk) chunks.push(currentChunk);
+  return chunks.length > 0 ? chunks : [text];
+}
+
+/**
  * Sintetiza áudio de fala em memória e retorna o Buffer MP3.
+ * Suporta textos de qualquer tamanho sem limite de caracteres.
  */
 export async function synthesizeTtsBuffer(options: TtsOptions): Promise<Buffer> {
   const voiceId = options.voiceId && ptBrVoices.some((v) => v.id === options.voiceId)
     ? options.voiceId
     : defaultVoiceId;
 
-  const tts = new EdgeTTS(options.text, voiceId, {
-    rate: options.rate || "+0%",
-    volume: options.volume || "+0%",
-    pitch: options.pitch || "+0Hz",
-  });
+  const chunks = splitTextIntoChunks(options.text, 2500);
+  if (chunks.length === 1) {
+    const tts = new EdgeTTS(chunks[0], voiceId, {
+      rate: options.rate || "+0%",
+      volume: options.volume || "+0%",
+      pitch: options.pitch || "+0Hz",
+    });
+    const result = await tts.synthesize();
+    const arrayBuffer = await result.audio.arrayBuffer();
+    return Buffer.from(arrayBuffer);
+  }
 
-  const result = await tts.synthesize();
-  const arrayBuffer = await result.audio.arrayBuffer();
-  return Buffer.from(arrayBuffer);
+  const buffers: Buffer[] = [];
+  for (const chunk of chunks) {
+    const tts = new EdgeTTS(chunk, voiceId, {
+      rate: options.rate || "+0%",
+      volume: options.volume || "+0%",
+      pitch: options.pitch || "+0Hz",
+    });
+    const result = await tts.synthesize();
+    const arrayBuffer = await result.audio.arrayBuffer();
+    buffers.push(Buffer.from(arrayBuffer));
+  }
+
+  return Buffer.concat(buffers);
 }
 
 /**
