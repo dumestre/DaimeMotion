@@ -352,6 +352,18 @@ export default function App() {
     }
   }
 
+  async function openHyperframesStudio(targetProject: Project) {
+    try {
+      setNotice(`Iniciando HyperFrames Studio para “${targetProject.name}”...`);
+      await api<{ ok: boolean; message: string }>(`/api/projects/${targetProject.id}/open-studio`, {
+        method: "POST",
+      });
+      setNotice(`HyperFrames Studio aberto no navegador para “${targetProject.name}”.`);
+    } catch (reason) {
+      setError((reason as Error).message);
+    }
+  }
+
   async function runAgent(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!project || !prompt.trim() || busy) return;
@@ -562,13 +574,13 @@ export default function App() {
       rate: ttsRate,
     });
     if (customText && customText.trim()) {
-      params.set("text", customText.trim().slice(0, 180));
+      params.set("text", customText.trim().slice(0, 60));
     }
 
     const audio = new Audio(`/api/tts/preview?${params.toString()}`);
     audioPreviewRef.current = audio;
 
-    audio.oncanplaythrough = () => {
+    audio.onplay = () => {
       setPreviewVoiceLoading(false);
     };
     audio.play().catch(() => {
@@ -695,6 +707,7 @@ export default function App() {
             projects={projects}
             onCreate={() => { setDraft(emptyDraft); setSelectedTemplateId("music-video"); setAllowGlobalSkills(false); setModal("create"); }}
             onOpen={openProject}
+            onOpenStudio={openHyperframesStudio}
             onDuplicate={duplicateProject}
             onDelete={deleteProject}
           />
@@ -717,6 +730,7 @@ export default function App() {
             onStopPlayback={stopPlayback}
             onImport={importFile}
             onOpenTts={() => setModal("tts")}
+            onOpenStudio={() => openHyperframesStudio(project)}
             onExport={() => { setExportName("video-final"); setExportDestination("exports"); setPreviewReviewed(false); setModal("export"); }}
             onOpenExports={openExports}
             onMedia={() => goTo("media")}
@@ -933,12 +947,14 @@ function ProjectsPage({
   projects,
   onCreate,
   onOpen,
+  onOpenStudio,
   onDuplicate,
   onDelete,
 }: {
   projects: Project[];
   onCreate: () => void;
   onOpen: (project: Project) => void;
+  onOpenStudio: (project: Project) => void;
   onDuplicate: (project: Project) => void;
   onDelete: (project: Project) => void;
 }) {
@@ -958,7 +974,7 @@ function ProjectsPage({
             </div>
             <div className="project-card-info"><h3>{item.name}</h3><p>{item.description || "Sem descrição"}</p><div className="project-meta"><span><Clock3 size={13} /> {formatDate(item.updatedAt)}</span><span>{resolutionLabel(item.resolution)}</span></div></div>
           </button>
-          <div className="project-card-actions"><button className="button small secondary" onClick={() => onOpen(item)}>Abrir projeto <ExternalLink size={13} /></button><div className="menu-actions"><button className="icon-button" onClick={() => onDuplicate(item)} title="Duplicar"><Copy size={15} /></button><button className="icon-button danger-icon" onClick={() => onDelete(item)} title="Excluir"><MoreHorizontal size={17} /></button></div></div>
+          <div className="project-card-actions"><div style={{ display: "flex", gap: "6px" }}><button className="button small secondary" onClick={() => onOpen(item)}>Abrir projeto <ExternalLink size={13} /></button><button className="button small secondary" onClick={() => onOpenStudio(item)} title="Abrir projeto no editor HyperFrames Studio"><Clapperboard size={13} /> Studio</button></div><div className="menu-actions"><button className="icon-button" onClick={() => onDuplicate(item)} title="Duplicar"><Copy size={15} /></button><button className="icon-button danger-icon" onClick={() => onDelete(item)} title="Excluir"><MoreHorizontal size={17} /></button></div></div>
         </article>)}
         <button className="new-project-card" onClick={onCreate}><span><Plus size={21} /></span><strong>Criar outra composição</strong><small>Comece com um projeto HyperFrames</small></button>
       </div> : <div className="empty-projects"><div className="empty-icon"><DaimeLogo size={32} /></div><h2>Seu próximo vídeo começa aqui</h2><p>Crie uma composição HyperFrames e transforme uma ideia em vídeo.</p><button className="button primary" onClick={onCreate}><Plus size={17} /> Criar primeiro projeto</button></div>}
@@ -987,6 +1003,7 @@ function StudioPage({
   onOpenExports,
   onMedia,
   onOpenTts,
+  onOpenStudio,
 }: {
   project: Project;
   files: ProjectFile[];
@@ -1007,13 +1024,14 @@ function StudioPage({
   onOpenExports: () => void;
   onMedia: () => void;
   onOpenTts: () => void;
+  onOpenStudio: () => void;
 }) {
   const mediaFiles = files.filter((file) => ["audio", "image", "video", "font"].includes(file.kind));
   return (
     <section className="studio-page">
       <div className="studio-titlebar">
         <div className="studio-project-title"><span className="project-title-icon"><Clapperboard size={17} /></span><div><h1>{project.name}</h1><span>{project.aspectRatio} <i /> {resolutionLabel(project.resolution)} <i /> {project.frameRate} fps</span></div></div>
-        <div className="studio-actions"><button className="button secondary" onClick={onOpenExports}><FolderOpen size={15} /> Exportações</button><button className="button secondary" onClick={onPlayback} disabled={busy}><MonitorPlay size={15} /> {playerUrl ? "Reiniciar animação" : "Reproduzir animação"}</button><button className="button primary" onClick={onExport} disabled={!playerUrl || activeTask}><Video size={15} /> Exportar MP4</button></div>
+        <div className="studio-actions"><button className="button secondary" onClick={onOpenStudio} title="Abrir projeto no editor HyperFrames Studio"><ExternalLink size={15} /> HyperFrames Studio</button><button className="button secondary" onClick={onOpenExports}><FolderOpen size={15} /> Exportações</button><button className="button secondary" onClick={onPlayback} disabled={busy}><MonitorPlay size={15} /> {playerUrl ? "Reiniciar animação" : "Reproduzir animação"}</button><button className="button primary" onClick={onExport} disabled={!playerUrl || activeTask}><Video size={15} /> Exportar MP4</button></div>
       </div>
       <div className="studio-layout">
         <div className="studio-center">

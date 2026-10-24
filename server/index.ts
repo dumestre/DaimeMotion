@@ -21,6 +21,7 @@ import type {
 import { PathSafetyError, resolveWithinDirectory, sanitizeFilename as safeFilename } from "./path-safety.js";
 import { installProjectGuidance } from "./project-guidance.js";
 import { isTemplateId, seedProjectComposition, type TemplateId } from "./templates.js";
+import { parseWhisperJson, segmentsToSrt } from "./transcription.js";
 import { generateTts, getCachedVoiceSample, ptBrVoices, synthesizeTtsBuffer, warmupVoiceSamples, type TtsOptions } from "./tts.js";
 
 const port = Number(process.env.DAIME_PORT ?? 4317);
