@@ -185,6 +185,9 @@ export default function App() {
   const [previewPlaying, setPreviewPlaying] = useState<string | null>(null);
   const [previewVoiceLoading, setPreviewVoiceLoading] = useState(false);
   const audioPreviewRef = useRef<HTMLAudioElement | null>(null);
+  const generatedAudioRef = useRef<HTMLAudioElement | null>(null);
+  const [playingAudio, setPlayingAudio] = useState<string | null>(null);
+  const [progress, setProgress] = useState<Record<string, number>>({});
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -552,13 +555,55 @@ export default function App() {
   // toggleGeneratedPlay removed (unused)
 
   function stopVoicePreview() {
-
     if (audioPreviewRef.current) {
       audioPreviewRef.current.pause();
       audioPreviewRef.current = null;
     }
     setPreviewPlaying(null);
     setPreviewVoiceLoading(false);
+  }
+
+  function toggleGeneratedAudio(fileName: string) {
+    if (playingAudio === fileName && generatedAudioRef.current) {
+      generatedAudioRef.current.pause();
+      setPlayingAudio(null);
+      return;
+    }
+
+    if (generatedAudioRef.current) {
+      generatedAudioRef.current.pause();
+    }
+
+    const audio = new Audio(`/api/projects/${project?.id}/files/${encodeURIComponent(fileName)}`);
+    generatedAudioRef.current = audio;
+
+    audio.addEventListener("timeupdate", () => {
+      if (audio.duration) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        setProgress((prev) => ({ ...prev, [fileName]: pct }));
+      }
+    });
+
+    audio.addEventListener("ended", () => {
+      setProgress((prev) => ({ ...prev, [fileName]: 0 }));
+      setPlayingAudio(null);
+    });
+
+    setPlayingAudio(fileName);
+    audio.play().catch(() => {
+      setPlayingAudio(null);
+    });
+  }
+
+  function seekGeneratedAudio(fileName: string, event: React.MouseEvent<HTMLDivElement>) {
+    const audio = generatedAudioRef.current;
+    if (!audio || playingAudio !== fileName) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const pct = (event.clientX - rect.left) / rect.width;
+    if (!isNaN(pct) && audio.duration) {
+      audio.currentTime = pct * audio.duration;
+      setProgress((prev) => ({ ...prev, [fileName]: pct * 100 }));
+    }
   }
 
   function playVoicePreview(voiceId: string, customText?: string) {
@@ -917,14 +962,114 @@ export default function App() {
             </div>
              <div className="tts-generated-list" style={{ marginTop: 12 }}>
                <span className="field-label">Áudios gerados (assets/)</span>
-               <ul style={{ margin: "4px 0 0 0", paddingLeft: 16 }}>
-                 {files.filter(f => /\.(wav|mp3)$/i.test(f.name)).map(f => (
-                   <li key={f.name} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                     <button type="button" className="voice-preview-btn" onClick={() => { const a = new Audio(`/api/projects/${project?.id}/files/${encodeURIComponent(f.name)}`); a.play(); }}><Play size={10} fill="currentColor" /></button>
-                      <div style={{ width: "100%", height: 6, background: "#ddd", borderRadius: 3, marginTop: 4 }}><div style={{ width: "0%", height: "100%", background: "#3b82f6", borderRadius: 3 }} /></div>
-                     <span>{f.name} ({formatSize(f.size)})</span>
-                   </li>
-                 ))}
+               <ul style={{ margin: "8px 0 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+                 {files.filter(f => /\.(wav|mp3)$/i.test(f.name)).map(f => {
+                   const pct = progress[f.name] || 0;
+                   const barsCount = 64;
+                   return (
+                     <li key={f.name} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                       <button
+                         type="button"
+                         className="voice-preview-btn"
+                         style={{ flexShrink: 0, width: 28, height: 28 }}
+                         onClick={() => toggleGeneratedAudio(f.name)}
+                         title={playingAudio === f.name ? "Pausar" : "Reproduzir"}
+                       >
+                         {playingAudio === f.name ? <Square size={10} fill="currentColor" /> : <Play size={10} fill="currentColor" />}
+                       </button>
+                       <div
+                         style={{
+                           flex: 1,
+                           border: "1px solid var(--line)",
+                           background: "var(--bg)",
+                           borderRadius: 10,
+                           padding: "6px 12px",
+                           display: "flex",
+                           flexDirection: "column",
+                           gap: 6,
+                           minHeight: 52,
+                         }}
+                       >
+                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+                           <span
+                             style={{
+                               fontSize: 12,
+                               opacity: 0.9,
+                               overflow: "hidden",
+                               textOverflow: "ellipsis",
+                               whiteSpace: "nowrap",
+                             }}
+                             title={f.name}
+                           >
+                             {f.name.replace(/\.[^/.]+$/, "")}
+                           </span>
+                           <span style={{ fontSize: 11, opacity: 0.5, flexShrink: 0 }}>{formatSize(f.size)}</span>
+                         </div>
+                         <div
+                           style={{
+                             display: "flex",
+                             alignItems: "center",
+                             gap: 1,
+                             height: 24,
+                             cursor: "pointer",
+                             width: "100%",
+                             position: "relative",
+                           }}
+                           onClick={(e) => seekGeneratedAudio(f.name, e)}
+                         >
+                           {Array.from({ length: barsCount }).map((_, i) => {
+                             const barStart = (i / barsCount) * 100;
+                             const active = pct >= barStart + (100 / barsCount / 2);
+                             const seed = (i * 131542391) % 1000;
+                             const amp = 3 + (seed % 10);
+                             return (
+                               <div
+                                 key={i}
+                                 style={{
+                                   flex: "1 1 0%",
+                                   minWidth: 0,
+                                   borderRadius: 1,
+                                   background: active ? "#3b82f6" : "rgba(255,255,255,0.18)",
+                                   height: `${amp}px`,
+                                   opacity: active ? 1 : 0.38,
+                                   position: "relative",
+                                   alignSelf: "center",
+                                 }}
+                               >
+                                 <div
+                                   style={{
+                                     position: "absolute",
+                                     left: 0,
+                                     top: "50%",
+                                     width: "100%",
+                                     height: `${amp}px`,
+                                     borderRadius: 1,
+                                     background: active ? "#3b82f6" : "rgba(255,255,255,0.18)",
+                                     transform: "translateY(-100%)",
+                                     opacity: active ? 0.5 : 0.28,
+                                   }}
+                                 />
+                                 <div
+                                   style={{
+                                     position: "absolute",
+                                     left: 0,
+                                     top: "50%",
+                                     width: "100%",
+                                     height: `${amp}px`,
+                                     borderRadius: 1,
+                                     background: active ? "#3b82f6" : "rgba(255,255,255,0.18)",
+                                     transform: "translateY(0%)",
+                                     opacity: active ? 0.5 : 0.28,
+                                   }}
+                                 />
+                               </div>
+                             );
+                           })}
+                         </div>
+                       </div>
+                     </li>
+                   );
+                 })}
                </ul>
              </div>
 
