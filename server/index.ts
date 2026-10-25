@@ -881,6 +881,17 @@ app.get("/api/projects/:id/files", projectMiddleware, async (request, response, 
     next(error);
   }
 });
+app.get("/api/projects/:id/files/:name", projectMiddleware, async (request, response, next) => {
+  try {
+    const projectDir = safeProjectDirectory(routeId(request));
+    const filePath = assertInside(projectDir, path.join(projectDir, "assets", request.params.name));
+    response.sendFile(filePath);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 app.post(
   "/api/projects/:id/assets",
@@ -1341,7 +1352,8 @@ app.get("/api/tts/preview", async (request, response, next) => {
       buffer = await synthesizeTtsBuffer({ text, voiceId, rate });
     }
 
-    response.setHeader("Content-Type", "audio/mpeg");
+    const contentType = buffer.slice(0, 4).toString() === "RIFF" ? "audio/wav" : "audio/mpeg";
+response.setHeader("Content-Type", contentType);
     response.setHeader("Cache-Control", "public, max-age=86400");
     response.send(buffer);
   } catch (error) {

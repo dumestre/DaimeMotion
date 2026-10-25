@@ -178,7 +178,7 @@ export default function App() {
   const [exportName, setExportName] = useState("video-final");
   const [ttsVoices, setTtsVoices] = useState<TtsVoice[]>([]);
   const [ttsText, setTtsText] = useState("");
-  const [ttsVoiceId, setTtsVoiceId] = useState("pt-BR-FranciscaNeural");
+  const [ttsVoiceId, setTtsVoiceId] = useState("pf_dora");
   const [ttsRate, setTtsRate] = useState("+0%");
   const [ttsFilename, setTtsFilename] = useState("");
   const [ttsBusy, setTtsBusy] = useState(false);
@@ -538,7 +538,7 @@ export default function App() {
       });
       await refreshFiles(project.id);
       await refreshProjects();
-      setNotice(`Narração gerada com sucesso: ${result.name} (${formatSize(result.size)}).`);
+      setNotice(`Narração gerada com sucesso: ${result.name} (${formatSize(result.size)}). Salvo em: ${result.path}`);
       stopVoicePreview();
       setModal(null);
       setTtsText("");
@@ -833,7 +833,15 @@ export default function App() {
             </div>
 
             <label className="field-label">Texto da narração
-              <textarea autoFocus required rows={6} value={ttsText} onChange={(event) => setTtsText(event.target.value)} placeholder="Digite ou cole aqui o roteiro que será narrado (sem limite de caracteres)..." />
+              <textarea autoFocus required rows={6} value={ttsText} onChange={(event) => {
+  const value = event.target.value;
+  setTtsText(value);
+  const words = value.trim().split(/\s+/).filter(Boolean);
+  if (words.length >= 2) {
+    const slug = words.slice(0, 2).join("-").toLowerCase().replace(/[^a-z0-9-]/gi, "");
+    setTtsFilename((prev) => (prev.trim() === "" ? slug : prev));
+  }
+}} placeholder="Digite ou cole aqui o roteiro que será narrado (sem limite de caracteres)..." />
               <div className="prompt-hint"><span>O áudio final será salvo em formato MP3 na pasta assets/ do projeto.</span><span>{ttsText ? `${ttsText.length.toLocaleString("pt-BR")} caracteres · sem limite` : "Sem limite de tamanho"}</span></div>
             </label>
 
@@ -905,6 +913,18 @@ export default function App() {
                 {previewPlaying === ttsVoiceId ? "Parar prévia" : "Ouvir texto"}
               </button>
             </div>
+             <div className="tts-generated-list" style={{ marginTop: 12 }}>
+               <span className="field-label">Áudios gerados (assets/)</span>
+               <ul style={{ margin: "4px 0 0 0", paddingLeft: 16 }}>
+                 {files.filter(f => /\.(wav|mp3)$/i.test(f.name)).map(f => (
+                   <li key={f.name} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                     <button type="button" className="voice-preview-btn" onClick={() => { const a = new Audio(`/api/projects/${project?.id}/files/${encodeURIComponent(f.name)}`); a.play(); }}><Play size={10} fill="currentColor" /></button>
+                     <span>{f.name} ({formatSize(f.size)})</span>
+                   </li>
+                 ))}
+               </ul>
+             </div>
+
 
             <div className="field-row" style={{ marginTop: 12 }}>
               <label className="field-label">Velocidade da fala
