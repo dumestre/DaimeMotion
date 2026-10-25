@@ -188,6 +188,7 @@ export default function App() {
   const generatedAudioRef = useRef<HTMLAudioElement | null>(null);
   const [playingAudio, setPlayingAudio] = useState<string | null>(null);
   const [progress, setProgress] = useState<Record<string, number>>({});
+  const [waveforms, setWaveforms] = useState<Record<string, number[]>>({});
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -563,7 +564,44 @@ export default function App() {
     setPreviewVoiceLoading(false);
   }
 
+  const generateWaveform = useCallback(
+    async (fileName: string) => {
+      if (waveforms[fileName]) return;
+      if (!project?.id) return;
+      try {
+        const url = `/api/projects/${project.id}/files/${encodeURIComponent(fileName)}`;
+        const resp = await fetch(url);
+        const buf = await resp.arrayBuffer();
+        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const audioBuffer = await ctx.decodeAudioData(buf);
+        const data = audioBuffer.getChannelData(0);
+        const bars = 92;
+        const step = Math.floor(data.length / bars) || 1;
+        const peaks: number[] = [];
+        for (let i = 0; i < bars; i++) {
+          let max = 0;
+          for (let j = 0; j < step; j++) {
+            const idx = i * step + j;
+            if (idx < data.length) {
+              const v = Math.abs(data[idx]);
+              if (v > max) max = v;
+            }
+          }
+          peaks.push(max);
+        }
+        const maxPeak = Math.max(...peaks, 0.01);
+        const normalized = peaks.map((p) => (p / maxPeak) * 100);
+        setWaveforms((prev) => ({ ...prev, [fileName]: normalized }));
+        ctx.close();
+      } catch {
+        // ignore
+      }
+    },
+    [project?.id, waveforms]
+  );
+
   function toggleGeneratedAudio(fileName: string) {
+    void generateWaveform(fileName);
     if (playingAudio === fileName && generatedAudioRef.current) {
       generatedAudioRef.current.pause();
       setPlayingAudio(null);
@@ -596,14 +634,41 @@ export default function App() {
   }
 
   function seekGeneratedAudio(fileName: string, event: React.MouseEvent<HTMLDivElement>) {
-    const audio = generatedAudioRef.current;
-    if (!audio || playingAudio !== fileName) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const pct = (event.clientX - rect.left) / rect.width;
-    if (!isNaN(pct) && audio.duration) {
-      audio.currentTime = pct * audio.duration;
-      setProgress((prev) => ({ ...prev, [fileName]: pct * 100 }));
+    void generateWaveform(fileName);
+    let audio = generatedAudioRef.current;
+    if (!audio || !audio.src.includes(encodeURIComponent(fileName))) {
+      audio = new Audio(`/api/projects/${project?.id}/files/${encodeURIComponent(fileName)}`);
+      generatedAudioRef.current = audio;
+      audio.addEventListener("timeupdate", () => {
+        if (audio!.duration) {
+          const pct = (audio!.currentTime / audio!.duration) * 100;
+          setProgress((prev) => ({ ...prev, [fileName]: pct }));
+        }
+      });
+      audio.addEventListener("ended", () => {
+        setProgress((prev) => ({ ...prev, [fileName]: 0 }));
+        setPlayingAudio(null);
+      });
     }
+    const rect = event.currentTarget.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+    const applySeek = () => {
+      if (audio!.duration) {
+        audio!.currentTime = pct * audio!.duration;
+        setProgress((prev) => ({ ...prev, [fileName]: pct * 100 }));
+      }
+    };
+    if (audio.duration) {
+      applySeek();
+    } else {
+      audio.addEventListener("loadedmetadata", applySeek, { once: true });
+      try {
+        audio.load();
+      } catch { }
+    }
+    setProgress((prev) => ({ ...prev, [fileName]: pct * 100 }));
+    setPlayingAudio(fileName);
+    audio.play().catch(() => { });
   }
 
   function playVoicePreview(voiceId: string, customText?: string) {
@@ -700,11 +765,21 @@ export default function App() {
     }
     if (sectionName === "studio" && selectedId && !warmupRef.current.has(selectedId)) {
       warmupRef.current.add(selectedId);
-      api<void>(`/api/projects/${selectedId}/warmup`, { method: "POST" }).catch(() => {});
+      api<void>(`/api/projects/${selectedId}/warmup`, { method: "POST" }).catch(() => { });
     }
   }
 
   const activeTask = task?.status === "running";
+
+  useEffect(() => {
+    if (modal !== "tts" || !project) return;
+    const audios = files.filter((f) => /\.(wav|mp3)$/i.test(f.name));
+    for (const f of audios) {
+      if (!waveforms[f.name]) {
+        void generateWaveform(f.name);
+      }
+    }
+  }, [modal, files, project?.id]);
 
   return (
     <div className="app-shell">
@@ -881,14 +956,14 @@ export default function App() {
 
             <label className="field-label">Texto da narração
               <textarea autoFocus required rows={6} value={ttsText} onChange={(event) => {
-  const value = event.target.value;
-  setTtsText(value);
-  const words = value.trim().split(/\s+/).filter(Boolean);
-  if (words.length >= 2) {
-    const slug = words.slice(0, 2).join("-").toLowerCase().replace(/[^a-z0-9-]/gi, "");
-    setTtsFilename((prev) => (prev.trim() === "" ? slug : prev));
-  }
-}} placeholder="Digite ou cole aqui o roteiro que será narrado (sem limite de caracteres)..." />
+                const value = event.target.value;
+                setTtsText(value);
+                const words = value.trim().split(/\s+/).filter(Boolean);
+                if (words.length >= 2) {
+                  const slug = words.slice(0, 2).join("-").toLowerCase().replace(/[^a-z0-9-]/gi, "");
+                  setTtsFilename((prev) => (prev.trim() === "" ? slug : prev));
+                }
+              }} placeholder="Digite ou cole aqui o roteiro que será narrado (sem limite de caracteres)..." />
               <div className="prompt-hint"><span>O áudio final será salvo em formato MP3 na pasta assets/ do projeto.</span><span>{ttsText ? `${ttsText.length.toLocaleString("pt-BR")} caracteres · sem limite` : "Sem limite de tamanho"}</span></div>
             </label>
 
@@ -960,118 +1035,121 @@ export default function App() {
                 {previewPlaying === ttsVoiceId ? "Parar prévia" : "Ouvir texto"}
               </button>
             </div>
-             <div className="tts-generated-list" style={{ marginTop: 12 }}>
-               <span className="field-label">Áudios gerados (assets/)</span>
-               <ul style={{ margin: "8px 0 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
-                 {files.filter(f => /\.(wav|mp3)$/i.test(f.name)).map(f => {
-                   const pct = progress[f.name] || 0;
-                   const barsCount = 64;
-                   return (
-                     <li key={f.name} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                       <button
-                         type="button"
-                         className="voice-preview-btn"
-                         style={{ flexShrink: 0, width: 28, height: 28 }}
-                         onClick={() => toggleGeneratedAudio(f.name)}
-                         title={playingAudio === f.name ? "Pausar" : "Reproduzir"}
-                       >
-                         {playingAudio === f.name ? <Square size={10} fill="currentColor" /> : <Play size={10} fill="currentColor" />}
-                       </button>
-                       <div
-                         style={{
-                           flex: 1,
-                           border: "1px solid var(--line)",
-                           background: "var(--bg)",
-                           borderRadius: 10,
-                           padding: "6px 12px",
-                           display: "flex",
-                           flexDirection: "column",
-                           gap: 6,
-                           minHeight: 52,
-                         }}
-                       >
-                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
-                           <span
-                             style={{
-                               fontSize: 12,
-                               opacity: 0.9,
-                               overflow: "hidden",
-                               textOverflow: "ellipsis",
-                               whiteSpace: "nowrap",
-                             }}
-                             title={f.name}
-                           >
-                             {f.name.replace(/\.[^/.]+$/, "")}
-                           </span>
-                           <span style={{ fontSize: 11, opacity: 0.5, flexShrink: 0 }}>{formatSize(f.size)}</span>
-                         </div>
-                         <div
-                           style={{
-                             display: "flex",
-                             alignItems: "center",
-                             gap: 1,
-                             height: 24,
-                             cursor: "pointer",
-                             width: "100%",
-                             position: "relative",
-                           }}
-                           onClick={(e) => seekGeneratedAudio(f.name, e)}
-                         >
-                           {Array.from({ length: barsCount }).map((_, i) => {
-                             const barStart = (i / barsCount) * 100;
-                             const active = pct >= barStart + (100 / barsCount / 2);
-                             const seed = (i * 131542391) % 1000;
-                             const amp = 3 + (seed % 10);
-                             return (
-                               <div
-                                 key={i}
-                                 style={{
-                                   flex: "1 1 0%",
-                                   minWidth: 0,
-                                   borderRadius: 1,
-                                   background: active ? "#3b82f6" : "rgba(255,255,255,0.18)",
-                                   height: `${amp}px`,
-                                   opacity: active ? 1 : 0.38,
-                                   position: "relative",
-                                   alignSelf: "center",
-                                 }}
-                               >
-                                 <div
-                                   style={{
-                                     position: "absolute",
-                                     left: 0,
-                                     top: "50%",
-                                     width: "100%",
-                                     height: `${amp}px`,
-                                     borderRadius: 1,
-                                     background: active ? "#3b82f6" : "rgba(255,255,255,0.18)",
-                                     transform: "translateY(-100%)",
-                                     opacity: active ? 0.5 : 0.28,
-                                   }}
-                                 />
-                                 <div
-                                   style={{
-                                     position: "absolute",
-                                     left: 0,
-                                     top: "50%",
-                                     width: "100%",
-                                     height: `${amp}px`,
-                                     borderRadius: 1,
-                                     background: active ? "#3b82f6" : "rgba(255,255,255,0.18)",
-                                     transform: "translateY(0%)",
-                                     opacity: active ? 0.5 : 0.28,
-                                   }}
-                                 />
-                               </div>
-                             );
-                           })}
-                         </div>
-                       </div>
-                     </li>
-                   );
-                 })}
-               </ul>
-             </div>
+            <div className="tts-generated-list" style={{ marginTop: 12 }}>
+              <span className="field-label">Áudios gerados (assets/)</span>
+              <ul style={{ margin: "8px 0 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+                {files.filter(f => /\.(wav|mp3)$/i.test(f.name)).map(f => {
+                  const pct = progress[f.name] || 0;
+                  const barsCount = 92;
+                  const wf = waveforms[f.name] || [];
+                  return (
+                    <li key={f.name} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                      <button
+                        type="button"
+                        className="voice-preview-btn"
+                        style={{ flexShrink: 0, width: 28, height: 28, marginTop: 24 }}
+                        onClick={() => toggleGeneratedAudio(f.name)}
+                        title={playingAudio === f.name ? "Pausar" : "Reproduzir"}
+                      >
+                        {playingAudio === f.name ? <Square size={10} fill="currentColor" /> : <Play size={10} fill="currentColor" />}
+                      </button>
+                      <div
+                        style={{
+                          flex: 1,
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 2,
+                        }}
+                      >
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+                          <span
+                            style={{
+                              fontSize: 12,
+                              opacity: 0.9,
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                            title={f.name}
+                          >
+                            {f.name.replace(/\.[^/.]+$/, "")}
+                          </span>
+                          <span style={{ fontSize: 11, opacity: 0.5, flexShrink: 0 }}>{formatSize(f.size)}</span>
+                        </div>
+                        <div
+                          style={{
+                            border: "1px solid var(--line)",
+                            background: "var(--bg)",
+                            borderRadius: 10,
+                            padding: "2px 12px 4px 12px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
+                            height: 40,
+                            cursor: "pointer",
+                            width: "100%",
+                          }}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            seekGeneratedAudio(f.name, e);
+                          }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            seekGeneratedAudio(f.name, e);
+                          }}
+                        >
+                          {Array.from({ length: barsCount }).map((_, i) => {
+                            const barStart = (i / barsCount) * 100;
+                            const active = pct >= barStart + (100 / barsCount / 2);
+                            const amp = wf[i] ? Math.max(2, (wf[i] / 100) * 16) : 3 + (i % 7);
+                            return (
+                              <div
+                                key={i}
+                                style={{
+                                  flex: "1 1 0",
+                                  height: `${amp}px`,
+                                  borderRadius: 999,
+                                  background: active ? "#3b82f6" : "#d9d5cc",
+                                  position: "relative",
+                                  alignSelf: "center",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    position: "absolute",
+                                    left: 0,
+                                    top: "50%",
+                                    width: "100%",
+                                    height: `${amp}px`,
+                                    borderRadius: 999,
+                                    background: active ? "#3b82f6" : "#d9d5cc",
+                                    transform: "translateY(-100%)",
+                                  }}
+                                />
+                                <div
+                                  style={{
+                                    position: "absolute",
+                                    left: 0,
+                                    top: "50%",
+                                    width: "100%",
+                                    height: `${amp}px`,
+                                    borderRadius: 999,
+                                    background: active ? "#3b82f6" : "#d9d5cc",
+                                    transform: "translateY(0%)",
+                                  }}
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
 
 
             <div className="field-row" style={{ marginTop: 12 }}>
@@ -1226,7 +1304,7 @@ function StudioPage({
             <div className="panel-header"><div className="ai-title"><span className="ai-icon"><Sparkles size={15} /></span><div><h2>Direção criativa</h2><span className="panel-subtitle">OpenCode · agente do projeto</span></div></div><span className="local-badge tiny">LOCAL</span></div>
             <form className="prompt-form" onSubmit={onRunAgent}>
               <label htmlFor="creative-prompt">Descreva o que você quer criar ou alterar</label>
-              <textarea id="creative-prompt" value={prompt} onChange={(event) => setPrompt(event.target.value)} disabled={activeTask} placeholder={"Ex.: Crie um videoclipe de trap com tipografia agressiva e partículas. Sincronize os cortes com a batida da música em assets/..." } />
+              <textarea id="creative-prompt" value={prompt} onChange={(event) => setPrompt(event.target.value)} disabled={activeTask} placeholder={"Ex.: Crie um videoclipe de trap com tipografia agressiva e partículas. Sincronize os cortes com a batida da música em assets/..."} />
               <div className="prompt-hint"><span>O agente trabalha somente na pasta deste projeto.</span><span>{prompt.length}/12.000</span></div>
               {activeTask
                 ? <button type="button" className="button cancel-button" onClick={onCancelTask}><X size={15} /> Cancelar execução</button>
