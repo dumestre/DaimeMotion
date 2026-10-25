@@ -964,7 +964,7 @@ export default function App() {
                   setTtsFilename((prev) => (prev.trim() === "" ? slug : prev));
                 }
               }} placeholder="Digite ou cole aqui o roteiro que será narrado (sem limite de caracteres)..." />
-              <div className="prompt-hint"><span>O áudio final será salvo em formato MP3 na pasta assets/ do projeto.</span><span>{ttsText ? `${ttsText.length.toLocaleString("pt-BR")} caracteres · sem limite` : "Sem limite de tamanho"}</span></div>
+              <div className="prompt-hint"><span>O áudio final será salvo em formato MP3 na pasta assets/ do projeto.</span><span>{ttsText ? `${ttsText.length.toLocaleString("pt-BR")} caracteres · dividido em blocos automaticamente` : "Textos longos são processados em blocos automaticamente"}</span></div>
             </label>
 
             <div>

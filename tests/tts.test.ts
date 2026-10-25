@@ -4,28 +4,28 @@ import { getVoiceSamplePhrase, ptBrVoices, splitTextIntoChunks } from "../server
 describe("TTS Engine & Voices", () => {
   it("contém lista de vozes em português brasileiro", () => {
     expect(ptBrVoices.length).toBeGreaterThan(0);
-    const francisca = ptBrVoices.find((v) => v.id === "pt-BR-FranciscaNeural");
-    expect(francisca).toBeDefined();
-    expect(francisca?.gender).toBe("feminino");
+    const dora = ptBrVoices.find((v) => v.id === "pf_dora");
+    expect(dora).toBeDefined();
+    expect(dora?.gender).toBe("feminino");
 
-    const antonio = ptBrVoices.find((v) => v.id === "pt-BR-AntonioNeural");
-    expect(antonio).toBeDefined();
-    expect(antonio?.gender).toBe("masculino");
+    const alex = ptBrVoices.find((v) => v.id === "pm_alex");
+    expect(alex).toBeDefined();
+    expect(alex?.gender).toBe("masculino");
   });
 
-  it("todas as vozes possuem formato válido pt-BR", () => {
+  it("todas as vozes possuem formato válido", () => {
     for (const voice of ptBrVoices) {
-      expect(voice.id).toMatch(/^pt-BR-/);
+      expect(voice.id.length).toBeGreaterThan(0);
       expect(voice.name.length).toBeGreaterThan(0);
       expect(["feminino", "masculino"]).toContain(voice.gender);
     }
   });
 
   it("gera frase curta de amostra por voz", () => {
-    const fSample = getVoiceSamplePhrase("pt-BR-FranciscaNeural");
+    const fSample = getVoiceSamplePhrase("pf_dora");
     expect(fSample).toBe("Olá! Sou a Francisca.");
 
-    const aSample = getVoiceSamplePhrase("pt-BR-AntonioNeural");
+    const aSample = getVoiceSamplePhrase("pm_alex");
     expect(aSample).toBe("Olá! Sou o Antônio.");
   });
 
@@ -46,4 +46,3 @@ describe("TTS Engine & Voices", () => {
     }
   });
 });
-
