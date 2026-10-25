@@ -551,6 +551,7 @@ export default function App() {
   }
 
   function stopVoicePreview() {
+
     if (audioPreviewRef.current) {
       audioPreviewRef.current.pause();
       audioPreviewRef.current = null;
@@ -919,6 +920,7 @@ export default function App() {
                  {files.filter(f => /\.(wav|mp3)$/i.test(f.name)).map(f => (
                    <li key={f.name} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                      <button type="button" className="voice-preview-btn" onClick={() => { const a = new Audio(`/api/projects/${project?.id}/files/${encodeURIComponent(f.name)}`); a.play(); }}><Play size={10} fill="currentColor" /></button>
+                      <div style={{ width: "100%", height: 6, background: "#ddd", borderRadius: 3, marginTop: 4 }}><div style={{ width: "0%", height: "100%", background: "#3b82f6", borderRadius: 3 }} /></div>
                      <span>{f.name} ({formatSize(f.size)})</span>
                    </li>
                  ))}
