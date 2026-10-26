@@ -1363,18 +1363,25 @@ app.get("/api/tts/voices", (_request, response) => response.json(ptBrVoices));
 
 app.get("/api/tts/preview", async (request, response, next) => {
   try {
-    const voiceId = typeof request.query.voiceId === "string" ? request.query.voiceId : "pt-BR-FranciscaNeural";
+    const voiceId = typeof request.query.voiceId === "string" ? request.query.voiceId : "pf_dora";
     const rate = typeof request.query.rate === "string" ? request.query.rate : undefined;
     const textQuery = typeof request.query.text === "string" ? request.query.text.trim() : "";
 
     let buffer: Buffer;
-    if (!textQuery && (!rate || rate === "+0%")) {
+    if (!textQuery && (!rate || rate === "+0%" || rate === "1" || rate === "1.0")) {
       // Amostra ultra-rápida pré-gravada em cache de disco (resposta instantânea)
       buffer = await getCachedVoiceSample(ttsCacheDir, voiceId);
     } else {
       // Frase curta de teste para resposta rápida (máx. 60 caracteres)
       const text = textQuery ? textQuery.slice(0, 60) : "Olá! Testando a voz.";
-      buffer = await synthesizeTtsBuffer({ text, voiceId, rate });
+      buffer = await synthesizeTtsBuffer({
+        text,
+        voiceId,
+        rate,
+        pauseCommaMs: 0,
+        pauseSentenceMs: 0,
+        pauseParagraphMs: 0,
+      });
     }
 
     const contentType = buffer.slice(0, 4).toString() === "RIFF" ? "audio/wav" : "audio/mpeg";
@@ -1413,8 +1420,10 @@ app.post("/api/projects/:id/tts", projectMiddleware, async (request, response, n
     }
     const voiceId = typeof request.body?.voiceId === "string" ? request.body.voiceId : undefined;
     const rate = typeof request.body?.rate === "string" ? request.body.rate : undefined;
-    const pitch = typeof request.body?.pitch === "string" ? request.body.pitch : undefined;
-    const volume = typeof request.body?.volume === "string" ? request.body.volume : undefined;
+    const speed = typeof request.body?.speed === "number" ? request.body.speed : undefined;
+    const pauseCommaMs = typeof request.body?.pauseCommaMs === "number" ? request.body.pauseCommaMs : undefined;
+    const pauseSentenceMs = typeof request.body?.pauseSentenceMs === "number" ? request.body.pauseSentenceMs : undefined;
+    const pauseParagraphMs = typeof request.body?.pauseParagraphMs === "number" ? request.body.pauseParagraphMs : undefined;
     const filename = typeof request.body?.filename === "string" ? request.body.filename.trim() : "";
     if (filename && (filename.length > 100 || /[<>:"/\\|?*\u0000-\u001f]/.test(filename))) {
       throw new HttpError(400, "Nome de arquivo inválido.");
@@ -1430,7 +1439,15 @@ app.post("/api/projects/:id/tts", projectMiddleware, async (request, response, n
     const outputName = `${stem}.mp3`;
     const outputPath = assertInside(projectDir, path.join(assetsDir, outputName));
 
-    const ttsOptions: TtsOptions = { text, voiceId, rate, pitch, volume };
+    const ttsOptions: TtsOptions = {
+      text,
+      voiceId,
+      rate,
+      speed,
+      pauseCommaMs,
+      pauseSentenceMs,
+      pauseParagraphMs,
+    };
     await generateTts(outputPath, ttsOptions);
 
     const stat = await fs.stat(outputPath);

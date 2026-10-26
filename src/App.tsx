@@ -179,7 +179,10 @@ export default function App() {
   const [ttsVoices, setTtsVoices] = useState<TtsVoice[]>([]);
   const [ttsText, setTtsText] = useState("");
   const [ttsVoiceId, setTtsVoiceId] = useState("pf_dora");
-  const [ttsRate, setTtsRate] = useState("+0%");
+  const [ttsSpeed, setTtsSpeed] = useState("1");
+  const [ttsPauseComma, setTtsPauseComma] = useState(120);
+  const [ttsPauseSentence, setTtsPauseSentence] = useState(350);
+  const [ttsPauseParagraph, setTtsPauseParagraph] = useState(700);
   const [ttsFilename, setTtsFilename] = useState("");
   const [ttsBusy, setTtsBusy] = useState(false);
   const [previewPlaying, setPreviewPlaying] = useState<string | null>(null);
@@ -536,7 +539,10 @@ export default function App() {
         body: JSON.stringify({
           text: ttsText.trim(),
           voiceId: ttsVoiceId,
-          rate: ttsRate,
+          speed: Number(ttsSpeed),
+          pauseCommaMs: ttsPauseComma,
+          pauseSentenceMs: ttsPauseSentence,
+          pauseParagraphMs: ttsPauseParagraph,
           filename: ttsFilename.trim() || undefined,
         }),
       });
@@ -717,7 +723,7 @@ export default function App() {
 
     const params = new URLSearchParams({
       voiceId,
-      rate: ttsRate,
+      rate: ttsSpeed,
     });
     if (customText && customText.trim()) {
       params.set("text", customText.trim().slice(0, 60));
@@ -1204,18 +1210,55 @@ export default function App() {
 
             <div className="field-row" style={{ marginTop: 12 }}>
               <label className="field-label">Velocidade da fala
-                <span className="select-wrap"><select value={ttsRate} onChange={(event) => setTtsRate(event.target.value)}>
-                  <option value="-30%">-30% · Muito lenta</option>
-                  <option value="-15%">-15% · Mais lenta</option>
-                  <option value="+0%">Normal (100%)</option>
-                  <option value="+15%">+15% · Dinâmica</option>
-                  <option value="+30%">+30% · Rápida</option>
+                <span className="select-wrap"><select value={ttsSpeed} onChange={(event) => setTtsSpeed(event.target.value)}>
+                  <option value="0.8">0,8× · Bem devagar</option>
+                  <option value="0.9">0,9× · Devagar</option>
+                  <option value="1">1,0× · Normal</option>
+                  <option value="1.1">1,1× · Dinâmica</option>
+                  <option value="1.2">1,2× · Rápida</option>
                 </select><ChevronDown size={15} /></span>
               </label>
               <label className="field-label">Nome do arquivo <span className="optional">opcional</span>
                 <input maxLength={80} value={ttsFilename} onChange={(event) => setTtsFilename(event.target.value)} placeholder="Ex.: narracao-intro" />
               </label>
             </div>
+
+            <div className="field-row" style={{ marginTop: 12 }}>
+              <label className="field-label">Pausa em vírgula (ms)
+                <input
+                  type="number"
+                  min={0}
+                  max={1500}
+                  step={10}
+                  value={ttsPauseComma}
+                  onChange={(event) => setTtsPauseComma(Number(event.target.value))}
+                />
+              </label>
+              <label className="field-label">Pausa em ponto (ms)
+                <input
+                  type="number"
+                  min={0}
+                  max={3000}
+                  step={10}
+                  value={ttsPauseSentence}
+                  onChange={(event) => setTtsPauseSentence(Number(event.target.value))}
+                />
+              </label>
+              <label className="field-label">Pausa entre parágrafos (ms)
+                <input
+                  type="number"
+                  min={0}
+                  max={5000}
+                  step={10}
+                  value={ttsPauseParagraph}
+                  onChange={(event) => setTtsPauseParagraph(Number(event.target.value))}
+                />
+              </label>
+            </div>
+            <p style={{ fontSize: 11, opacity: 0.55, margin: "6px 0 0" }}>
+              Pausas são silêncio real inserido entre os trechos (o Kokoro quase não pausa em pontuação).
+              Acentos são preservados — sem eles a pronúncia muda (“você” vira “vósse”).
+            </p>
 
             <div className="dialog-actions">
               <button type="button" className="button secondary" onClick={() => { stopVoicePreview(); setModal(null); }}>Cancelar</button>

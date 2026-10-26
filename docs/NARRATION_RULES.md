@@ -22,11 +22,37 @@ Remova obrigatoriamente antes de enviar ao TTS:
 
 Para evitar erros no TTS e problemas com o script Python:
 
+- **Acentos (agudo, til, circunflexo, cedilha)**: NUNCA remover. São eles que definem a pronúncia.
+  Medido no Kokoro: `voce` → `v'?sy` (tônica errada), `você` → `vos'e`; `nao` → "nau",
+  `não` → nasalizado; `avo` / `avô` / `avó` geram três pronúncias diferentes.
+- **Codificação**: o arquivo deve estar em UTF-8. Texto salvo em cp1252 aparece como
+  `nÃ£o` e o sistema repara automaticamente, mas o correto é gravar em UTF-8 desde o início.
 - **Aspas curvas**: converter `" "` (U+201C/U+201D) e `' '` para aspas retas
 - **Apóstrofos tipográficos**: converter para `'` normal
 - **Travessões**: converter `—` (U+2014) e `–` (U+2013) para `-` ou manter como pontuação natural
 - **Caracteres zero-width**: remover `\u200B`, `\u200C`, `\u200D`, `\uFEFF`
 - **Caracteres de controle**: remover exceto `\n`, `\t`, `\r`
+
+## 3.1 Parâmetros de voz (naturalidade)
+
+O painel de Narração expõe estes controles (também disponíveis na API):
+
+| Parâmetro | Faixa | Padrão | Observação |
+|---|---|---|---|
+| Velocidade (`speed`) | 0,5 – 2,0 | 1,0 | Fator real do Kokoro |
+| Pausa em vírgula (`pauseCommaMs`) | 0 – 1500 ms | 120 ms | Após `,` `;` `:` |
+| Pausa em ponto (`pauseSentenceMs`) | 0 – 3000 ms | 350 ms | Após `.` `!` `?` `…` |
+| Pausa entre parágrafos (`pauseParagraphMs`) | 0 – 5000 ms | 700 ms | Em quebra de parágrafo |
+
+**Importante:** o Kokoro quase não pausa em pontuação (medido: ~12 ms por vírgula e
+~20 ms por ponto). A naturalidade vem do silêncio inserido pelo sistema entre os trechos,
+não da pontuação em si. Ajuste os valores acima em vez de encher o texto de reticências.
+
+Narração mais natural, na prática:
+- Frases curtas e bem pontuadas
+- Vírgula 100–150 ms, ponto 350–450 ms, parágrafo 700–900 ms
+- Velocidade 0,9–1,0 para documentário; 1,1 para conteúdo dinâmico
+- Não use CAPS LOCK para ênfase (o modelo lê letra por letra em alguns casos)
 
 ## 4. Estrutura para boa narração
 
@@ -52,6 +78,7 @@ Para evitar erros no TTS e problemas com o script Python:
 - **Manter** pontuação natural para melhor entonação
 - **Usar UTF-8** sempre ao ler/escrever
 - **Para textos muito grandes** (>10k caracteres), confiar no chunking automático do sistema
+- **Ajustar pausas e velocidade** nos controles do painel, não no texto
 
 ## Exemplo prático
 
