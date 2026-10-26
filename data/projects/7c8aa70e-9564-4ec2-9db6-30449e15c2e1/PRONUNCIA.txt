@@ -1,0 +1,20 @@
+# Dicionário de pronúncia — narração "O que é o fascismo?"
+#
+# Formato:  palavra = como deve ser lida
+# - Uma regra por linha; linhas com # são comentários.
+# - A leitura é escrita como se fala ("uatsápi" para WhatsApp).
+# - Maiúsculas/minúsculas não importam; a regra vale para palavras inteiras.
+# - Regras de várias palavras são aceitas ("fake news = feik niús").
+# - Aplicado só na hora de gerar o áudio: o roteiro não é alterado.
+
+# "fascio" sairia como "fa-SI-u" (tônica no i). "fássio" dá /ˈfa.sju/, a pronúncia correta.
+fascio = fássio
+
+# "Weimar" sairia como "ua-MAR". Em português se diz "VÁI-mar".
+Weimar = Váimar
+
+# "SA" sairia como "sá". Aqui são as letras do alemão Sturmabteilung: "ésse-á".
+SA = ésse-á
+
+# "fake news" sairia como "fáqui neus", com sotaque português.
+fake news = feik niús
