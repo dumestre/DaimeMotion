@@ -40,4 +40,8 @@ desse silêncio, não da pontuação.
 
 Vozes atuais (Kokoro, local): `pf_dora`, `pm_alex`, `pm_santa`. Manter essas 3 como padrão.
 
+**Pronúncia:** para corrigir palavras mal faladas, use o dicionário do projeto (`PRONUNCIA.txt`,
+formato `palavra = como ler`) — não altere a grafia do roteiro. Detalhes e fonemas medidos em
+[docs/NARRATION_RULES.md](docs/NARRATION_RULES.md) (seção 3.2).
+
 **Planejado:** integração opcional do XTTS v2 (clonagem de voz / mais vozes PT-BR). Ler [docs/XTTS_V2_PLAN.md](docs/XTTS_V2_PLAN.md) antes de implementar. Não adicionar engines/APIs de TTS fora do plano (ex.: Edge TTS) sem decisão explícita do usuário.

@@ -22,7 +22,18 @@ import { PathSafetyError, resolveWithinDirectory, sanitizeFilename as safeFilena
 import { installProjectGuidance } from "./project-guidance.js";
 import { isTemplateId, seedProjectComposition, type TemplateId } from "./templates.js";
 import { parseWhisperJson, segmentsToSrt } from "./transcription.js";
-import { generateTts, getCachedVoiceSample, ptBrVoices, synthesizeTtsBuffer, warmupVoiceSamples, type TtsOptions } from "./tts.js";
+import {
+  generateTts,
+  getCachedVoiceSample,
+  parsePronunciationDictionary,
+  invalidPronunciationLines,
+  PRONUNCIATION_FILE,
+  ptBrVoices,
+  synthesizeTtsBuffer,
+  warmupVoiceSamples,
+  type PronunciationRule,
+  type TtsOptions,
+} from "./tts.js";
 
 const port = Number(process.env.DAIME_PORT ?? 4317);
 const projectRoot = path.resolve(process.cwd());
@@ -165,6 +176,17 @@ async function getProject(id: string): Promise<Project> {
   const project = (await readProjects()).find((item) => item.id === id);
   if (!project) throw new HttpError(404, "Projeto não encontrado.");
   return project;
+}
+
+/** Lê o dicionário de pronúncia do projeto (vazio se o arquivo não existir). */
+async function readProjectPronunciations(projectDir: string): Promise<PronunciationRule[]> {
+  const filePath = path.join(projectDir, PRONUNCIATION_FILE);
+  try {
+    const content = await fs.readFile(filePath, "utf8");
+    return parsePronunciationDictionary(content);
+  } catch {
+    return [];
+  }
 }
 
 function resolveCli(name: string): { command: string; prefixArgs: string[] } | null {
@@ -1366,6 +1388,17 @@ app.get("/api/tts/preview", async (request, response, next) => {
     const voiceId = typeof request.query.voiceId === "string" ? request.query.voiceId : "pf_dora";
     const rate = typeof request.query.rate === "string" ? request.query.rate : undefined;
     const textQuery = typeof request.query.text === "string" ? request.query.text.trim() : "";
+    const projectId = typeof request.query.projectId === "string" ? request.query.projectId.trim() : "";
+
+    let pronunciations: PronunciationRule[] = [];
+    if (projectId) {
+      try {
+        const project = await getProject(projectId);
+        pronunciations = await readProjectPronunciations(safeProjectDirectory(project.id));
+      } catch {
+        pronunciations = [];
+      }
+    }
 
     let buffer: Buffer;
     if (!textQuery && (!rate || rate === "+0%" || rate === "1" || rate === "1.0")) {
@@ -1381,6 +1414,7 @@ app.get("/api/tts/preview", async (request, response, next) => {
         pauseCommaMs: 0,
         pauseSentenceMs: 0,
         pauseParagraphMs: 0,
+        pronunciations,
       });
     }
 
@@ -1432,6 +1466,7 @@ app.post("/api/projects/:id/tts", projectMiddleware, async (request, response, n
     const projectDir = safeProjectDirectory(project.id);
     const assetsDir = path.join(projectDir, "assets");
     await fs.mkdir(assetsDir, { recursive: true });
+    const pronunciations = await readProjectPronunciations(projectDir);
 
     const stem = filename
       ? filename.replace(/\.mp3$/i, "")
@@ -1447,6 +1482,7 @@ app.post("/api/projects/:id/tts", projectMiddleware, async (request, response, n
       pauseCommaMs,
       pauseSentenceMs,
       pauseParagraphMs,
+      pronunciations,
     };
     await generateTts(outputPath, ttsOptions);
 
@@ -1464,6 +1500,48 @@ app.post("/api/projects/:id/tts", projectMiddleware, async (request, response, n
       path: `assets/${outputName}`,
       size: stat.size,
       voice: voiceId || "pt-BR-FranciscaNeural",
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/projects/:id/pronunciation", projectMiddleware, async (request, response, next) => {
+  try {
+    const projectDir = safeProjectDirectory(routeId(request));
+    const filePath = path.join(projectDir, PRONUNCIATION_FILE);
+    let content = "";
+    try {
+      content = await fs.readFile(filePath, "utf8");
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    }
+    response.json({
+      file: PRONUNCIATION_FILE,
+      content,
+      rules: parsePronunciationDictionary(content),
+      invalidLines: invalidPronunciationLines(content),
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.put("/api/projects/:id/pronunciation", projectMiddleware, async (request, response, next) => {
+  try {
+    const content = typeof request.body?.content === "string" ? request.body.content : null;
+    if (content === null) throw new HttpError(400, "Envie o conteúdo do dicionário em 'content'.");
+    if (content.length > 100_000) throw new HttpError(413, "O dicionário excede 100.000 caracteres.");
+
+    const projectDir = safeProjectDirectory(routeId(request));
+    const filePath = assertInside(projectDir, path.join(projectDir, PRONUNCIATION_FILE));
+    await fs.writeFile(filePath, content.replace(/^\uFEFF/, ""), "utf8");
+
+    response.json({
+      file: PRONUNCIATION_FILE,
+      content,
+      rules: parsePronunciationDictionary(content),
+      invalidLines: invalidPronunciationLines(content),
     });
   } catch (error) {
     next(error);

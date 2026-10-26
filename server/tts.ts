@@ -48,6 +48,8 @@ export interface TtsOptions {
   pauseCommaMs?: number;
   pauseSentenceMs?: number;
   pauseParagraphMs?: number;
+  /** Regras de pronúncia aplicadas ao texto antes da síntese. */
+  pronunciations?: PronunciationRule[];
 }
 
 /** Trecho de fala enviado ao Kokoro, com o silêncio que vem depois dele. */
@@ -156,6 +158,104 @@ export function normalizeTextForTts(input: string): string {
   return text.trim();
 }
 
+/**
+ * Nome do dicionário de pronúncia dentro da pasta do projeto.
+ * Formato: uma regra por linha, `palavra = como deve ser lida`.
+ */
+export const PRONUNCIATION_FILE = "PRONUNCIA.txt";
+
+export interface PronunciationRule {
+  /** Como a palavra aparece no roteiro. */
+  from: string;
+  /** Como ela deve ser lida (grafia fonética interpretada pelo espeak-ng). */
+  to: string;
+}
+
+function stripQuotePairs(value: string): string {
+  const trimmed = value.trim();
+  if (trimmed.length >= 2) {
+    const first = trimmed[0];
+    const last = trimmed[trimmed.length - 1];
+    if ((first === '"' && last === '"') || (first === "'" && last === "'")) {
+      return trimmed.slice(1, -1).trim();
+    }
+  }
+  return trimmed;
+}
+
+/** Indica se a linha deveria conter uma regra (e não é comentário/linha vazia). */
+function isRuleLine(rawLine: string): boolean {
+  const line = rawLine.trim();
+  return line.length > 0 && !line.startsWith("#") && !line.startsWith("//");
+}
+
+/**
+ * Lê o dicionário de pronúncia no formato `palavra = leitura`.
+ * Linhas vazias, comentários (`#`) e linhas sem `=` são ignoradas.
+ * Regras mais longas vêm primeiro para que "fake news" vença "news".
+ */
+export function parsePronunciationDictionary(content: string): PronunciationRule[] {
+  const rules: PronunciationRule[] = [];
+  const seen = new Set<string>();
+
+  for (const rawLine of (content ?? "").replace(/^\uFEFF/, "").split(/\r?\n/)) {
+    if (!isRuleLine(rawLine)) continue;
+    const line = rawLine.trim();
+    const separator = line.indexOf("=");
+    if (separator <= 0) continue;
+    const from = stripQuotePairs(line.slice(0, separator));
+    const to = stripQuotePairs(line.slice(separator + 1));
+    if (!from || !to) continue;
+    const key = from.toLocaleLowerCase("pt-BR");
+    if (seen.has(key)) continue;
+    seen.add(key);
+    rules.push({ from, to });
+  }
+
+  return rules.sort((a, b) => b.from.length - a.from.length);
+}
+
+/** Números das linhas (1-based) que parecem regras mas estão num formato inválido. */
+export function invalidPronunciationLines(content: string): number[] {
+  const invalid: number[] = [];
+  (content ?? "").replace(/^\uFEFF/, "").split(/\r?\n/).forEach((rawLine, index) => {
+    if (!isRuleLine(rawLine)) return;
+    const line = rawLine.trim();
+    const separator = line.indexOf("=");
+    if (separator <= 0) {
+      invalid.push(index + 1);
+      return;
+    }
+    if (!stripQuotePairs(line.slice(0, separator)) || !stripQuotePairs(line.slice(separator + 1))) {
+      invalid.push(index + 1);
+    }
+  });
+  return invalid;
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Troca as palavras pelas leituras do dicionário antes da síntese.
+ * A troca é insensível a maiúsculas/minúsculas e respeita limites de palavra,
+ * então "SA" não afeta "casa". O texto original do roteiro não é alterado.
+ */
+export function applyPronunciationDictionary(text: string, rules: PronunciationRule[]): string {
+  if (!text || rules.length === 0) return text;
+  let result = text;
+
+  for (const rule of rules) {
+    const body = rule.from.split(/\s+/).map(escapeRegExp).join("\\s+");
+    const guardStart = /^[\p{L}\p{N}]/u.test(rule.from) ? "(?<![\\p{L}\\p{N}])" : "";
+    const guardEnd = /[\p{L}\p{N}]$/u.test(rule.from) ? "(?![\\p{L}\\p{N}])" : "";
+    result = result.replace(new RegExp(`${guardStart}${body}${guardEnd}`, "giu"), () => rule.to);
+  }
+
+  return result;
+}
+
 function splitBySentences(text: string): string[] {
   const sentences = text.split(/(?<=[.!?;:])\s+/);
   return sentences.filter((s) => s.trim().length > 0);
@@ -175,9 +275,16 @@ function splitSentences(text: string): string[] {
     if (!piece) continue;
     if (merged.length > 0) {
       const previous = merged[merged.length - 1];
-      const word = (previous.replace(/[.!?…]+$/, "").match(/[\p{L}]+$/u)?.[0] ?? "").toLowerCase();
-      const isAbbreviation = ABBREVIATIONS.has(word) || word.length === 1;
-      if (isAbbreviation) {
+      const lastWord = previous.replace(/[.!?…]+$/, "").match(/[\p{L}]+$/u)?.[0] ?? "";
+      const word = lastWord.toLowerCase();
+      // Iniciais ("J. R. R. Tolkien") só continuam a frase se forem maiúsculas e o
+      // próximo trecho também começar em maiúscula. Antes, QUALQUER palavra de uma
+      // letra ("Ele é. Depois...", "ésse-á. ésse-á.") colava as frases seguintes.
+      const isInitial =
+        lastWord.length === 1 &&
+        lastWord === lastWord.toLocaleUpperCase("pt-BR") &&
+        /^[\p{Lu}\p{N}]/u.test(piece);
+      if (ABBREVIATIONS.has(word) || isInitial) {
         merged[merged.length - 1] = `${previous} ${piece}`;
         continue;
       }
@@ -417,7 +524,8 @@ async function concatenateWavsToMp3(wavPaths: string[], outputMp3Path: string, t
 
 export async function synthesizeTtsBuffer(options: TtsOptions): Promise<Buffer> {
   const voice = normalizeVoiceId(options.voiceId);
-  const text = normalizeTextForTts(options.text || "");
+  const normalized = normalizeTextForTts(options.text || "");
+  const text = applyPronunciationDictionary(normalized, options.pronunciations ?? []);
   if (!text.trim()) {
     throw new Error("Texto vazio para síntese de voz.");
   }

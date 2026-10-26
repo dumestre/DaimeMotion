@@ -5,6 +5,7 @@ import {
   Bookmark,
   Check,
   ChevronDown,
+  ChevronRight,
   Clapperboard,
   Clock3,
   Copy,
@@ -20,6 +21,7 @@ import {
   MoreHorizontal,
   Play,
   Plus,
+  Save,
   Scissors,
   Settings2,
   Sparkles,
@@ -185,6 +187,12 @@ export default function App() {
   const [ttsPauseParagraph, setTtsPauseParagraph] = useState(700);
   const [ttsFilename, setTtsFilename] = useState("");
   const [ttsBusy, setTtsBusy] = useState(false);
+  const [pronContent, setPronContent] = useState("");
+  const [pronSaved, setPronSaved] = useState("");
+  const [pronRuleCount, setPronRuleCount] = useState(0);
+  const [pronInvalid, setPronInvalid] = useState<number[]>([]);
+  const [pronBusy, setPronBusy] = useState(false);
+  const [pronOpen, setPronOpen] = useState(false);
   const [previewPlaying, setPreviewPlaying] = useState<string | null>(null);
   const [previewVoiceLoading, setPreviewVoiceLoading] = useState(false);
   const audioPreviewRef = useRef<HTMLAudioElement | null>(null);
@@ -561,6 +569,47 @@ export default function App() {
   }
   // toggleGeneratedPlay removed (unused)
 
+  async function loadPronunciation(projectId: string) {
+    try {
+      const data = await api<{ content: string; rules: unknown[]; invalidLines: number[] }>(
+        `/api/projects/${projectId}/pronunciation`,
+      );
+      setPronContent(data.content ?? "");
+      setPronSaved(data.content ?? "");
+      setPronRuleCount(data.rules?.length ?? 0);
+      setPronInvalid(data.invalidLines ?? []);
+    } catch {
+      setPronContent("");
+      setPronSaved("");
+      setPronRuleCount(0);
+      setPronInvalid([]);
+    }
+  }
+
+  async function savePronunciation() {
+    if (!project || pronBusy) return;
+    setError("");
+    setPronBusy(true);
+    try {
+      const data = await api<{ content: string; rules: unknown[]; invalidLines: number[] }>(
+        `/api/projects/${project.id}/pronunciation`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: pronContent }),
+        },
+      );
+      setPronSaved(data.content ?? pronContent);
+      setPronRuleCount(data.rules?.length ?? 0);
+      setPronInvalid(data.invalidLines ?? []);
+      setNotice(`Dicionário de pronúncia salvo: ${data.rules?.length ?? 0} regra(s) ativa(s).`);
+    } catch (reason) {
+      setError((reason as Error).message);
+    } finally {
+      setPronBusy(false);
+    }
+  }
+
   function stopVoicePreview() {
     if (audioPreviewRef.current) {
       audioPreviewRef.current.pause();
@@ -725,6 +774,9 @@ export default function App() {
       voiceId,
       rate: ttsSpeed,
     });
+    if (project) {
+      params.set("projectId", project.id);
+    }
     if (customText && customText.trim()) {
       params.set("text", customText.trim().slice(0, 60));
     }
@@ -810,6 +862,11 @@ export default function App() {
   }
 
   const activeTask = task?.status === "running";
+
+  useEffect(() => {
+    if (modal !== "tts" || !project) return;
+    void loadPronunciation(project.id);
+  }, [modal, project?.id]);
 
   useEffect(() => {
     if (modal !== "tts" || !project) return;
@@ -1259,6 +1316,79 @@ export default function App() {
               Pausas são silêncio real inserido entre os trechos (o Kokoro quase não pausa em pontuação).
               Acentos são preservados — sem eles a pronúncia muda (“você” vira “vósse”).
             </p>
+
+            <div style={{ marginTop: 14, borderTop: "1px solid var(--line)", paddingTop: 12 }}>
+              <button
+                type="button"
+                onClick={() => setPronOpen((open) => !open)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  width: "100%",
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  cursor: "pointer",
+                  color: "inherit",
+                  font: "inherit",
+                  textAlign: "left",
+                }}
+              >
+                {pronOpen ? <ChevronDown size={15} /> : <ChevronRight size={15} />}
+                <span style={{ fontWeight: 600, fontSize: 12 }}>Dicionário de pronúncia</span>
+                <span style={{ fontSize: 11, opacity: 0.5 }}>
+                  {pronRuleCount > 0 ? `${pronRuleCount} regra(s) ativa(s)` : "nenhuma regra"}
+                </span>
+                {pronContent !== pronSaved && (
+                  <span style={{ fontSize: 11, color: "#b45309" }}>· não salvo</span>
+                )}
+              </button>
+
+              {pronOpen && (
+                <div style={{ marginTop: 10 }}>
+                  <p style={{ fontSize: 11, opacity: 0.6, margin: "0 0 8px" }}>
+                    Ensine como falar palavras que a voz erra. Uma regra por linha, no formato
+                    <code style={{ margin: "0 4px" }}>palavra = como ler</code>
+                    — a leitura é escrita como se pronuncia. Vale para este projeto.
+                  </p>
+                  <textarea
+                    rows={6}
+                    value={pronContent}
+                    onChange={(event) => setPronContent(event.target.value)}
+                    spellCheck={false}
+                    style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 12 }}
+                    placeholder={"# comentário\nWhatsApp = uatsápi\nWeimar = Váimar\nfake news = feik niús"}
+                  />
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8 }}>
+                    <button
+                      type="button"
+                      className="button small secondary"
+                      disabled={pronBusy || pronContent === pronSaved}
+                      onClick={() => void savePronunciation()}
+                    >
+                      {pronBusy ? <LoaderCircle className="spin" size={13} /> : <Save size={13} />}
+                      {pronBusy ? "Salvando..." : "Salvar dicionário"}
+                    </button>
+                    <button
+                      type="button"
+                      className="button small secondary"
+                      disabled={!ttsText.trim()}
+                      onClick={() => playVoicePreview(ttsVoiceId, ttsText)}
+                    >
+                      <Volume2 size={13} />
+                      Testar com o texto acima
+                    </button>
+                    <span style={{ fontSize: 11, opacity: 0.5 }}>PRONUNCIA.txt</span>
+                  </div>
+                  {pronInvalid.length > 0 && (
+                    <p style={{ fontSize: 11, color: "#b45309", margin: "8px 0 0" }}>
+                      Linha(s) sem o formato <code>palavra = leitura</code>: {pronInvalid.join(", ")} — serão ignoradas.
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
 
             <div className="dialog-actions">
               <button type="button" className="button secondary" onClick={() => { stopVoicePreview(); setModal(null); }}>Cancelar</button>

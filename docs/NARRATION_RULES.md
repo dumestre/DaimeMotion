@@ -54,6 +54,41 @@ Narração mais natural, na prática:
 - Velocidade 0,9–1,0 para documentário; 1,1 para conteúdo dinâmico
 - Não use CAPS LOCK para ênfase (o modelo lê letra por letra em alguns casos)
 
+## 3.2 Dicionário de pronúncia
+
+Quando a voz erra uma palavra (nome estrangeiro, sigla, termo técnico), **não reescreva o roteiro**:
+use o dicionário de pronúncia do projeto, o arquivo `PRONUNCIA.txt` na raiz do projeto.
+
+Formato (`palavra = como deve ser lida`), uma regra por linha:
+
+```text
+# comentário
+WhatsApp = uatsápi
+Weimar = Váimar
+SA = ésse-á
+fake news = feik niús
+```
+
+- A troca acontece **só na síntese**: `NARRACAO.md` continua com a grafia correta.
+- Insensível a maiúsculas/minúsculas, respeita palavras inteiras (`SA` não afeta `casa`).
+- Aceita expressões com várias palavras; regras mais longas têm prioridade.
+- No painel de Narração: **Dicionário de pronúncia** → editar → **Salvar dicionário**.
+- API: `GET`/`PUT /api/projects/:id/pronunciation` (corpo `{ "content": "..." }`).
+
+Como escolher a leitura: o PT-BR é fonemizado pelo **espeak-ng** (`pt-br`), não pelo misaki.
+Escreva a palavra "como se fala" na variedade brasileira e confirme no botão
+**Testar com o texto acima**. Exemplos medidos no espeak-ng:
+
+| Palavra | Fonemas sem regra | Leitura | Fonemas com regra |
+|---|---|---|---|
+| `Weimar` | `wamˈar` ("ua-MAR") | `Váimar` | `vˈimar` ("VÁI-mar") |
+| `fascio` | `fasˈiʊ` ("fa-SI-u") | `fássio` | `fˈasjʊ` ("FÁ-sio") |
+| `SA` | `sˈa` ("sá") | `ésse-á` | `ˈɛsjˈa` (letras) |
+| `fake news` | `fˈaky nˈews` ("fáqui neus") | `feik niús` | `feˈik niˈus` |
+
+Não crie regras para o que já sai certo: `XX` (romano) já é lido como "vinte" pelo espeak-ng,
+e palavras como `holocausto` e `nazismo` são corretas em português.
+
 ## 4. Estrutura para boa narração
 
 - **Parágrafos**: mantenha parágrafos separados por `\n\n` - isso cria pausas naturais
@@ -79,6 +114,7 @@ Narração mais natural, na prática:
 - **Usar UTF-8** sempre ao ler/escrever
 - **Para textos muito grandes** (>10k caracteres), confiar no chunking automático do sistema
 - **Ajustar pausas e velocidade** nos controles do painel, não no texto
+- **Corrigir pronúncia** no `PRONUNCIA.txt` do projeto, nunca alterando a grafia do roteiro
 
 ## Exemplo prático
 

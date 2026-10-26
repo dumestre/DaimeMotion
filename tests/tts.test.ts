@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
+  applyPronunciationDictionary,
   getVoiceSamplePhrase,
+  invalidPronunciationLines,
   normalizeTextForTts,
+  parsePronunciationDictionary,
   parseSpeed,
   ptBrVoices,
   splitIntoSpeechUnits,
@@ -158,6 +161,24 @@ describe("Pausas entre trechos da narração", () => {
     expect(units[0].text).toContain("Dr. Silva");
   });
 
+  it("quebra a frase quando termina em palavra de uma letra", () => {
+    const units = splitIntoSpeechUnits("Ele é. Depois ele foi.", pauses);
+    expect(units.map((unit) => unit.text)).toEqual(["Ele é.", "Depois ele foi."]);
+  });
+
+  it("mantém iniciais unidas (J. R. R. Tolkien)", () => {
+    const units = splitIntoSpeechUnits("J. R. R. Tolkien escreveu. Outra frase.", pauses);
+    expect(units).toHaveLength(2);
+    expect(units[0].text).toBe("J. R. R. Tolkien escreveu.");
+  });
+
+  it("não cola frases com leitura do dicionário que termina em uma letra", () => {
+    const rules = parsePronunciationDictionary("SA = ésse-á");
+    const text = applyPronunciationDictionary("SA. SA. SA. SA.", rules);
+    const units = splitIntoSpeechUnits(text, pauses);
+    expect(units).toHaveLength(4);
+  });
+
   it("mantém o texto inteiro quando todas as pausas são zero", () => {
     const text = "Uma frase. Outra frase, com vírgula.\n\nNovo parágrafo.";
     const units = splitIntoSpeechUnits(text, {
@@ -186,5 +207,62 @@ describe("Velocidade da fala", () => {
     expect(parseSpeed(5)).toBe(2);
     expect(parseSpeed(0.1)).toBe(0.5);
     expect(parseSpeed(undefined)).toBe(1);
+  });
+});
+
+describe("Dicionário de pronúncia", () => {
+  it("lê regras no formato 'palavra = leitura'", () => {
+    const rules = parsePronunciationDictionary("WhatsApp = uatsápi\nWeimar = Váimar");
+    expect(rules).toHaveLength(2);
+    expect(rules.find((r) => r.from === "WhatsApp")?.to).toBe("uatsápi");
+  });
+
+  it("ignora comentários, linhas vazias e formato inválido", () => {
+    const content = ["# comentário", "", "// outra nota", "sem separador", "= vazio", "valido = ok"].join("\n");
+    const rules = parsePronunciationDictionary(content);
+    expect(rules).toEqual([{ from: "valido", to: "ok" }]);
+  });
+
+  it("aceita BOM, CRLF e valores entre aspas", () => {
+    const rules = parsePronunciationDictionary('\uFEFF"fake news" = "feik niús"\r\n');
+    expect(rules).toEqual([{ from: "fake news", to: "feik niús" }]);
+  });
+
+  it("mantém a primeira regra quando há duplicatas", () => {
+    const rules = parsePronunciationDictionary("SA = ésse-á\nsa = primeira");
+    expect(rules).toHaveLength(1);
+    expect(rules[0].to).toBe("ésse-á");
+  });
+
+  it("ordena regras mais longas primeiro", () => {
+    const rules = parsePronunciationDictionary("news = niús\nfake news = feik niús");
+    expect(rules[0].from).toBe("fake news");
+  });
+
+  it("aponta as linhas inválidas", () => {
+    expect(invalidPronunciationLines("# ok\nruim\nbom = ok\n= nada")).toEqual([2, 4]);
+  });
+
+  it("troca palavras respeitando limites e ignorando maiúsculas", () => {
+    const rules = parsePronunciationDictionary("SA = ésse-á");
+    expect(applyPronunciationDictionary("O SA agiu e a casa ficou.", rules)).toBe(
+      "O ésse-á agiu e a casa ficou.",
+    );
+  });
+
+  it("troca expressões de várias palavras e aceita quebras de linha", () => {
+    const rules = parsePronunciationDictionary("fake news = feik niús");
+    expect(applyPronunciationDictionary("Isso é fake news.", rules)).toBe("Isso é feik niús.");
+    expect(applyPronunciationDictionary("Isso é fake\nnews.", rules)).toBe("Isso é feik niús.");
+  });
+
+  it("não interpreta $ no texto de substituição", () => {
+    const rules = parsePronunciationDictionary("preço = $1");
+    expect(applyPronunciationDictionary("O preço subiu.", rules)).toBe("O $1 subiu.");
+  });
+
+  it("preserva acentos e não altera o texto quando não há regras", () => {
+    const text = "A nação e a violência não são opiniões.";
+    expect(applyPronunciationDictionary(text, [])).toBe(text);
   });
 });
