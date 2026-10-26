@@ -600,6 +600,41 @@ export default function App() {
     [project?.id, waveforms]
   );
 
+  async function deleteGeneratedAudio(fileName: string) {
+    if (!project) return;
+    if (!window.confirm(`Excluir o áudio "${fileName}"? Esta ação não pode ser desfeita.`)) return;
+    setError("");
+    try {
+      if (playingAudio === fileName) {
+        generatedAudioRef.current?.pause();
+        generatedAudioRef.current = null;
+        setPlayingAudio(null);
+      }
+      const response = await fetch(
+        `/api/projects/${project.id}/files/${encodeURIComponent(fileName)}`,
+        { method: "DELETE" },
+      );
+      if (!response.ok) {
+        const detail = await response.json().catch(() => null);
+        throw new Error(detail?.error || "Não foi possível excluir o áudio.");
+      }
+      setProgress((prev) => {
+        const next = { ...prev };
+        delete next[fileName];
+        return next;
+      });
+      setWaveforms((prev) => {
+        const next = { ...prev };
+        delete next[fileName];
+        return next;
+      });
+      await refreshFiles(project.id);
+      setNotice(`Áudio excluído: ${fileName}`);
+    } catch (reason) {
+      setError((reason as Error).message);
+    }
+  }
+
   function toggleGeneratedAudio(fileName: string) {
     void generateWaveform(fileName);
     if (playingAudio === fileName && generatedAudioRef.current) {
@@ -633,8 +668,7 @@ export default function App() {
     });
   }
 
-  function seekGeneratedAudio(fileName: string, event: React.MouseEvent<HTMLDivElement>) {
-    void generateWaveform(fileName);
+  function seekGeneratedAudio(fileName: string, event: React.MouseEvent<HTMLDivElement>) {    void generateWaveform(fileName);
     let audio = generatedAudioRef.current;
     if (!audio || !audio.src.includes(encodeURIComponent(fileName))) {
       audio = new Audio(`/api/projects/${project?.id}/files/${encodeURIComponent(fileName)}`);
@@ -1047,7 +1081,7 @@ export default function App() {
                       <button
                         type="button"
                         className="voice-preview-btn"
-                        style={{ flexShrink: 0, width: 28, height: 28, marginTop: 24 }}
+                        style={{ flexShrink: 0, width: 28, height: 28, alignSelf: "flex-end", marginBottom: 6 }}
                         onClick={() => toggleGeneratedAudio(f.name)}
                         title={playingAudio === f.name ? "Pausar" : "Reproduzir"}
                       >
@@ -1074,7 +1108,23 @@ export default function App() {
                           >
                             {f.name.replace(/\.[^/.]+$/, "")}
                           </span>
-                          <span style={{ fontSize: 11, opacity: 0.5, flexShrink: 0 }}>{formatSize(f.size)}</span>
+                          <span style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+                            <span style={{ fontSize: 11, opacity: 0.5 }}>{formatSize(f.size)}</span>
+                            <button
+                              type="button"
+                              className="voice-preview-btn audio-delete-btn"
+                              style={{ width: 22, height: 22 }}
+                              onClick={(event) => {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                void deleteGeneratedAudio(f.name);
+                              }}
+                              title={`Excluir ${f.name}`}
+                              aria-label={`Excluir ${f.name}`}
+                            >
+                              <Trash2 size={11} />
+                            </button>
+                          </span>
                         </div>
                         <div
                           style={{

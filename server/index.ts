@@ -891,6 +891,31 @@ app.get("/api/projects/:id/files/:name", projectMiddleware, async (request, resp
   }
 });
 
+app.delete("/api/projects/:id/files/:name", projectMiddleware, async (request, response, next) => {
+  try {
+    const projectDir = safeProjectDirectory(routeId(request));
+    const assetsDir = path.join(projectDir, "assets");
+    const filePath = assertInside(assetsDir, path.join(assetsDir, String(request.params.name)));
+    const stat = await fs.stat(filePath);
+    if (!stat.isFile()) throw new HttpError(400, "O caminho informado não é um arquivo.");
+    await fs.unlink(filePath);
+
+    const projects = await readProjects();
+    const current = projects.find((item) => item.id === routeId(request));
+    if (current) {
+      current.updatedAt = new Date().toISOString();
+      await writeProjects(projects);
+    }
+    response.status(204).end();
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      next(new HttpError(404, "Arquivo não encontrado."));
+      return;
+    }
+    next(error);
+  }
+});
+
 
 
 app.post(

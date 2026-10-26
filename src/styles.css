@@ -233,9 +233,11 @@ button:disabled { cursor: not-allowed !important; opacity: .55; }
 .voice-card-info { display: grid; gap: 2px; min-width: 0; }
 .voice-card-name { font-size: 11px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .voice-card-gender { font-size: 9px; color: var(--muted); text-transform: capitalize; }
-.voice-preview-btn { width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: var(--bg); color: var(--detail); cursor: pointer; flex-shrink: 0; }
+.voice-preview-btn { width: 24px; height: 24px; display: grid; place-items: center; padding: 0; line-height: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--bg); color: var(--detail); cursor: pointer; flex-shrink: 0; }
 .voice-preview-btn:hover { border-color: var(--detail); background: var(--surface); }
 .voice-preview-btn.playing { border-color: var(--detail); background: var(--detail); color: var(--primary-text); }
+.audio-delete-btn { color: var(--muted); }
+.audio-delete-btn:hover { border-color: #b42318; background: var(--surface); color: #b42318; }
 .tts-quick-preview { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; border: 1px dashed var(--line); border-radius: 6px; padding: 8px 12px; background: var(--bg); }
 .tts-quick-preview span { font-size: 10px; color: var(--muted); }
 .tts-quick-preview button { display: inline-flex; align-items: center; gap: 6px; }
