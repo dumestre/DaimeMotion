@@ -884,7 +884,7 @@ app.get("/api/projects/:id/files", projectMiddleware, async (request, response, 
 app.get("/api/projects/:id/files/:name", projectMiddleware, async (request, response, next) => {
   try {
     const projectDir = safeProjectDirectory(routeId(request));
-    const filePath = assertInside(projectDir, path.join(projectDir, "assets", request.params.name));
+    const filePath = assertInside(projectDir, path.join(projectDir, "assets", String(request.params.name)));
     response.sendFile(filePath);
   } catch (error) {
     next(error);
@@ -1460,9 +1460,16 @@ const server = app.listen(port, "127.0.0.1", () => {
   console.log(`Daime Motion disponível em http://127.0.0.1:${port}`);
   console.log(`Biblioteca local: ${dataRoot}`);
 });
-server.once("error", (error) => {
-  console.error(`Não foi possível iniciar o backend local: ${error.message}`);
-  process.exitCode = 1;
+server.once("error", (error: NodeJS.ErrnoException) => {
+  if (error.code === "EADDRINUSE") {
+    console.error(
+      `A porta ${port} já está em uso por outro processo do Daime Motion.\n` +
+        `Encerre a instância antiga (ou use DAIME_PORT=xxxx) e tente novamente.`,
+    );
+  } else {
+    console.error(`Não foi possível iniciar o backend local: ${error.message}`);
+  }
+  process.exit(1);
 });
 
 async function shutdown(): Promise<void> {

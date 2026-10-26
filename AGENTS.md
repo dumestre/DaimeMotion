@@ -17,3 +17,7 @@
 - Sempre normalize caracteres especiais e use UTF-8
 - Confie no sistema de chunking automático para textos longos (>2000 caracteres)
 - Passe o texto limpo, apenas o que deve ser falado
+
+Vozes atuais (Kokoro, local): `pf_dora`, `pm_alex`, `pm_santa`. Manter essas 3 como padrão.
+
+**Planejado:** integração opcional do XTTS v2 (clonagem de voz / mais vozes PT-BR). Ler [docs/XTTS_V2_PLAN.md](docs/XTTS_V2_PLAN.md) antes de implementar. Não adicionar engines/APIs de TTS fora do plano (ex.: Edge TTS) sem decisão explícita do usuário.

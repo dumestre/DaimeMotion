@@ -120,8 +120,12 @@ async function generateChunkWav(
 
   await fs.writeFile(textFile, text, "utf8");
 
-  const py = `from kokoro import KPipeline
+  // O Kokoro divide o texto em varios segmentos e gera um audio por segmento.
+  // E preciso acumular TODOS os segmentos e concatenar antes de gravar,
+  // senao o arquivo final fica apenas com o ultimo (ou o primeiro) trecho.
+  const py = `import numpy as np
 import soundfile as sf
+from kokoro import KPipeline
 
 text_path = r"""${textFile.replace(/\\/g, "\\\\")}"""
 out_path = r"""${outWavPath.replace(/\\/g, "\\\\")}"""
@@ -132,10 +136,19 @@ with open(text_path, "r", encoding="utf-8") as f:
 
 pipeline = KPipeline(lang_code="p")
 generator = pipeline(text, voice=voice)
-for gs, ps, audio in generator:
-    sf.write(out_path, audio, 24000)
-    break
-print("done")
+
+segments = []
+for _gs, _ps, audio in generator:
+    if audio is None:
+        continue
+    segments.append(np.asarray(audio, dtype=np.float32).reshape(-1))
+
+if not segments:
+    raise RuntimeError("Kokoro nao gerou audio para este trecho.")
+
+merged = np.concatenate(segments)
+sf.write(out_path, merged, 24000)
+print(f"done segments={len(segments)} samples={merged.shape[0]}")
 `;
 
   await fs.writeFile(scriptFile, py, "utf8");
